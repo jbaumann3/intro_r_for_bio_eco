@@ -10,11 +10,9 @@ website:
     left:
       - href: index.qmd
         text: Home
-        menu:
-          - text: drop
-          - getting_started.qmd
-          - rbasics.qmd
-          - usingquarto.qmd
+      - getting_started.qmd
+      - rbasics.qmd
+      - usingquarto.qmd
           
 format:
   html:

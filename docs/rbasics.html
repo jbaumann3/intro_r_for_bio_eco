@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.3.353" />
 
-<meta name="author" content="Justin Baumann">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
-<title>Introduction to R for Bio/Eco/Evo - Packages &amp; reading/writing data</title>
+<meta name="author" content="Justin Baumann" />
+
+<title>Introduction to R for Bio/Eco/Evo – Packages &amp; reading/writing data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,23 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<!-- htmldependencies:E3FAD763 -->
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -95,29 +81,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 </head>
 
-<body class="nav-fixed">
+<body>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="/index.html">
     <span class="navbar-title">Introduction to R for Bio/Eco/Evo</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
+    <a class="nav-link" href="/index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="/getting_started.html" rel="" target="">
+ <span class="menu-text">Getting Started with RStudio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="/rbasics.html" rel="" target="">
+ <span class="menu-text">Packages &amp; reading/writing data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="/usingquarto.html" rel="" target="">
+ <span class="menu-text">Getting Started with Quarto</span></a>
   </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
@@ -131,20 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><strong>Learning Objectives</strong></a></li>
-  <li><a href="#r-basics" id="toc-r-basics" class="nav-link" data-scroll-target="#r-basics"><strong>R Basics</strong></a>
-  <ul class="collapse">
-  <li><a href="#installing-and-loading-libraries" id="toc-installing-and-loading-libraries" class="nav-link" data-scroll-target="#installing-and-loading-libraries"><strong>Installing and Loading libraries</strong></a></li>
-  <li><a href="#looking-at-data" id="toc-looking-at-data" class="nav-link" data-scroll-target="#looking-at-data"><strong>Looking at data!</strong></a></li>
-  <li><a href="#write-data-to-file-saving-data" id="toc-write-data-to-file-saving-data" class="nav-link" data-scroll-target="#write-data-to-file-saving-data"><strong>Write data to file (saving data)</strong></a></li>
-  <li><a href="#read-a-file-in-import-data-into-r" id="toc-read-a-file-in-import-data-into-r" class="nav-link" data-scroll-target="#read-a-file-in-import-data-into-r"><strong>Read a file in (import data into R)</strong></a></li>
-  </ul></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rbasics.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+        <div id="quarto-toc-target"></div>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -171,40 +158,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 </header>
-
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives"><strong>Learning Objectives</strong></a></li>
+  <li><a href="#r-basics" id="toc-r-basics"><strong>R Basics</strong></a>
+  <ul>
+  <li><a href="#installing-and-loading-libraries" id="toc-installing-and-loading-libraries"><strong>Installing and Loading libraries</strong></a></li>
+  <li><a href="#looking-at-data" id="toc-looking-at-data"><strong>Looking at data!</strong></a></li>
+  <li><a href="#write-data-to-file-saving-data" id="toc-write-data-to-file-saving-data"><strong>Write data to file (saving data)</strong></a></li>
+  <li><a href="#read-a-file-in-import-data-into-r" id="toc-read-a-file-in-import-data-into-r"><strong>Read a file in (import data into R)</strong></a></li>
+  </ul></li>
+  </ul>
+</nav>
 <section id="learning-objectives" class="level1">
 <h1><strong>Learning Objectives</strong></h1>
-<p>1.) How to install and load libraries<br>
-2.) How to view and inspect data<br>
-3.) Read in data files &amp; output data (write to file)<br>
+<p>1.) How to install and load libraries<br />
+2.) How to view and inspect data<br />
+3.) Read in data files &amp; output data (write to file)<br />
 </p>
 </section>
 <section id="r-basics" class="level1">
 <h1><strong>R Basics</strong></h1>
 <section id="installing-and-loading-libraries" class="level2">
-<h2 class="anchored" data-anchor-id="installing-and-loading-libraries"><strong>Installing and Loading libraries</strong></h2>
+<h2><strong>Installing and Loading libraries</strong></h2>
 <p>Libraries are packages of functions (and sometimes data) that we use to execute tasks in R. Packages are what make R so versatile! We can do almost anything with R if we learn how to utilize the right packages.</p>
 <p>If we do not have a package already installed (for example, if you have only just downloaded R/ RStudio), we will need to use install.packages(‘packagename’) to install each package that we need.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(tidyverse)</span></code></pre></div>
 </div>
 <p>OR - We can use the ‘Packages’ tab in the bottom right quadrant to install packages. Simply navigate to ‘Packages’, select ‘install packages’ and enter the package names you need (separate each package by commas). <strong>NOTE</strong> for users for rstudio.mtholyoke.edu – You cannot install packages to the Mt Holyoke cloud instance of R. If we need something that isn’t installed we will need to contact IT!</p>
 <p>In order for a <em>package to work</em>, we must first load it! We do this as with the code libary(packagename)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co">#for data manipulation</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) <span class="co">#for some fun data!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co">#for data manipulation</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) <span class="co">#for some fun data!</span></span></code></pre></div>
 </div>
 <p><strong>It is best practice to load all of the packages you will need at the top of your script</strong></p>
 <p>In this course we will be following a best practices guide that utilizes a library called ‘Tidyverse’ for data manipulation and analysis. Tidyverse contains many packages all in one, including the very functional ‘dplyr’ and ‘ggplot2’ packages. You will almost always use Tidyverse, so make sure to load it in :)</p>
 <p>Note the ‘#’ with notes after them in the code chunk above. These are called comments. You can comment out any line of code in R by using a ‘#’. This is strongly recommended when you are programming. We will discuss more later!</p>
 </section>
 <section id="looking-at-data" class="level2">
-<h2 class="anchored" data-anchor-id="looking-at-data"><strong>Looking at data!</strong></h2>
-<p>R has integrated data sets that we can use to play around with code and learn. <br></p>
-<p>examples: mtcars (a dataframe all about cars, this is available in R without loading a package), and iris (in the ‘vegan’ package, great for testing out ecology related functions and code)<br><br></p>
-<p><strong>Load a dataset</strong> R has some test datasets built into it. Let’s load one and look at it!<br></p>
+<h2><strong>Looking at data!</strong></h2>
+<p>R has integrated data sets that we can use to play around with code and learn. </br></p>
+<p>examples: mtcars (a dataframe all about cars, this is available in R without loading a package), and iris (in the ‘vegan’ package, great for testing out ecology related functions and code)</br></br></p>
+<p><strong>Load a dataset</strong> R has some test datasets built into it. Let’s load one and look at it!</br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mtcars </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mtcars </span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
@@ -241,9 +241,9 @@ Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
 Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
 </div>
 </div>
-<p><strong>Using head() and tail()</strong> Now let’s look at the data frame (df) using head() and tail() <br> These tell us the column names, and let us see the top or bottom 6 rows of data.</p>
+<p><strong>Using head() and tail()</strong> Now let’s look at the data frame (df) using head() and tail() </br> These tell us the column names, and let us see the top or bottom 6 rows of data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars) </span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
 Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
@@ -253,7 +253,7 @@ Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
 Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(mtcars) <span class="co">#tail shows the header and the last 6 rows </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(mtcars) <span class="co">#tail shows the header and the last 6 rows </span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                mpg cyl  disp  hp drat    wt qsec vs am gear carb
 Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2
@@ -266,9 +266,9 @@ Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.6  1  1    4    2</code></pre>
 </div>
 <p><strong>column attributes</strong> If we want to see the attributes of each column we can use the str() function</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mtcars) <span class="co">#str shows attributes of each column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mtcars) <span class="co">#str shows attributes of each column</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   32 obs. of  11 variables:
+<pre><code>&#39;data.frame&#39;:   32 obs. of  11 variables:
  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
  $ disp: num  160 160 108 258 360 ...
@@ -282,14 +282,14 @@ Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.6  1  1    4    2</code></pre>
  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
 </div>
 </div>
-<p>str() is very important because it allows you to see the type of data in each column. Types include: integer, numeric, factor, date, and more. If the data in a column are factors instead of numbers you may have an issue in your data (your spreadsheet)<br></p>
+<p>str() is very important because it allows you to see the type of data in each column. Types include: integer, numeric, factor, date, and more. If the data in a column are factors instead of numbers you may have an issue in your data (your spreadsheet)</br></p>
 <p><strong>Changing column attributes</strong> Importantly, you can change the type of the column. Here is an example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>mpg<span class="ot">=</span><span class="fu">as.factor</span>(mtcars<span class="sc">$</span>mpg) <span class="co"># Makes mpg a factor instead of a number</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>mpg<span class="ot">=</span><span class="fu">as.factor</span>(mtcars<span class="sc">$</span>mpg) <span class="co"># Makes mpg a factor instead of a number</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   32 obs. of  11 variables:
- $ mpg : Factor w/ 25 levels "10.4","13.3",..: 16 16 19 17 13 12 3 20 19 14 ...
+<pre><code>&#39;data.frame&#39;:   32 obs. of  11 variables:
+ $ mpg : Factor w/ 25 levels &quot;10.4&quot;,&quot;13.3&quot;,..: 16 16 19 17 13 12 3 20 19 14 ...
  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
  $ disp: num  160 160 108 258 360 ...
  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
@@ -301,10 +301,10 @@ Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.6  1  1    4    2</code></pre>
  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>mpg<span class="ot">=</span><span class="fu">as.numeric</span>(mtcars<span class="sc">$</span>mpg) <span class="co">#Changes mpg back to a number</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>mpg<span class="ot">=</span><span class="fu">as.numeric</span>(mtcars<span class="sc">$</span>mpg) <span class="co">#Changes mpg back to a number</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   32 obs. of  11 variables:
+<pre><code>&#39;data.frame&#39;:   32 obs. of  11 variables:
  $ mpg : num  16 16 19 17 13 12 3 20 19 14 ...
  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
  $ disp: num  160 160 108 258 360 ...
@@ -320,7 +320,7 @@ Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.6  1  1    4    2</code></pre>
 </div>
 <p><strong>Summary statistics</strong> To see summary statistics on each column (mean, median, min, max, range), we can use summary()</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mtcars) <span class="co">#summarizes each column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mtcars) <span class="co">#summarizes each column</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mpg             cyl             disp             hp       
  Min.   : 1.00   Min.   :4.000   Min.   : 71.1   Min.   : 52.0  
@@ -347,19 +347,19 @@ Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.6  1  1    4    2</code></pre>
 </div>
 <p><strong>Counting rows and columns</strong> To see the number of rows and columns we can use nrow() and ncol()</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(mtcars) <span class="co">#gives number of rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(mtcars) <span class="co">#gives number of rows</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 32</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(mtcars) <span class="co">#gives number of columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(mtcars) <span class="co">#gives number of columns</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 11</code></pre>
 </div>
 </div>
 <p><strong>Naming dataframes</strong> Rename mtcars and view in Environment tab in Rstudio</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span>mtcars</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span>mtcars</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 Mazda RX4            16   6 160.0 110 3.90 2.620 16.46  0  1    4    4
@@ -395,7 +395,7 @@ Ferrari Dino         15   6 145.0 175 3.62 2.770 15.50  0  1    5    6
 Maserati Bora         5   8 301.0 335 3.54 3.570 14.60  0  1    5    8
 Volvo 142E           17   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  mpg cyl disp  hp drat    wt  qsec vs am gear carb
 Mazda RX4          16   6  160 110 3.90 2.620 16.46  0  1    4    4
@@ -408,18 +408,18 @@ Valiant            12   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 </div>
 </section>
 <section id="write-data-to-file-saving-data" class="level2">
-<h2 class="anchored" data-anchor-id="write-data-to-file-saving-data"><strong>Write data to file (saving data)</strong></h2>
-<p>We use the write.csv function here. a= the name of the dataframe and the name we want to give the file goes after ‘file=’ <br> The file name must be in quotes and must include an extension. Since we are using write.csv we MUST use .csv <br></p>
+<h2><strong>Write data to file (saving data)</strong></h2>
+<p>We use the write.csv function here. a= the name of the dataframe and the name we want to give the file goes after ‘file=’ </br> The file name must be in quotes and must include an extension. Since we are using write.csv we MUST use .csv </br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(a, <span class="at">file=</span><span class="st">'mtcars.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(a, <span class="at">file=</span><span class="st">&#39;mtcars.csv&#39;</span>)</span></code></pre></div>
 </div>
 </section>
 <section id="read-a-file-in-import-data-into-r" class="level2">
-<h2 class="anchored" data-anchor-id="read-a-file-in-import-data-into-r"><strong>Read a file in (import data into R)</strong></h2>
+<h2><strong>Read a file in (import data into R)</strong></h2>
 <p>NOTE: if you have a .xls file make sure you convert to .csv. Ensure the file is clean and orderly (rows x columns). Only 1 excel tab can be in each .csv, so plan accordingly</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">'mtcars.csv'</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&#39;mtcars.csv&#39;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(b)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  X mpg cyl disp  hp drat    wt  qsec vs am gear carb
 1         Mazda RX4  16   6  160 110 3.90 2.620 16.46  0  1    4    4
@@ -430,16 +430,20 @@ Valiant            12   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 6           Valiant  12   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 </div>
 </div>
-<p>You are welcome to use other functions to read in data (including read_csv or read.xls). Especially for beginners, I strongly encourage you to use .csv format. Other file formats can get complicated (often unnecessarily complicated). That said, R can also handle .txt, .xls, images, shapefiles (for spatial analysis or GIS style work), etc. It is very versatile! Feel free to explore :)<br>
+<p>You are welcome to use other functions to read in data (including read_csv or read.xls). Especially for beginners, I strongly encourage you to use .csv format. Other file formats can get complicated (often unnecessarily complicated). That said, R can also handle .txt, .xls, images, shapefiles (for spatial analysis or GIS style work), etc. It is very versatile! Feel free to explore :)<br />
 A note on read_csv -&gt; I consider this to be the “best” option for reading in .csv files. It is a ‘smarter’ version of read.csv and can automatically figure out what kind of data (numeric, factor, date, etc) each column is. If you use read.csv, you have often have to manually change these options.</p>
-<hr>
-
-
+<hr />
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Introduction to R for Bio/Eco/Evo</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Introduction to R for Bio/Eco/Evo</span> <span class="hidden" data-render-id="quarto-int-navbar:Home">Home</span> <span class="hidden" data-render-id="quarto-int-navbar:/index.html">/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with RStudio">Getting Started with RStudio</span> <span class="hidden" data-render-id="quarto-int-navbar:/getting_started.html">/getting_started.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Packages &amp; reading/writing data">Packages &amp; reading/writing data</span> <span class="hidden" data-render-id="quarto-int-navbar:/rbasics.html">/rbasics.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with Quarto">Getting Started with Quarto</span> <span class="hidden" data-render-id="quarto-int-navbar:/usingquarto.html">/usingquarto.html</span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden" data-render-id="quarto-metatitle">Introduction to R for Bio/Eco/Evo - Packages &amp; reading/writing data</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Introduction to R for Bio/Eco/Evo - Packages &amp; reading/writing data</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Introduction to R for Bio/Eco/Evo - Packages &amp; reading/writing data</span> <span class="hidden" data-render-id="quarto-metasitename">Introduction to R for Bio/Eco/Evo</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
+</div>
 </section>
 </section>
 
 </main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script id = "quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -674,6 +678,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 
+</body>
 
-
-</body></html>
+</html>
