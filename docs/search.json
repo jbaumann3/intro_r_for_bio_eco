@@ -19,5 +19,19 @@
     "title": "Lab 1: Intro to R, RStudio, and Quarto",
     "section": "How to SET the working directory",
     "text": "How to SET the working directory\n1.) Using the “Files” tab to set manually: a.) Using the ‘…’ in the ‘Files’ tab you can select any directory (folder) on your computer. You can also set a google drive, box, dropbox, or other shared folder as your working directory if you’d like (as long as you are syncing a folder between the cloud and your computer – ASK me if you have questions about this!) b.) Once you navigate to a directory you still need to SET IT as your working directory. You do this in the “More” cog– select “Set as working directory”\n2.) Set working directory with code: We use the ‘setwd()’ function for this\n\nsetwd(\"C:/Users/Justin Baumann/Desktop/r_for_bioeco\")\n\nNote that I am using rstudio.mtholyoke.edu, a cloud version of RStudio. As such, my setwd() looks weird! ‘~’ just tells R I want to look in the same parent directory I am currently working in. Your version of this might be setwd(“C://username/biol234/code”) or similar. You use a “/” between each folder. As always, ask questions if you have them! The manual setting using “Files” is usually easier for most people."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "testpage.html",
+    "href": "testpage.html",
+    "title": "testpage",
+    "section": "",
+    "text": "This is a test page\n\n#here is some test code\n\nlibrary(tidyverse)\n\n── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──\n✔ ggplot2 3.4.0      ✔ purrr   1.0.0 \n✔ tibble  3.1.8      ✔ dplyr   1.0.10\n✔ tidyr   1.2.1      ✔ stringr 1.5.0 \n✔ readr   2.1.3      ✔ forcats 0.5.2 \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\n\nlibrary(palmerpenguins)\n\nAnd some more\n\nhead(penguins)\n\n# A tibble: 6 × 8\n  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year\n  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;\n1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007\n2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007\n3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007\n4 Adelie  Torgersen           NA            NA            NA      NA &lt;NA&gt;   2007\n5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007\n6 Adelie  Torgersen           39.3          20.6         190    3650 male   2007\n# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g"
   }
 ]
