@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "website_code",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "Lab1.html",
+    "href": "Lab1.html",
+    "title": "Lab 1: Intro to R, RStudio, and Quarto",
+    "section": "",
+    "text": "IN THIS TUTORIAL YOU WILL LEARN:\n1.) How to navigate RStudio\n2.) How to install and load packages\n3.) How to view data\n4.) How to read and write data files\n5.) How to use Quarto to make a document"
+  },
+  {
+    "objectID": "Lab1.html#how-to-set-the-working-directory",
+    "href": "Lab1.html#how-to-set-the-working-directory",
+    "title": "Lab 1: Intro to R, RStudio, and Quarto",
+    "section": "How to SET the working directory",
+    "text": "How to SET the working directory\n1.) Using the “Files” tab to set manually: a.) Using the ‘…’ in the ‘Files’ tab you can select any directory (folder) on your computer. You can also set a google drive, box, dropbox, or other shared folder as your working directory if you’d like (as long as you are syncing a folder between the cloud and your computer – ASK me if you have questions about this!) b.) Once you navigate to a directory you still need to SET IT as your working directory. You do this in the “More” cog– select “Set as working directory”\n2.) Set working directory with code: We use the ‘setwd()’ function for this\n\nsetwd(\"C:/Users/Justin Baumann/Desktop/r_for_bioeco\")\n\nNote that I am using rstudio.mtholyoke.edu, a cloud version of RStudio. As such, my setwd() looks weird! ‘~’ just tells R I want to look in the same parent directory I am currently working in. Your version of this might be setwd(“C://username/biol234/code”) or similar. You use a “/” between each folder. As always, ask questions if you have them! The manual setting using “Files” is usually easier for most people."
+  }
+]
