@@ -1,0 +1,396 @@
+---
+title: 'Lab 4: T-tests'
+author: "Justin Baumann"
+date: "2/15/2022"
+output: html_document
+---
+
+# **LEARNING OBJECTIVES**
+IN THIS TUTORIAL YOU WILL LEARN: </br>
+1.) The theory behind a T-test and how to perform one </br>
+2.) Practice data preparation skills </br>
+3.) How to pair graphs and stats to test hypotheses </br>
+
+***
+# Additional Tutorials and Resources for basic statistics in R  
+
+[t-tests](https://statistics.berkeley.edu/computing/r-t-tests)
+
+
+```{r message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
+
+library(tidyverse) #For data manipulation and graphing
+library(ggridges) #For making nice looking density plots/histograms
+library(patchwork)  #to panel our graphs
+library(ggsci) #for easy color palletes!
+library(car) #contains some statistical tests we need to assess assumptions
+```
+
+# **2.) A note on statistics and experimental design**
+Statistics is a complex field with a long history. We could spend an entire course or even an entire career focusing on the intricate details of statistical decisions and ideas. We've already spent some time on this! I want you to have the statistical grounding necessary to plan your experiments and analyze your data. For biologists, statistics are a tool we can leverage to perform the best possible experiments and test our hypotheses. The T-test is the start of our stats journey. It's a simple test and one that you may not use often, but the theory behind it sets the stage for what is to come!
+
+# **3.) The T-test**{.tabset .tabset-pills}
+
+## **T-test theory**
+
+The t-test (or students' t-test) is a basic statistical test used to assess whether or not the means of two groups are different from one another. In this test, the null hypothesis is that the two means are equal (or that there is no difference between the two means). 
+
+**A t-test should only be used if the following assumptions are met:** </br>
+**1.)** the two distributions whose means we are comparing must be **normally distributed** </br>
+**2.)** The variances of the two groups must be **equal** </br>
+
+**Generate example data**
+```{r}
+iris2<-iris %>%
+  filter(Species != 'setosa') %>%
+  droplevels() #removes the empty levels so when we check levels below we only get the ones that are still in the data!
+
+#check levels to make sure we only have 2 species!
+head(iris2)
+levels(iris2$Species)
+```
+We will use these data for our examples today. T-test requires *only* 2 groups/populations. We will assess the alternative hypothesis that one of our numerical variables (sepal length, sepal width, petal length, or petal width) differs by species.
+
+But first, we must **test our assumptions**
+
+## **Assumption 1.) Assessing normality**
+*Method 1: the Shapiro-Wilk Test* If p < 0.05 then the distribution is significantly different from normal.
+
+Step 1: we need to create separate data frames for each species to assess normality of each variable by species!
+```{r}
+versi<-iris2 %>%
+  filter(Species=='versicolor') %>%
+  droplevels()
+
+virg<-iris2 %>%
+  filter(Species=='virginica') %>%
+  droplevels()
+
+```
+</br>
+
+Step 2: We can run our shapiro-wilk tests on each variable if we'd like
+```{r}
+shapiro.test(versi$Petal.Length) #this is normally distributed
+
+shapiro.test(versi$Petal.Width) # this is not
+
+shapiro.test(versi$Sepal.Length) #normal
+
+shapiro.test(versi$Sepal.Width) #normal
+
+shapiro.test(virg$Petal.Length) #normal
+
+shapiro.test(virg$Petal.Width) #normal
+
+shapiro.test(virg$Sepal.Length) #normal
+
+shapiro.test(virg$Sepal.Width) #normal
+```
+</br>
+*Method 2: Visualization*
+
+Explore the following visualizations. Do you see clear evidence of normality? 
+
+```{r}
+a1<-ggplot(data=iris2, aes(Petal.Length, fill=Species))+
+  geom_histogram(binwidth = 0.3)+ 
+  facet_wrap(~Species)+
+  theme_classic()+
+  scale_fill_aaas()
+
+a2<-ggplot(data=iris2, aes(x=Petal.Length, y=Species, fill=Species))+
+  geom_density_ridges()+ #makes a smooth density curve instead of a histogram!
+  theme_classic()+
+  scale_fill_aaas()
+
+a1/a2 #compare the visualizations (they are of the same data)- do we see normality here?
+
+```
+
+```{r}
+b1<-ggplot(data=iris2, aes(Petal.Width, fill=Species))+
+  geom_histogram(binwidth = 0.3)+ 
+  facet_wrap(~Species)+
+  theme_classic()+
+  scale_fill_aaas()
+
+b2<-ggplot(data=iris2, aes(x=Petal.Width, y=Species, fill=Species))+
+  geom_density_ridges()+ #makes a smooth density curve instead of a histogram!
+  theme_classic()+
+  scale_fill_aaas()
+
+b1/b2 #compare the visualizations (they are of the same data)- do we see normality here?
+```
+
+```{r}
+c1<-ggplot(data=iris2, aes(Sepal.Width, fill=Species))+
+  geom_histogram(binwidth = 0.3)+ 
+  facet_wrap(~Species)+
+  theme_classic()+
+  scale_fill_aaas()
+
+c2<-ggplot(data=iris2, aes(x=Sepal.Width, y=Species, fill=Species))+
+  geom_density_ridges()+ #makes a smooth density curve instead of a histogram!
+  theme_classic()+
+  scale_fill_aaas()
+
+c1/c2 #compare the visualizations (they are of the same data)- do we see normality here?
+
+```
+
+```{r}
+d1<-ggplot(data=iris2, aes(Sepal.Length, fill=Species))+
+  geom_histogram(binwidth = 0.3)+ 
+  facet_wrap(~Species)+
+  theme_classic()+
+  scale_fill_aaas()
+
+d2<-ggplot(data=iris2, aes(x=Sepal.Length, y=Species, fill=Species))+
+  geom_density_ridges()+ #makes a smooth density curve instead of a histogram!
+  theme_classic()+
+  scale_fill_aaas()
+
+d1/d2 #compare the visualizations (they are of the same data)- do we see normality here?
+
+```
+
+## **Assumption 2.) Assessing equal variance** 
+
+AKA homogeneity of variance </br>
+
+**Methods 1: F-test** We will use the **F-Test** to compare the variance of two populations. This can only be used with *2* populations and is thus only useful when we run a t-test. 
+
+H0 for an F-test is: The variances of the two groups are equal. </br>
+Ha: The variances are different </br>
+p<0.05 allows us to reject the null (H0) and suggests that the variances are different </br>
+</br>
+**note:** The F-test assumes our data are already normal! You should not run it on non-normal data
+
+
+```{r}
+#we use var.test to run an F-test
+f1<- var.test(Petal.Length ~ Species, data=iris2)
+f1 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+f2<- var.test(Petal.Width ~ Species, data=iris2)
+f2 # p<0.05, so we reject H0 (variances are likely different)
+
+f3<- var.test(Sepal.Length ~ Species, data=iris2)
+f3 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+f4<- var.test(Sepal.Width ~ Species, data=iris2)
+f4 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+```
+</br>
+**Method 2: Levene Test** </br>
+A more flexible test of homogeneity of variance is the Levene Test. It can be used to compare the variance of many populations (not just 2) and is more flexible than the F-test, so it can be used even if the normality assumption is violated. </br>
+**this is the most commonly used test for homogeneity of variance** </br>
+**leveneTest() is in the car package in R!** </br>
+
+N0: Variances of all populationos are equal </br>
+p<0.05 allows us to reject H0
+
+
+```{r}
+l1<- leveneTest(Petal.Length ~ Species, data=iris2)
+l1 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+l2<- leveneTest(Petal.Width ~ Species, data=iris2)
+l2 # p<0.05, so we reject H0 (variances are likely different)
+
+l3<- leveneTest(Sepal.Length ~ Species, data=iris2)
+l3 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+l4<- leveneTest(Sepal.Width ~ Species, data=iris2)
+l4 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+```
+</br>
+**Method 3: Visualization** </br>
+Since p-values are more like guidelines, we also want to visualize our data to assess homogeniety of variance. 
+We can do that in several ways. You might already have some ideas about this! 
+In general, it seems smart to display the raw data as points and as boxplots. Let's start there!
+
+```{r}
+
+v1.1<-ggplot(data=iris2, aes(x=Species, y=Petal.Length, color=Species))+
+  geom_point()+
+  theme_classic()+
+  scale_color_aaas()
+
+v1.2<-ggplot(data=iris2, aes(x=Species, y=Petal.Length, color=Species))+
+  geom_boxplot()+
+  theme_classic()+
+  scale_color_aaas()
+
+v1.1+v1.2
+
+```
+```{r}
+v2.1<-ggplot(data=iris2, aes(x=Species, y=Petal.Width, color=Species))+
+  geom_point()+
+  theme_classic()+
+  scale_color_aaas()
+
+v2.2<-ggplot(data=iris2, aes(x=Species, y=Petal.Width, color=Species))+
+  geom_boxplot()+
+  theme_classic()+
+  scale_color_aaas()
+
+v2.1+v2.2
+
+```
+
+```{r}
+v3.1<-ggplot(data=iris2, aes(x=Species, y=Sepal.Width, color=Species))+
+  geom_point()+
+  theme_classic()+
+  scale_color_aaas()
+
+v3.2<-ggplot(data=iris2, aes(x=Species, y=Sepal.Width, color=Species))+
+  geom_boxplot()+
+  theme_classic()+
+  scale_color_aaas()
+
+v3.1+v3.2
+```
+```{r}
+v4.1<-ggplot(data=iris2, aes(x=Species, y=Sepal.Length, color=Species))+
+  geom_point()+
+  theme_classic()+
+  scale_color_aaas()
+
+v4.2<-ggplot(data=iris2, aes(x=Species, y=Sepal.Length, color=Species))+
+  geom_boxplot()+
+  theme_classic()+
+  scale_color_aaas()
+
+v4.1+v4.2
+```
+
+## **When can we ignore assumptions?**
+
+We can if our sample sizes are large. If n is small, we should not ignore this assumption. 
+There are alternatives to dealing with normality that we can discuss in the ANOVA section (such as transforming the data)
+
+[For more info on that](https://thestatsgeek.com/2013/09/28/the-t-test-and-robustness-to-non-normality/)
+
+We can also ignore the equal variance requirement if we use the Welch t-test (default in R)
+
+
+## **A basic T-test in R**
+
+Finally, let's do some T-tests! </br>
+
+H0: No difference between the means of the 2 populations
+p<0.05 allows us to reject this H0 (indicating a likely difference)
+
+**Step 1:** Calculate means and error and plot!
+
+```{r}
+meaniris<-iris2 %>%
+  group_by(Species) %>%
+  summarize(meanpl=mean(Petal.Length), sdpl=sd(Petal.Length), n=n(), sepl=sdpl/sqrt(n), meanpw=mean(Petal.Width), sdpw=sd(Petal.Width), n=n(), sepw=sdpw/sqrt(n), meansl=mean(Sepal.Length), sdsl=sd(Sepal.Length), n=n(), sesl=sdpl/sqrt(n), meansw=mean(Sepal.Width), sdsw=sd(Sepal.Width), n=n(), sesw=sdsw/sqrt(n))
+
+meaniris
+
+```
+</br>
+```{r}
+p1<-ggplot(meaniris, aes(x=Species, y=meanpl, color=Species))+
+  geom_point()+
+  geom_errorbar(aes(x=Species, ymin=meanpl-sepl, ymax=meanpl+sepl), width=0.2)+
+  scale_color_aaas()+
+  theme_classic()+
+  labs(title='Petal Length')
+
+p2<-ggplot(meaniris, aes(x=Species, y=meanpw, color=Species))+
+  geom_point()+
+  geom_errorbar(aes(x=Species, ymin=meanpw-sepw, ymax=meanpw+sepw), width=0.2)+
+  scale_color_aaas()+
+  theme_classic()+
+  labs(title='Petal Width')
+
+p3<-ggplot(meaniris, aes(x=Species, y=meansl, color=Species))+
+  geom_point()+
+  geom_errorbar(aes(x=Species, ymin=meansl-sesl, ymax=meansl+sesl), width=0.2)+
+  scale_color_aaas()+
+  theme_classic()+
+  labs(title='Sepal Length')
+
+p4<-ggplot(meaniris, aes(x=Species, y=meansw, color=Species))+
+  geom_point()+
+  geom_errorbar(aes(x=Species, ymin=meansw-sesw, ymax=meansw+sesw), width=0.2)+
+  scale_color_aaas()+
+  theme_classic()+
+  labs(title='Sepal Width')
+
+(p1+p2)/(p3+p4)
+
+```
+
+
+**Does Petal Length differ by species?**
+```{r}
+
+t1<-t.test(data=iris2, Petal.Length~Species, alternative='two.sided', var.equal=FALSE) #two.sided and var.equal= FALSE are default, so we don't have to list them. BUt, we can also change them (as I will show later)
+
+t1 #p<0.05 suggests that there is a significant difference in petal length between species
+
+```
+</br>
+Our p<0.05 suggests that there is a significant effect of species on petal length (petal length differs by species). BUT, do we get a clear explanation of which group is higher or lower? Look at the Welch T-test output and you can see the means! You can also use the graph we made to visualize this!
+
+**Does Petal Width differ by species?**
+
+```{r}
+t2<-t.test(data=iris2, Petal.Width~Species, alternative='two.sided', var.equal=FALSE) #two.sided and var.equal= FALSE are default, so we don't have to list them. BUt, we can also change them (as I will show later)
+
+t2
+```
+</br>
+**Does Sepal Width differ between species?**
+
+```{r}
+t3<-t.test(data=iris2, Sepal.Width~Species, alternative='two.sided', var.equal=FALSE) #two.sided and var.equal= FALSE are default, so we don't have to list them. BUt, we can also change them (as I will show later)
+
+t3
+```
+</br>
+**Does Sepal Length differ between species?**
+```{r}
+t4<-t.test(data=iris2, Sepal.Length~Species, alternative='two.sided', var.equal=FALSE) #two.sided and var.equal= FALSE are default, so we don't have to list them. BUt, we can also change them (as I will show later)
+
+t4
+```
+
+
+
+SO, when is a t-test actually useful and when isn't it? We use a T-test **ONLY** when we want to compare two means / two populations. If we have more than 2 groups, a T-test is not appropriate! Instead, we need to use an analysis of variance (ANOVA) or possibly something more complex!
+
+# **Applying what we've learned**
+</br>
+**1.)** Use the sleep data (this is already loaded into r! You can just call it by typing the name. It may help to name it, see below) </br>
+sleep <- sleep </br>
+NOTE: The 'extra' column tells us how many more hours each person (ID) is getting after treatment compared to before treatment. Group (1 or 2) tells us the treatment (either 1 or 2). </br>
+</br>
+**2.)** Make a boxplot of the data to visualize the distributions </br>
+</br>
+**3.)** Generate a null and alternative hypothesis about how a extre (sleep time) will change based on group.
+</br>
+</br>
+**4.)** Calculate the mean, standard deviation, sample size, and standard error of extra by group
+</br>
+</br>
+**5.)** Plot this mean and standard error of your variable (extra) by group using ggplot
+</br>
+</br>
+**6.)** Perform the appropriate t-test and interpret the result (can you reject the null hypothesis or not?)
+</br>
+</br>
+**7.)** Test the assumptions necessary for t-test. Do your data meet all of the assumptions? Can we trust your t-test result?
+
+
+
+
