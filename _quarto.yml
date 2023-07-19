@@ -3,7 +3,7 @@ project:
   output-dir: docs
   
 website:
-  title: "website_code"
+  title: "Introduction to R for Bio/Eco/Evo"
   navbar:
     left:
       - href: index.qmd
