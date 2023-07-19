@@ -33,5 +33,19 @@
     "title": "testpage",
     "section": "",
     "text": "This is a test page\n\n#here is some test code\n\nlibrary(tidyverse)\n\n── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──\n✔ ggplot2 3.4.0      ✔ purrr   1.0.0 \n✔ tibble  3.1.8      ✔ dplyr   1.0.10\n✔ tidyr   1.2.1      ✔ stringr 1.5.0 \n✔ readr   2.1.3      ✔ forcats 0.5.2 \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\n\nlibrary(palmerpenguins)\n\nAnd some more\n\nhead(penguins)\n\n# A tibble: 6 × 8\n  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year\n  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;\n1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007\n2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007\n3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007\n4 Adelie  Torgersen           NA            NA            NA      NA &lt;NA&gt;   2007\n5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007\n6 Adelie  Torgersen           39.3          20.6         190    3650 male   2007\n# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g"
+  },
+  {
+    "objectID": "getting_started.html",
+    "href": "getting_started.html",
+    "title": "Getting Started with RStudio",
+    "section": "",
+    "text": "IN THIS TUTORIAL YOU WILL LEARN:\n1.) How to navigate RStudio\n2.) How to install and load packages\n3.) How to view data\n4.) How to read and write data files\n5.) How to use Quarto to make a document"
+  },
+  {
+    "objectID": "getting_started.html#how-to-set-the-working-directory",
+    "href": "getting_started.html#how-to-set-the-working-directory",
+    "title": "Getting Started with RStudio",
+    "section": "How to SET the working directory",
+    "text": "How to SET the working directory\n1.) Using the “Files” tab to set manually: a.) Using the ‘…’ in the ‘Files’ tab you can select any directory (folder) on your computer. You can also set a google drive, box, dropbox, or other shared folder as your working directory if you’d like (as long as you are syncing a folder between the cloud and your computer – ASK me if you have questions about this!) b.) Once you navigate to a directory you still need to SET IT as your working directory. You do this in the “More” cog– select “Set as working directory”\n2.) Set working directory with code: We use the ‘setwd()’ function for this. Below is an example. You will need to replace the path details with your own!\n\nsetwd(\"C:/Users/Justin Baumann/Desktop/BIOL234_Biostats_MHC/Spring 2023/Labs\")"
   }
 ]
