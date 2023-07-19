@@ -1,0 +1,147 @@
+---
+title: "Getting Started with RStudio"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+
+# **Learning Objectives**
+
+IN THIS TUTORIAL YOU WILL LEARN:\
+1.) How to navigate RStudio\
+2.) How to install and load packages\
+3.) How to view data\
+4.) How to read and write data files\
+5.) How to use Quarto to make a document
+
+# Additional Tutorials and Resources
+
+[Datacamp Tidyverse tutorial](https://www.datacamp.com/community/tutorials/tidyverse-tutorial-r)
+
+[Books and workshops for learning tidyverse](https://www.tidyverse.org/learn/)
+
+[A nice step by step walkthough of Tidyverse functions](https://and.netlify.app/tutorials/02/)
+
+[Video Tidyverse tutorial](https://www.youtube.com/watch?v=JtQfXY0lIzc)
+
+[Want to TRY some stuff on your own? Use the RStudio.cloud primers](https://rstudio.cloud/learn/primers)
+
+The best way to learn is to GOOGLE IT and try stuff
+
+------------------------------------------------------------------------
+
+# **1.) Install R and RStudio and access the Rstudio server**
+
+In this course we will learn how to program in R (a coding language) using RStudio (a coding environment). RStudio makes using R easier and more user friendly!\
+We will also learn how to make pdf and html output files that include code and outputs (tables and graphs).\
+These are handy tools for reporting data and even for writing papers! We will use Quarto to do this (a new tool from the folks who designed RStudio).\
+Your lab reports will all be built using Quarto.
+
+**You have options:**\
+1. Install R and RStudio on your device(s) and use it locally\
+2. Sign up for a posit cloud account here: https://posit.cloud/plans/free. Posit Cloud is a way to access RStudio online without downloading and installing anything. If you are a student, faculty, or staff at a college or university, your school may have an RStudio server. Mount Holyoke has one, for example. You can access it for free (if you are an affiliate) at https://rstudio.mtholyoke.edu/. Note that for the rstudio.mtholyoke.edu website to work you need to login AND you must either be on campus or be using the MHC VPN.\
+
+::: panel-tabset
+## **Install R**
+
+To install R, we will use this link: [install R](https://cran.r-project.org/bin/)\
+1.) Choose the operating system you use (macosx or windows)\
+2.) Click the blue .pkg link that aligns with your computer and operating system (ask questions if needed)\
+3.) Follow instructions
+
+## **Install RStudio**
+
+1.) Click [this link](https://www.rstudio.com/products/rstudio/download/#download) and follow instructions\
+2.) OPEN RStudio (not R). Click on the logo that is a white R inside a blue circle (RStudio). We never need to open R, we can use RStudio.
+
+## **Access the MHC Server**
+
+1.) follow this link [rstudio.mtholyoke.edu](https://rstudio.mtholyoke.edu)\
+2.) login\
+3.) This is RStudio hosted by Mt Holyoke servers. It requires 2 things: a.) internet connection b.) you must be on campus OR you must have the Mt Holyoke VPN activated. To learn about the VPN, check out [this page](https://lits.mtholyoke.edu/tech-support/access-and-internet-connectivity/connect-campus/using-virtual-private-network-vpn)
+:::
+
+------------------------------------------------------------------------
+
+# **2.) RStudio Layout**
+
+::: panel-tabset
+RStudio looks like the image below. The screen can be divided into 4 sections. Use the tabs above to navigate to info about each section.
+
+## **Top Left**: Script
+
+Where you will write your script(s). This is where we should be writing our code! It can be run, commented, and saved here.
+
+## **Bottom Left**: Console/terminal
+
+Here you can run single lines of code and/or see error messages, warnings, and other outputs. Code should not be written here unless it is simple / for testing! Anything worth keeping should go in the script at the top left!
+
+## **Top Right**: Environment, History, etc...
+
+Here you will be able to see the dataframes you have read into R or created (using the "Environment tab"). The other tabs are less useful for us at this stage, but feel free to explore them! Note: The Broom icon can be used to clear dataframes from your environment. You can minimize or maximize this and each other quadrant using the symbols at the top right of the quadrant (a collapsed page next to a full page)
+
+## **Bottom Right**: Files, Plots, Packages, etc...
+
+This is the second most important quadrant (behind top left) and we can change the working directory here very easily. Here we can see the files in our present working directory (we will learn about that next!) We can also see any plots we make in the plots tab. VERY importantly, we can see the packages we have loaded or installed in the packages tab. This will be useful to you! You can also use this tab to search the internal Help dictionary, though I will note that the internet is often more helpful!
+
+## **Top Bar**: File, Edit, Etc...
+
+You can use the top bar in RStudio much like in any other program. I'll let you explore that on your own. Notably, in the top right corner of the top bar you will see an 'R' in a blue box. This is where you can set the project you are working form. Using projects is great because it allows you an easy way to compartmentalize your code, data, figures, and working directory for a single project all in one place! We will get to this shortly.
+:::
+
+#  {.unnumbered}
+
+![](images/RStudio_layout.png)
+
+------------------------------------------------------------------------
+
+# **3.) The Working Directory** - What is it, how to check it, and how to set it!
+
+1.) We can use the getwd() command!
+
+```{r}
+getwd()
+```
+
+2.) We can also use the Bottom Right "Files" tab
+
+![](images/files.png)
+
+Here our working directory (and it's file path) can be located in the black circle. We can manually change the working directory by using the '...' in the brown circle to find any folder on our computer (or attached cloud folders), navigating to it, and then using the 'More' Cog in the green circle to "Set as working directory"
+
+3.) An alternative approach to finding the working directory in the "Files" tab. Using the "More" cog, we can select "Go to working directory"
+
+## **How to SET the working directory**
+
+1.) Using the "Files" tab to set manually: a.) Using the '...' in the 'Files' tab you can select any directory (folder) on your computer. You can also set a google drive, box, dropbox, or other shared folder as your working directory if you'd like (as long as you are syncing a folder between the cloud and your computer -- ASK me if you have questions about this!) b.) Once you navigate to a directory you still need to **SET IT** as your working directory. You do this in the "More" cog-- select "Set as working directory"
+
+2.) Set working directory with code: We use the 'setwd()' function for this. Below is an example. You will need to replace the path details with your own!
+
+```{r}
+#| eval: false
+setwd("C:/Users/Justin Baumann/Desktop/BIOL234_Biostats_MHC/Spring 2023/Labs")
+```
+
+# **3.) RStudio Projects!**
+
+![](images/projects.png)\
+
+RStudio Projects are a great way to compartmentalize your coding work! You can store your code, outputs, input files, figures, etc all in one directory (with subdirectories). When you load your R Project, R will automatically load the last scripts you were working with on that project as well as the dataframes and items you have read in (your environment will be ready to go!). It will also navigate to the correct working directory automatically :) This will make your life easier!
+
+*To make an RStudio Project*\
+1.) Create a folder on your computer (or cloud storage) that will serve as the MAIN directory for your project. Within that folder I recommend you make subdirectories for all of your R related inputs and outputs. Maybe something like I have here:
+
+![](images/projectex.png)
+
+2.) Once you have a MAIN directory folder created (whether you've made subdirectories or not) you can create a project! Set your main folder as your working directory. Next, navigate to the TOP RIGHT of your screen and select the down arrow next to the Big "R" in a blue box. NOW, select "New Project" --\> Existing directory --\> Name the project and hit done! At this point you will see a .Rproj file appear in your MAIN directory. This means you did it right :) This .Rproj file is how you save all of your project info. It autosaves and when you select your project (Again, TOP RIGHT of your screen, select the down arrow next to the R in the blue box and then select your project name) it will load up your scripts, environment, and set your working directory as the MAIN folder. You can navigate VERY easily from here :)
+
+------------------------------------------------------------------------
+
