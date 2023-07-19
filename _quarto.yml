@@ -9,6 +9,8 @@ website:
       - href: index.qmd
         text: Home
       - getting_started.qmd
+      - rbasics.qmd
+      - usingquarto.qmd
 
 format:
   html:

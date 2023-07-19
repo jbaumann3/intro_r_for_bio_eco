@@ -1,0 +1,130 @@
+---
+title: "R Basics"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+
+# **Learning Objectives**
+
+1.) How to install and load libraries\
+2.) How to view and inspect data\
+3.) Read in data files & output data (write to file)\
+
+# **R Basics**
+
+## **Installing and Loading libraries**
+
+Libraries are packages of functions (and sometimes data) that we use to execute tasks in R. Packages are what make R so versatile! We can do almost anything with R if we learn how to utilize the right packages.
+
+If we do not have a package already installed (for example, if you have only just downloaded R/ RStudio), we will need to use install.packages('packagename') to install each package that we need.
+
+```{r eval=FALSE}
+install.packages(tidyverse)
+```
+
+OR - We can use the 'Packages' tab in the bottom right quadrant to install packages. Simply navigate to 'Packages', select 'install packages' and enter the package names you need (separate each package by commas). **NOTE** for users for rstudio.mtholyoke.edu -- You cannot install packages to the Mt Holyoke cloud instance of R. If we need something that isn't installed we will need to contact IT!
+
+In order for a *package to work*, we must first load it! We do this as with the code libary(packagename)
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse) #for data manipulation
+library(palmerpenguins) #for some fun data!
+```
+
+**It is best practice to load all of the packages you will need at the top of your script**
+
+In this course we will be following a best practices guide that utilizes a library called 'Tidyverse' for data manipulation and analysis. Tidyverse contains many packages all in one, including the very functional 'dplyr' and 'ggplot2' packages. You will almost always use Tidyverse, so make sure to load it in :)
+
+Note the '\#' with notes after them in the code chunk above. These are called comments. You can comment out any line of code in R by using a '\#'. This is strongly recommended when you are programming. We will discuss more later!
+
+## **Looking at data!**
+
+R has integrated data sets that we can use to play around with code and learn. </br>
+
+examples: mtcars (a dataframe all about cars, this is available in R without loading a package), and iris (in the 'vegan' package, great for testing out ecology related functions and code)</br></br>
+
+**Load a dataset** R has some test datasets built into it. Let's load one and look at it!</br>
+
+```{r}
+mtcars 
+```
+
+**Using head() and tail()** Now let's look at the data frame (df) using head() and tail() </br> These tell us the column names, and let us see the top or bottom 6 rows of data.
+
+```{r}
+head(mtcars) 
+
+tail(mtcars) #tail shows the header and the last 6 rows 
+```
+
+**column attributes** If we want to see the attributes of each column we can use the str() function
+
+```{r}
+str(mtcars) #str shows attributes of each column
+```
+
+str() is very important because it allows you to see the type of data in each column. Types include: integer, numeric, factor, date, and more. If the data in a column are factors instead of numbers you may have an issue in your data (your spreadsheet)</br>
+
+**Changing column attributes** Importantly, you can change the type of the column. Here is an example
+
+```{r}
+mtcars$mpg=as.factor(mtcars$mpg) # Makes mpg a factor instead of a number
+str(mtcars)
+
+mtcars$mpg=as.numeric(mtcars$mpg) #Changes mpg back to a number
+str(mtcars)
+
+```
+
+**Summary statistics** To see summary statistics on each column (mean, median, min, max, range), we can use summary()
+
+```{r}
+summary(mtcars) #summarizes each column
+```
+
+**Counting rows and columns** To see the number of rows and columns we can use nrow() and ncol()
+
+```{r}
+nrow(mtcars) #gives number of rows
+ncol(mtcars) #gives number of columns
+```
+
+**Naming dataframes** Rename mtcars and view in Environment tab in Rstudio
+
+```{r}
+a<-mtcars
+a
+head(a)
+```
+
+## **Write data to file (saving data)**
+
+We use the write.csv function here. a= the name of the dataframe and the name we want to give the file goes after 'file=' </br> The file name must be in quotes and must include an extension. Since we are using write.csv we MUST use .csv </br>
+
+```{r}
+write.csv(a, file='mtcars.csv')
+```
+
+## **Read a file in (import data into R)**
+
+NOTE: if you have a .xls file make sure you convert to .csv. Ensure the file is clean and orderly (rows x columns). Only 1 excel tab can be in each .csv, so plan accordingly
+
+```{r}
+b<-read.csv('mtcars.csv')
+head(b)
+```
+
+You are welcome to use other functions to read in data (including read_csv or read.xls). Especially for beginners, I strongly encourage you to use .csv format. Other file formats can get complicated (often unnecessarily complicated). That said, R can also handle .txt, .xls, images, shapefiles (for spatial analysis or GIS style work), etc. It is very versatile! Feel free to explore :)
+\
+A note on read_csv -> I consider this to be the "best" option for reading in .csv files. It is a 'smarter' version of read.csv and can automatically figure out what kind of data (numeric, factor, date, etc) each column is. If you use read.csv, you have often have to manually change these options. 
+
+------------------------------------------------------------------------
