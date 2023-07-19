@@ -39,7 +39,7 @@
     "href": "getting_started.html",
     "title": "Getting Started with RStudio",
     "section": "",
-    "text": "IN THIS TUTORIAL YOU WILL LEARN:\n1.) How to navigate RStudio\n2.) How to install and load packages\n3.) How to view data\n4.) How to read and write data files\n5.) How to use Quarto to make a document"
+    "text": "IN THIS TUTORIAL YOU WILL LEARN:\n1.) How to access and/or install R and RStudio\n2.) How to navigate RStudio\n3.) How to set and change the working directory\n4.) How to setup an RStudio Project"
   },
   {
     "objectID": "getting_started.html#how-to-set-the-working-directory",
