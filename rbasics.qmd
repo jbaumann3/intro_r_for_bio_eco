@@ -1,5 +1,5 @@
 ---
-title: "R Basics"
+title: "Packages & reading/writing data"
 author: "Justin Baumann"
 format: 
   html:

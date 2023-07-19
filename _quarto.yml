@@ -5,12 +5,15 @@ project:
 website:
   title: "Introduction to R for Bio/Eco/Evo"
   navbar:
+    background: primary
+    search: true
     left:
       - href: index.qmd
         text: Home
-      - getting_started.qmd
-      - rbasics.qmd
-      - usingquarto.qmd
+        menu:
+          - getting_started.qmd
+          - rbasics.qmd
+          - usingquarto.qmd
 
 format:
   html:
