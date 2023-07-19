@@ -10,11 +10,10 @@ website:
     left:
       - href: index.qmd
         text: Home
-        menu:
           - getting_started.qmd
           - rbasics.qmd
           - usingquarto.qmd
-
+          
 format:
   html:
     theme: flatly
