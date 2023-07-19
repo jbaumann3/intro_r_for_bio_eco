@@ -179,7 +179,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={R Basics},
+  pdftitle={Packages \& reading/writing data},
   pdfauthor={Justin Baumann},
   colorlinks=true,
   linkcolor={blue},
@@ -188,13 +188,13 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-\title{R Basics}
+\title{Packages \& reading/writing data}
 \author{Justin Baumann}
 \date{}
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, boxrule=0pt, breakable, interior hidden, frame hidden, borderline west={3pt}{0pt}{shadecolor}, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, breakable, sharp corners, borderline west={3pt}{0pt}{shadecolor}, interior hidden, boxrule=0pt]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -593,7 +593,12 @@ read\_csv or read.xls). Especially for beginners, I strongly encourage
 you to use .csv format. Other file formats can get complicated (often
 unnecessarily complicated). That said, R can also handle .txt, .xls,
 images, shapefiles (for spatial analysis or GIS style work), etc. It is
-very versatile! Feel free to explore :)
+very versatile! Feel free to explore :)\\
+A note on read\_csv -\textgreater{} I consider this to be the ``best''
+option for reading in .csv files. It is a `smarter' version of read.csv
+and can automatically figure out what kind of data (numeric, factor,
+date, etc) each column is. If you use read.csv, you have often have to
+manually change these options.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
