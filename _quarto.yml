@@ -11,6 +11,7 @@ website:
       - href: index.qmd
         text: Home
         menu:
+          - text: drop
           - getting_started.qmd
           - rbasics.qmd
           - usingquarto.qmd
