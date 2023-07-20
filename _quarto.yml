@@ -33,6 +33,7 @@ website:
        - shapes.qmd
        - themes.qmd
        - axes.qmd
+       - facets.qmd
        
     - id: quarto
       title: "Using Quarto"
