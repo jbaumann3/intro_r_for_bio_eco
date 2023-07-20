@@ -28,7 +28,11 @@ website:
       style: "docked"
       background: light
       contents: 
-       - basic_graphs.qmd   
+       - basic_graphs.qmd
+       - colors.qmd
+       - shapes.qmd
+       - themes.qmd
+       - axes.qmd
        
     - id: quarto
       title: "Using Quarto"

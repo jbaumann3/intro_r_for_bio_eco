@@ -1,0 +1,85 @@
+---
+title: "Shapes"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+```{r}
+#Load packages
+library(tidyverse)
+library(ggsci) #for easy color scales
+library(patchwork) #to make multi-panel plots 
+library(palmerpenguins) # our fave penguin friends :)
+```
+
+
+# **Shapes**
+
+ggplot gives us options to change point shape using the aesethic option 'shape' </br> We can either change shape based on a characterstic of the data ('cyl', for example), make all the shapes the same, or manually control shape
+
+Below is a table of shape options:
+
+![ggplot shape options](/home/jbaumann/BIOL234_Biostats_MHC/Spring%202023/Labs/images/ggplot_shapes.png)
+
+**Conditional Shape Change**
+
+```{r}
+
+ggplot(data=penguins, aes(x=species, y=bill_length_mm, color=island, shape=island))+ 
+  geom_jitter(size=2)+
+  theme_classic()
+
+```
+
+**Change all shapes to triangles**
+
+```{r}
+ggplot(data=mtcars, aes(x=cyl, y=mpg, color=cyl))+
+  geom_point(shape=17) #Here 'shape=' is inside the settings for geom_point. Note that it is outside the aes() function, as that applied aesethics conditionally)
+
+#example 2, same w/ different syntax
+ggplot()+
+  geom_point(data=mtcars, aes(x=cyl, y=mpg, color=cyl), shape=17)
+
+```
+
+**Manual shape changes**
+
+```{r}
+ggplot(data=penguins, aes(x=species, y=bill_length_mm, color=island, shape=island))+ 
+  geom_jitter(size=2)+
+  theme_classic()+  
+  scale_shape_manual(values=c(2,3,4)) #scale_shape_manual allows us to choose shapes for each group (cyl in this case). c stands for concatenate, as we've seen before
+
+```
+
+**Changing Size of points**
+
+Conditional Shape Change
+
+```{r}
+ggplot(data=mtcars, aes(x=cyl, y=mpg, color=cyl, size=cyl))+ #note that we added 'size=' to our aes. 
+  geom_point()
+#note the warning message that using size for a discrete variable is not best practice. 
+#Instead, let's use the size to five us an idea of hp (a 3rd variable)
+
+ggplot(data=mtcars, aes(x=cyl, y=mpg, color=cyl, size=hp))+ #note that we added 'size=' to our aes. 
+  geom_point()
+```
+
+Change size of all points (all points must be same size)
+
+```{r}
+ggplot(data=mtcars, aes(x=cyl, y=mpg, color=cyl))+  
+  geom_point(size=5) #as w/ shape, point needs to be outside the aes() here. 
+```
+
+------------------------------------------------------------------------
