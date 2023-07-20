@@ -1,0 +1,681 @@
+---
+title: "Lab_5_correlation_regression_t_chi"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+
+# **Learning Objectives**
+
+1.) Explore correlations between numerical variables (two variables and many)\
+2.) Practice running and interpreting linear regressions\
+3.) Calculate and interpret R\^2 values\
+4.) Test assumptions of linear regression\
+5.) practice running and interpreting t-tests\
+6.) test assumptions of t-tests\
+7.) Practice chi-square tests and understand their application\
+ 
+
+# **1: Load packages**
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(see)
+library(car)
+library(patchwork)
+library(ggsci)
+library(ggridges)
+library(performance)
+library(Hmisc) #for correlation matrix
+library(corrplot)#to visualize correlation matrices
+library(car) #contains some statistical tests we need to assess assumptions
+
+```
+
+# **2: Correlation between numerical variables**
+
+::: panel-tabset
+Often in science, it can be useful to assess the correlation between numerical variables (how does a change in one variable impact a change in another?). We may use these correlations to tell us which variables to include or exclude from more complex models and we can also use these correlations to understand relationships between variables and thus, possibly search for mechanisms to explain said relationships.
+
+## Correlation Coefficients
+
+A **correlation coefficient (r)** tells us the relationship (strength and direction) between two variables. These coefficients can be positive or negative and will range from 0 to 1 (or negative 1). Values nearer to 1 (or negative 1) indicate stronger correlations and values closer to 0 indicate weaker correlations
+
+Let's try out some correlations using the iris data.\
+Is there a correlation between sepal length and sepal width? Let's test each species separately for now.\
+**Step 1: make a scatterplot**
+
+```{r}
+#filter down to a single species
+virg<-iris %>%
+  filter(Species=='virginica')
+
+#make a plot
+ggplot(virg, aes(x=Sepal.Length, y=Sepal.Width))+
+  geom_point()+
+  theme_classic()
+```
+
+\
+**Step 2: Calculate a correlation coeficient (r)**
+
+```{r}
+cor(virg$Sepal.Length, virg$Sepal.Width)
+```
+
+This value (r=0.45) positive and middle of the road/strong. This tells us that some correlation likely exists.
+
+**Step 3: Do a hypothesis test on the correlation** **Spearman's Test**\
+H0: The correlation between these two variables is 0\
+Ha: The correlation != 0\
+
+```{r}
+cor.test(virg$Sepal.Length, virg$Sepal.Width, method="spearman")
+```
+
+The above output gives us the r value (cor=0.457) AND a p-value for a hypothesis test that the two correlations do not differ. If p\<0.05 we can reject our H0 and say that the correlation differs from 0. Here, p=0.0008 so we can reject H0 and suggest that we have a significant positive correlation! Rho is similar to r and is this case our correlation coefficient (0.42). It is slightly lower than the r we calculated above.
+
+## Multiple Correlations
+
+```{r}
+iris2<-iris[,c(1:4)] #filter iris so we only have the numerical columns!
+
+iris_cor<-cor(iris2, method="spearman")
+
+iris_cor
+
+```
+
+The above correlation matrix shows r (correlation coefficient) not p values!
+
+**Getting r and p values**
+
+```{r}
+mydata.rcorr = rcorr(as.matrix(iris2))
+mydata.rcorr #top matrix = r, bottom matrix = p
+```
+
+**Plotting our correlations**
+
+```{r}
+corrplot(iris_cor)
+```
+
+## Categorical correlations (Chi-Square)
+
+A Chi-square test is a statistical test used to determine if two categorical variables have a significant correlation between them. These two variables should be selected from the same population. An example - Is the color of a thing red or green? Is the answer to a simple question yes or no?\
+\
+**Data format** Technically, a chi-square test is done on data that are in a contingency table (contains columns (variables) in which numbers represent counts. For example, here is a contingency table of household chore data (exciting)
+
+```{r}
+chore <- read.delim("http://www.sthda.com/sthda/RDoc/data/housetasks.txt", row.names=1)
+chore
+```
+
+**H0** = The row and column data of the contingency table are independent (no relationship) **Ha**= Row and column variables are dependent (there is a relationship between them)
+
+**The test**
+
+```{r}
+chorechi<-chisq.test(chore)
+chorechi
+```
+
+This result demonstrates that there is a significant association between the columns and rows in the data (they are dependent).\
+
+**A second example**
+
+Let's try to assess correlation between two categorical variables in a dataframe we know! We will use mtcars
+
+```{r}
+head(mtcars)
+
+#make a contingency table
+cartab<-table(mtcars$carb, mtcars$cyl)
+
+chisq.test(cartab)
+
+#note that we don't NEED to make the table. We can just do this
+chisq.test(mtcars$carb, mtcars$cyl)
+
+```
+
+Both tests above are the same (just two options for you). We see that p\<0.05, thus we have evidence to reject H0 and suggest that carb and cyl are dependent / correlated.
+:::
+
+# **3. (Simple) Linear Regression**
+
+::: panel-tabset
+A linear regression essentially compares the correlation of one variable with another. The closer the relationship is to 1:1 (a diagonal line at 45 degrees from the x and y axis) the more correlated the two variables are. Does correlation imply causation? NO, it does not. But this type of analysis driven by hypotheses can help us seek causation/ mechanisms and statistically assess relationships.
+
+Let's take a look at a simple linear regression. To do this, we will use the lm() function in R. The syntax should always be reponsevariable \~ explanatoryvariable We will do this with the iris data.
+
+```{r}
+lm1<-lm(Sepal.Length ~ Petal.Length, data=iris)
+summary(lm1)
+```
+
+The above table produces estimates for the slope and intercept of the line.
+
+At the bottom we see R2 values (multiple and adjusted. We usually use adjusted Rsquared). We also see an overall p-value for our linear regression model (H0= slope of our regression line = 0).
+
+## plotting a regression line
+
+It is very easy to make a regression line in ggplot. We can plot our scatterplot as we normally would and then we add the regression line using the geom_smooth() argument.
+
+```{r}
+
+ggplot(iris, aes(x=Petal.Length, y=Sepal.Length))+
+  geom_point()+
+  geom_smooth(method='lm')+
+  theme_classic()
+
+```
+
+\
+The blue line represents our regression line (y\~x). The gray around the line is the SE. We can add SE=FALSE to our geom_smooth() to turn that off:
+
+geom_smooth(method='lm', SE=FALSE)
+
+## **Assumptions**
+
+Linear regressions have 4 assumptions:
+
+**1.)** Linearity of the data: We assume the relationship between predictor (x) and outcome/dependent variable (y) is approx. linear. At each value of X there is a population of possible Y-values whose mean lies on the regression line.\
+
+**2.)** Normality of residuals: The residual error are assumed to be normally distributed. In other words: at each value of X, the distribution of possible Y values is normal\
+
+**3.)** Homogeneity of residual variance (homoscedasticity): We assume residual variance is approx. constant. In other words: the variance of Y values is the same at all values of X\
+**4.)** Independence of residual error terms: At each value of X, the Y-measurements represent a random sample from the population of possible Y values.\
+
+We can also make a residual plot to check some of our assumptions. **Residuals** measure the scatter of points above or below the least-squares regression line. When we calculate the residuals for a linear regression and plot them, y=0 is the least squares line. Residuals essentially represent the distance between each point and the linear regression line we see in our regression graph.
+
+```{r}
+residuals(lm1)
+ggplot(lm1, aes(x=.fitted, y=.resid))+
+  geom_point()+
+  geom_hline(yintercept=0, linetype='dashed')+
+  labs(x='Petal Legnth', y='Residuals')+
+  theme_classic()
+
+```
+
+\
+If assumptions of normality and equal variance are met, a residual plot should have: - A roughly symmetric cloud of points above and below the horizontal line at 0 with a higher density of points close to the line ran away from it.\
+- Little noticeable curvature as we move from left to right\
+- Approx. equal variance of points above and below the line at all values of X\
+\
+
+The residual plot above shows meets all assumptions, though this analysis is somewhat subjective.
+
+**An alternative assumption check** I think it is easier to do a more comprehensive visual check with the performance package in R. We can easily visually check the first 3 assumptions using check_model(). Assumption 4 requires us to think about experimental design.
+
+```{r}
+lm1<-lm(Sepal.Length ~ Petal.Length, data=iris)
+
+check_model(lm1)
+
+```
+
+\
+Using the plots above, we can check 3 / 4 of our assumptions and look for influential observations/outliers. The plots even tell us what to look for on them! This is a bit simpler than trying to analyze the residual plot.\
+As with the residual plot, this analysis of assumptions is somewhat subjective. That is ok.
+
+## **when data are not linear**
+
+Sometimes the relationship between two variables is not linear! There are many types of common relationships including logarithmic and exponential. We can often visualize these relationships and **Transform** our data to make them linear with some simple math.
+
+Let's look at an example:
+
+```{r}
+head(Loblolly)
+p1<-ggplot(Loblolly, aes(x=age, y=height))+
+  geom_point()+
+  geom_smooth()+
+  geom_smooth(method='lm', linetype='dashed', color='firebrick')+
+  theme_classic()+
+  labs(title='original')
+#this is roughly logarithmic in shape
+
+lob<-Loblolly
+lob$age2<-log(lob$age)
+
+p2<-ggplot(lob, aes(x=age2, y=height))+
+  geom_point()+
+  geom_smooth()+
+  geom_smooth(method='lm', linetype='dashed', color='firebrick')+
+  theme_classic()+
+  labs(title='log transformed')
+
+lob$age3=(lob$age2)^2
+p3<-ggplot(lob, aes(x=age3, y=height))+
+  geom_point()+
+  geom_smooth()+
+  geom_smooth(method='lm', linetype='dashed', color='firebrick')+
+  theme_classic()+
+  labs(title='squared')
+
+p1/p2/p3
+
+
+```
+
+Here we can see that the transformation was fairly trivial (the data were close enough to a straight line already). BUT, technically, the first plot shows a logarithmic trend. We can transform one of the variables to generate a more linear trend. We can guess a transformation and check it with graphs or we can use our knowledge of mathematical relationships to understand how we might make our relationship more linear.
+
+## **Linear Regression with categorical variables**
+
+We can look at mtcars this time...
+
+```{r}
+head(mtcars)
+```
+
+Now, I want to hypothesize that there will be no effect of cylinder on horsepower (this is called a "null hypothesis"). We've seen similar hypothesis before in our ANOVA.
+
+First, let's make cylinder a factor and plot a boxplot so we can see whether there may be a trend here...
+
+```{r}
+mtcars$cyl1=as.factor(mtcars$cyl)
+
+ggplot(mtcars, aes(x=cyl1, y=hp))+
+         geom_boxplot()+
+         theme_bw()
+
+```
+
+\
+I think it is safe to say we see what we might suspect to be a linear(ish) relationship between cyl and hp, where hp increases as cyl increases. What do you think?
+
+Now, let's do some stats on this.
+
+## **Run the lm**
+
+```{r}
+lmhp<-lm(hp~cyl1, data = mtcars)
+summary(lmhp)
+```
+
+This time we used a categorical x variable, which makes things a little more interesting. In the coefficients table this time we see cyl = 6 and cyl =8 represented as well as "intercept." R takes the categorical variables and places them in alpha numeric order in these tables. So "intercept" is actually cyl=4. The "estimate" tells us the effect size of each category relative to "intercept." SO, the mean of cyl=4 should be 82.64 (check the boxplot above to confirm). The mean of cyl=6 is not 39.65, but is actually 39.65 higher than mean of cyl=4 (82.64 + 39.65 = 132.29, which checks out). The p-values associated with each of the coefficients test the null hypothesis that each coefficient has no effect. A p \<0.05 indicates that the coefficient is likely to be meaningful in the model (changes in the predictor's value are related to changes in the response value). </br>
+
+Further down, we see an R-squared of nearly 0.70, which is very good evidence of a linear relationship (70% of the variance in y can be explained by x!). The p-value is very nearly 0.00, which indicates a significant linear correlation.
+
+## **Check assumptions!**
+
+```{r meesage=FALSE, warning=FALSE}
+check_model(lmhp)
+```
+
+\
+Here we see some concern about Homoscedasticity and homogeneity of variance. We can probably still assume our model is reliable, but we may want to be careful. We learned ways to numerically assess this last week, but again, with high enough sample size, this won't be an issue. Here, I would suggest that n is too small, so if this were a real statistical test we would have limitations to discuss.\
+
+Remember our hypothesis (null) was: "There will be no effect of cylinder on horsepower." We are able to reject this null hypothesis and suggest that indeed horsepower increases as cylinder increases. We might also add caveats that homoscedasticity was not confirmed due to low sample size, but the result seems clear enough that this likely doesn't matter.\
+:::
+
+## **4. t-test**
+
+# Additional Tutorials and Resources for t-tests
+
+[t-tests](https://statistics.berkeley.edu/computing/r-t-tests)
+
+::: panel-tabset
+## **A note on statistics and experimental design**
+
+Statistics is a complex field with a long history. We could spend an entire course or even an entire career focusing on the intricate details of statistical decisions and ideas. We've already spent some time on this! I want you to have the statistical grounding necessary to plan your experiments and analyze your data. For biologists, statistics are a tool we can leverage to perform the best possible experiments and test our hypotheses. The T-test is the start of our stats journey. It's a simple test and one that you may not use often, but the theory behind it sets the stage for what is to come!
+
+\
+
+## **T-test theory**
+
+The t-test (or students' t-test) is a basic statistical test used to assess whether or not the means of two groups are different from one another. In this test, the null hypothesis is that the two means are equal (or that there is no difference between the two means).
+
+**A t-test should only be used if the following assumptions are met:**\
+**1.)** the two distributions whose means we are comparing must be **normally distributed**\
+**2.)** The variances of the two groups must be **equal**\
+
+**Generate example data**
+
+```{r}
+iris2<-iris %>%
+  filter(Species != 'setosa') %>%
+  droplevels() #removes the empty levels so when we check levels below we only get the ones that are still in the data!
+
+#check levels to make sure we only have 2 species!
+head(iris2)
+levels(iris2$Species)
+```
+
+We will use these data for our examples today. T-test requires *only* 2 groups/populations. We will assess the alternative hypothesis that one of our numerical variables (sepal length, sepal width, petal length, or petal width) differs by species.
+
+But first, we must **test our assumptions**
+
+## **Assumption 1.) Assessing normality**
+
+*Method 1: the Shapiro-Wilk Test* If p \< 0.05 then the distribution is significantly different from normal.
+
+Step 1: we need to create separate data frames for each species to assess normality of each variable by species!
+
+```{r}
+versi<-iris2 %>%
+  filter(Species=='versicolor') %>%
+  droplevels()
+
+virg<-iris2 %>%
+  filter(Species=='virginica') %>%
+  droplevels()
+
+```
+
+\
+
+Step 2: We can run our shapiro-wilk tests on each variable if we'd like
+
+```{r}
+shapiro.test(versi$Petal.Length) #this is normally distributed
+
+shapiro.test(versi$Petal.Width) # this is not
+
+shapiro.test(versi$Sepal.Length) #normal
+
+shapiro.test(versi$Sepal.Width) #normal
+
+shapiro.test(virg$Petal.Length) #normal
+
+shapiro.test(virg$Petal.Width) #normal
+
+shapiro.test(virg$Sepal.Length) #normal
+
+shapiro.test(virg$Sepal.Width) #normal
+```
+
+\
+*Method 2: Visualization*
+
+Explore the following visualizations. Do you see clear evidence of normality?
+
+```{r}
+a1<-ggplot(data=iris2, aes(Petal.Length, fill=Species))+
+  geom_histogram(binwidth = 0.3)+ 
+  facet_wrap(~Species)+
+  theme_classic()+
+  scale_fill_aaas()
+
+a2<-ggplot(data=iris2, aes(x=Petal.Length, y=Species, fill=Species))+
+  geom_density_ridges()+ #makes a smooth density curve instead of a histogram!
+  theme_classic()+
+  scale_fill_aaas()
+
+a1/a2 #compare the visualizations (they are of the same data)- do we see normality here?
+
+```
+
+```{r}
+b1<-ggplot(data=iris2, aes(Petal.Width, fill=Species))+
+  geom_histogram(binwidth = 0.3)+ 
+  facet_wrap(~Species)+
+  theme_classic()+
+  scale_fill_aaas()
+
+b2<-ggplot(data=iris2, aes(x=Petal.Width, y=Species, fill=Species))+
+  geom_density_ridges()+ #makes a smooth density curve instead of a histogram!
+  theme_classic()+
+  scale_fill_aaas()
+
+b1/b2 #compare the visualizations (they are of the same data)- do we see normality here?
+```
+
+```{r}
+c1<-ggplot(data=iris2, aes(Sepal.Width, fill=Species))+
+  geom_histogram(binwidth = 0.3)+ 
+  facet_wrap(~Species)+
+  theme_classic()+
+  scale_fill_aaas()
+
+c2<-ggplot(data=iris2, aes(x=Sepal.Width, y=Species, fill=Species))+
+  geom_density_ridges()+ #makes a smooth density curve instead of a histogram!
+  theme_classic()+
+  scale_fill_aaas()
+
+c1/c2 #compare the visualizations (they are of the same data)- do we see normality here?
+
+```
+
+```{r}
+d1<-ggplot(data=iris2, aes(Sepal.Length, fill=Species))+
+  geom_histogram(binwidth = 0.3)+ 
+  facet_wrap(~Species)+
+  theme_classic()+
+  scale_fill_aaas()
+
+d2<-ggplot(data=iris2, aes(x=Sepal.Length, y=Species, fill=Species))+
+  geom_density_ridges()+ #makes a smooth density curve instead of a histogram!
+  theme_classic()+
+  scale_fill_aaas()
+
+d1/d2 #compare the visualizations (they are of the same data)- do we see normality here?
+
+```
+
+## **Assumption 2.) Assessing equal variance**
+
+AKA homogeneity of variance\
+
+**Methods 1: F-test** We will use the **F-Test** to compare the variance of two populations. This can only be used with *2* populations and is thus only useful when we run a t-test.
+
+H0 for an F-test is: The variances of the two groups are equal.\
+Ha: The variances are different\
+p\<0.05 allows us to reject the null (H0) and suggests that the variances are different\
+\
+**note:** The F-test assumes our data are already normal! You should not run it on non-normal data
+
+```{r}
+#we use var.test to run an F-test
+f1<- var.test(Petal.Length ~ Species, data=iris2)
+f1 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+f2<- var.test(Petal.Width ~ Species, data=iris2)
+f2 # p<0.05, so we reject H0 (variances are likely different)
+
+f3<- var.test(Sepal.Length ~ Species, data=iris2)
+f3 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+f4<- var.test(Sepal.Width ~ Species, data=iris2)
+f4 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+```
+
+\
+**Method 2: Levene Test**\
+A more flexible test of homogeneity of variance is the Levene Test. It can be used to compare the variance of many populations (not just 2) and is more flexible than the F-test, so it can be used even if the normality assumption is violated.\
+**this is the most commonly used test for homogeneity of variance**\
+**leveneTest() is in the car package in R!**\
+
+N0: Variances of all populations are equal\
+p\<0.05 allows us to reject H0
+
+```{r}
+l1<- leveneTest(Petal.Length ~ Species, data=iris2)
+l1 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+l2<- leveneTest(Petal.Width ~ Species, data=iris2)
+l2 # p<0.05, so we reject H0 (variances are likely different)
+
+l3<- leveneTest(Sepal.Length ~ Species, data=iris2)
+l3 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+l4<- leveneTest(Sepal.Width ~ Species, data=iris2)
+l4 # p>0.05, so we fail to reject H0 (the variances are likely equal)
+
+```
+
+\
+**Method 3: Visualization**\
+Since p-values are more like guidelines, we also want to visualize our data to assess homogeneity of variance. We can do that in several ways. You might already have some ideas about this! In general, it seems smart to display the raw data as points and as boxplots. Let's start there!
+
+```{r}
+
+v1.1<-ggplot(data=iris2, aes(x=Species, y=Petal.Length, color=Species))+
+  geom_point()+
+  theme_classic()+
+  scale_color_aaas()
+
+v1.2<-ggplot(data=iris2, aes(x=Species, y=Petal.Length, color=Species))+
+  geom_boxplot()+
+  theme_classic()+
+  scale_color_aaas()
+
+v1.1+v1.2
+
+```
+
+```{r}
+v2.1<-ggplot(data=iris2, aes(x=Species, y=Petal.Width, color=Species))+
+  geom_point()+
+  theme_classic()+
+  scale_color_aaas()
+
+v2.2<-ggplot(data=iris2, aes(x=Species, y=Petal.Width, color=Species))+
+  geom_boxplot()+
+  theme_classic()+
+  scale_color_aaas()
+
+v2.1+v2.2
+
+```
+
+```{r}
+v3.1<-ggplot(data=iris2, aes(x=Species, y=Sepal.Width, color=Species))+
+  geom_point()+
+  theme_classic()+
+  scale_color_aaas()
+
+v3.2<-ggplot(data=iris2, aes(x=Species, y=Sepal.Width, color=Species))+
+  geom_boxplot()+
+  theme_classic()+
+  scale_color_aaas()
+
+v3.1+v3.2
+```
+
+```{r}
+v4.1<-ggplot(data=iris2, aes(x=Species, y=Sepal.Length, color=Species))+
+  geom_point()+
+  theme_classic()+
+  scale_color_aaas()
+
+v4.2<-ggplot(data=iris2, aes(x=Species, y=Sepal.Length, color=Species))+
+  geom_boxplot()+
+  theme_classic()+
+  scale_color_aaas()
+
+v4.1+v4.2
+```
+
+## **When can we ignore assumptions?**
+
+We can if our sample sizes are large. If n is small, we should not ignore this assumption. There are alternatives to dealing with normality that we can discuss in the ANOVA section (such as transforming the data)
+
+[For more info on that](https://thestatsgeek.com/2013/09/28/the-t-test-and-robustness-to-non-normality/)
+
+We can also ignore the equal variance requirement if we use the Welch t-test (default in R)\
+
+## **A basic T-test in R**
+
+Finally, let's do some T-tests!\
+
+H0: No difference between the means of the 2 populations p\<0.05 allows us to reject this H0 (indicating a likely difference)
+
+**Step 1:** Calculate means and error and plot!
+
+```{r}
+meaniris<-iris2 %>%
+  group_by(Species) %>%
+  dplyr::summarise(meanpl=mean(Petal.Length), sdpl=sd(Petal.Length), n=n(), sepl=sdpl/sqrt(n), meanpw=mean(Petal.Width), sdpw=sd(Petal.Width), n=n(), sepw=sdpw/sqrt(n), meansl=mean(Sepal.Length), sdsl=sd(Sepal.Length), n=n(), sesl=sdpl/sqrt(n), meansw=mean(Sepal.Width), sdsw=sd(Sepal.Width), n=n(), sesw=sdsw/sqrt(n))
+
+meaniris
+
+```
+
+\
+
+```{r}
+p1<-ggplot(meaniris, aes(x=Species, y=meanpl, color=Species))+
+  geom_point()+
+  geom_errorbar(aes(x=Species, ymin=meanpl-sepl, ymax=meanpl+sepl), width=0.2)+
+  scale_color_aaas()+
+  theme_classic()+
+  labs(title='Petal Length')
+
+p2<-ggplot(meaniris, aes(x=Species, y=meanpw, color=Species))+
+  geom_point()+
+  geom_errorbar(aes(x=Species, ymin=meanpw-sepw, ymax=meanpw+sepw), width=0.2)+
+  scale_color_aaas()+
+  theme_classic()+
+  labs(title='Petal Width')
+
+p3<-ggplot(meaniris, aes(x=Species, y=meansl, color=Species))+
+  geom_point()+
+  geom_errorbar(aes(x=Species, ymin=meansl-sesl, ymax=meansl+sesl), width=0.2)+
+  scale_color_aaas()+
+  theme_classic()+
+  labs(title='Sepal Length')
+
+p4<-ggplot(meaniris, aes(x=Species, y=meansw, color=Species))+
+  geom_point()+
+  geom_errorbar(aes(x=Species, ymin=meansw-sesw, ymax=meansw+sesw), width=0.2)+
+  scale_color_aaas()+
+  theme_classic()+
+  labs(title='Sepal Width')
+
+(p1+p2)/(p3+p4)
+
+```
+
+**Does Petal Length differ by species?**
+
+```{r}
+
+t1<-t.test(data=iris2, Petal.Length~Species, alternative='two.sided', var.equal=FALSE) #two.sided and var.equal= FALSE are default, so we don't have to list them. BUt, we can also change them (as I will show later)
+
+t1 #p<0.05 suggests that there is a significant difference in petal length between species
+
+```
+
+\
+Our p\<0.05 suggests that there is a significant effect of species on petal length (petal length differs by species). BUT, do we get a clear explanation of which group is higher or lower? Look at the Welch T-test output and you can see the means! You can also use the graph we made to visualize this!
+
+**Does Petal Width differ by species?**
+
+```{r}
+t2<-t.test(data=iris2, Petal.Width~Species, alternative='two.sided', var.equal=FALSE) #two.sided and var.equal= FALSE are default, so we don't have to list them. BUt, we can also change them (as I will show later)
+
+t2
+```
+
+\
+**Does Sepal Width differ between species?**
+
+```{r}
+t3<-t.test(data=iris2, Sepal.Width~Species, alternative='two.sided', var.equal=FALSE) #two.sided and var.equal= FALSE are default, so we don't have to list them. BUt, we can also change them (as I will show later)
+
+t3
+```
+
+\
+**Does Sepal Length differ between species?**
+
+```{r}
+t4<-t.test(data=iris2, Sepal.Length~Species, alternative='two.sided', var.equal=FALSE) #two.sided and var.equal= FALSE are default, so we don't have to list them. BUt, we can also change them (as I will show later)
+
+t4
+```
+
+SO, when is a t-test actually useful and when isn't it? We use a T-test **ONLY** when we want to compare two means / two populations. If we have more than 2 groups, a T-test is not appropriate! Instead, we need to use an analysis of variance (ANOVA) or possibly something more complex!
+:::

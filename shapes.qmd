@@ -12,14 +12,15 @@ format:
 
 editor: visual
 ---
+
 ```{r}
+#| warning: false
 #Load packages
 library(tidyverse)
 library(ggsci) #for easy color scales
 library(patchwork) #to make multi-panel plots 
 library(palmerpenguins) # our fave penguin friends :)
 ```
-
 
 # **Shapes**
 

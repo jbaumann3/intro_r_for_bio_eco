@@ -10,7 +10,7 @@
 
 <meta name="author" content="Justin Baumann" />
 
-<title>Introduction to R for Bio/Eco/Evo – Intro to ggplot2</title>
+<title>Introduction to R for Biology & Ecology – Intro to ggplot2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -92,7 +92,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="/index.html">
-    <span class="navbar-title">Introduction to R for Bio/Eco/Evo</span>
+    <span class="navbar-title">Introduction to R for Biology &amp; Ecology</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -123,6 +123,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tidyverse-data-wrangling" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Tidyverse data wrangling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tidyverse-data-wrangling">    
+        <li>
+    <a class="dropdown-item" href="/intro_tidyverse.html" rel="" target="">
+ <span class="dropdown-text">Intro to the Tidyverse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/pipe.html" rel="" target="">
+ <span class="dropdown-text">Stringing functions together with the pipe</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/groupsmeans.html" rel="" target="">
+ <span class="dropdown-text">Summarizing Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/datetime.html" rel="" target="">
+ <span class="dropdown-text">Date and Time</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-graphs" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Graphs</span>
     </a>
@@ -130,6 +153,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="/basic_graphs.html" rel="" target="">
  <span class="dropdown-text">Intro to ggplot2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/colors.html" rel="" target="">
+ <span class="dropdown-text">Colors</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/shapes.html" rel="" target="">
+ <span class="dropdown-text">Shapes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/themes.html" rel="" target="">
+ <span class="dropdown-text">Themes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/axes.html" rel="" target="">
+ <span class="dropdown-text">Axes labels and Titles</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/facets.html" rel="" target="">
+ <span class="dropdown-text">Multiple panels and multiple graphs</span></a>
   </li>  
     </ul>
   </li>
@@ -176,6 +219,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="/basic_graphs.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Intro to ggplot2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/colors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Colors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/shapes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shapes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/themes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Themes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/axes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Axes labels and Titles</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/facets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple panels and multiple graphs</span></a>
   </div>
 </li>
     </ul>
@@ -238,20 +311,10 @@ To continue your learning, have a look at this more detailed data visualization 
 <p>Making nice looking graphs is a key feature of R and of data science in general. The best way to do this in R is through use of the ggplot2 package. This package is the most user friendly and flexible way to make nice plots in R. Notably, ggplot2 is a package that is contained within the tidyverse package, which is more of a style of R usage than a package. So, let’s load tidyverse and a few other useful packages for today.</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   1.0.0 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-✔ readr   2.1.3      ✔ forcats 0.5.2 
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
-</div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci) <span class="co">#for easy color scales</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork) <span class="co">#to make multi-panel plots </span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) <span class="co"># our fave penguin friends :)</span></span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci) <span class="co">#for easy color scales</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork) <span class="co">#to make multi-panel plots </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) <span class="co"># our fave penguin friends :)</span></span></code></pre></div>
 </div>
 </section>
 <section id="ggplot-basics" class="level1">
@@ -270,7 +333,7 @@ To continue your learning, have a look at this more detailed data visualization 
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>The ggplot() function is the base of the ggplot2 package. Using it creates the space that we use to build a graph. If we run just the ggplot() function we will get a gray rectangle. This is the space (and background) of our plot!</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="basic_graphs_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672" /></p>
 </div>
@@ -278,39 +341,39 @@ To continue your learning, have a look at this more detailed data visualization 
 <p>To build a plot on the background, we must add to the ggplot call. First, we need to tell it what data to use. Next, we need to tell it where in the data frame to pull data from to build the axes and data points. The part of the ggplot() function we use to build a graph is called aes() or aesthetics.</p>
 <p>Here is an example using penguins: I am telling ggplot that the data we are using is ‘penguins’ and then defining the x and y axis in the aes() call with column names from penguins</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 8
-  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year
-  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
-1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007
-2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007
-3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007
-4 Adelie  Torgersen           NA            NA            NA      NA &lt;NA&gt;   2007
-5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007
-6 Adelie  Torgersen           39.3          20.6         190    3650 male   2007
-# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g</code></pre>
+  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+1 Adelie  Torgersen           39.1          18.7               181        3750
+2 Adelie  Torgersen           39.5          17.4               186        3800
+3 Adelie  Torgersen           40.3          18                 195        3250
+4 Adelie  Torgersen           NA            NA                  NA          NA
+5 Adelie  Torgersen           36.7          19.3               193        3450
+6 Adelie  Torgersen           39.3          20.6               190        3650
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) </span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="basic_graphs_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
 <p>Like anything in R, we can give our plot a name and call it later</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot1<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plot1</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot1<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plot1</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="basic_graphs_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
 <p>This is incredibly useful in ggplot as we can essentially add pieces to make a more complete graph</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot1<span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot1<span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing non-finite values (`stat_boxplot()`).</code></pre>
 </div>
@@ -327,8 +390,8 @@ To continue your learning, have a look at this more detailed data visualization 
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <p>Histograms are used to explore the frequency distribution of a single variable. We can check for normality (a bell curve) using this feature. We can also look for means, skewed data, and other trends.</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(bill_length_mm))<span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(bill_length_mm))<span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -341,8 +404,8 @@ To continue your learning, have a look at this more detailed data visualization 
 </div>
 <p>Within geom_histogram we can use bin_width to change the width of our x-axis groupings.</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(bill_length_mm))<span class="sc">+</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth=</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(bill_length_mm))<span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth=</span><span class="dv">5</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing non-finite values (`stat_bin()`).</code></pre>
 </div>
@@ -355,8 +418,8 @@ To continue your learning, have a look at this more detailed data visualization 
 <p>A boxplot is a really useful plot to assess median and range of data. It can also identify outliers! The defaults for a boxplot in ggplot produce a median and interquartile range (IQR). The 1st quartile is the bottom of the box and the 3rd quartile is the top. The whiskers show the spread of the data where the ends of the whiskers represent the data points that are the furthest from the median in either direction. Notably, if a data point is 1.5 * IQR from the box (either the 1st or 3rd quartile) it is an outlier. Outliers are excluded from whiskers and are presented as points. There</p>
 <p>Here’s an example</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing non-finite values (`stat_boxplot()`).</code></pre>
 </div>
@@ -366,9 +429,9 @@ To continue your learning, have a look at this more detailed data visualization 
 </div>
 <p>We can use geom_violin to combine boxplot with a density plot (similar to a histogram) Here we can see the distribution of values within bill length by species.</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_boxplot()+</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_boxplot()+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing non-finite values (`stat_ydensity()`).</code></pre>
 </div>
@@ -382,24 +445,24 @@ To continue your learning, have a look at this more detailed data visualization 
 <p>We can make bar graphs in ggplot using geom_bar(). There are some tricks to getting bar graphs to work exactly right, which I will try to detail below. <strong>NOTE</strong> Bar graphs are very rarely useful. If we want to show means, why not just use points + error bars? What does the bar actually represent? There aren’t that many cases where we really need bar graphs. There are exceptions, like when we have a population and we want to see the demographics of that population by count or percentage (see example below)</p>
 <p>Here is a simple bar chart.</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(species)) <span class="sc">+</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(species)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="basic_graphs_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
 <p>Here is a more elaborate boxplot that shows species breakdown by island! Note that we use an aes() call within geom_bar to define a fill. That means fill by species, or add a color for each species.</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(island)) <span class="sc">+</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>species))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(island)) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>species))</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="basic_graphs_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
 <p>And here is that same plot with the bars unstacked. Instead of stacking, we have used “dodged” each color to be its own bar.</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(island)) <span class="sc">+</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>species), <span class="at">position=</span> <span class="fu">position_dodge</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(island)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>species), <span class="at">position=</span> <span class="fu">position_dodge</span>())</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="basic_graphs_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672" /></p>
 </div>
@@ -411,7 +474,7 @@ To continue your learning, have a look at this more detailed data visualization 
 <p>A line graph can be extremely useful, especially if we are looking at time series data or rates!</p>
 <p>Here is an example of CO2 uptake vs concentration in plants. Each color represents a different plant. NOTE: the dataset called ‘CO2’ is built into R, so we can just use it without loading anything :)</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(CO2)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(CO2)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Plant   Type  Treatment conc uptake
 1   Qn1 Quebec nonchilled   95   16.0
@@ -421,16 +484,16 @@ To continue your learning, have a look at this more detailed data visualization 
 5   Qn1 Quebec nonchilled  500   35.3
 6   Qn1 Quebec nonchilled  675   39.2</code></pre>
 </div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>CO2, <span class="fu">aes</span>(<span class="at">x=</span>conc, <span class="at">y=</span> uptake, <span class="at">color=</span>Plant)) <span class="sc">+</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>CO2, <span class="fu">aes</span>(<span class="at">x=</span>conc, <span class="at">y=</span> uptake, <span class="at">color=</span>Plant)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="basic_graphs_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
 <p>We can change the aesthetics of the lines using color, linetype, size, etc. Here I am changing the linetype based on the plant species and increasing the size of ALL lines to 2. This is a good example of how aes() works. Anything within the aes() call is conditional. That means, I give it a name (such as a column or variable name) and it changes based on that column or variable. To change an aesthetic across all lines, points, etc, I just put the code outside of the aes(). As I did for size. That makes the size of ALL lines = 2.</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>CO2, <span class="fu">aes</span>(<span class="at">x=</span>conc, <span class="at">y=</span> uptake, <span class="at">color=</span>Plant)) <span class="sc">+</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">linetype=</span>Plant),<span class="at">size=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>CO2, <span class="fu">aes</span>(<span class="at">x=</span>conc, <span class="at">y=</span> uptake, <span class="at">color=</span>Plant)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">linetype=</span>Plant),<span class="at">size=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ℹ Please use `linewidth` instead.</code></pre>
@@ -444,8 +507,8 @@ To continue your learning, have a look at this more detailed data visualization 
 <div id="tabset-1-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-7-tab">
 <p>The scatter plot is probably the most commonly used graphical tool in ggplot. It is based on the geom_point() function</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 </div>
@@ -455,8 +518,8 @@ To continue your learning, have a look at this more detailed data visualization 
 </div>
 <p>Importantly, we can use the data= and aes() calls within geom_point() or any other geom instead of within ggplot() if needed. Why might this be important?</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm))</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm))</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 </div>
@@ -466,8 +529,8 @@ To continue your learning, have a look at this more detailed data visualization 
 </div>
 <p>Sometimes we don’t want to plot all of our points on the same vertical line. If that is the case, we can use geom_jitter()</p>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 </div>
@@ -481,13 +544,13 @@ To continue your learning, have a look at this more detailed data visualization 
 <p>We often want to present means and error in our visualizations. This can be done through the use of geom_boxplot() or through combining geom_point() with geom_errorbar()</p>
 <p>Here is an example of the later…</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#First, we need to calculate a mean bill length for our penguins by species and island</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>sumpens<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, island) <span class="sc">%&gt;%</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> <span class="co">#removes rows with NA values (a few rows may otherwise have NA due to sampling error in the field)</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanbill=</span><span class="fu">mean</span>(bill_length_mm), <span class="at">sd=</span><span class="fu">sd</span>(bill_length_mm), <span class="at">n=</span><span class="fu">n</span>(), <span class="at">se=</span>sd<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>sumpens</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#First, we need to calculate a mean bill length for our penguins by species and island</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>sumpens<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, island) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> <span class="co">#removes rows with NA values (a few rows may otherwise have NA due to sampling error in the field)</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanbill=</span><span class="fu">mean</span>(bill_length_mm), <span class="at">sd=</span><span class="fu">sd</span>(bill_length_mm), <span class="at">n=</span><span class="fu">n</span>(), <span class="at">se=</span>sd<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>sumpens</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 6
 # Groups:   species [3]
@@ -499,20 +562,20 @@ To continue your learning, have a look at this more detailed data visualization 
 4 Chinstrap Dream         48.8  3.34    68 0.405
 5 Gentoo    Biscoe        47.6  3.11   119 0.285</code></pre>
 </div>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we can plot! </span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>meanbill, <span class="at">color=</span>island))<span class="sc">+</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">ymin=</span>meanbill<span class="sc">-</span>se, <span class="at">ymax=</span>meanbill<span class="sc">+</span>se), <span class="at">width=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we can plot! </span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>meanbill, <span class="at">color=</span>island))<span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">ymin=</span>meanbill<span class="sc">-</span>se, <span class="at">ymax=</span>meanbill<span class="sc">+</span>se), <span class="at">width=</span><span class="fl">0.2</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="basic_graphs_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
 <p>And if we want to be extra fancy (and rigorous), we can plot the raw data behind the mean+error This is considered a <strong>graphical best practice</strong> as we can see the mean, error, and the true spread of the data!</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()<span class="sc">+</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span> penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>island), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">width=</span><span class="fl">0.2</span>)<span class="sc">+</span> <span class="co">#this is the raw data</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>meanbill, <span class="at">color=</span>island), <span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span> <span class="co">#this is the averages</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">ymin=</span>meanbill<span class="sc">-</span>se, <span class="at">ymax=</span>meanbill<span class="sc">+</span>se), <span class="at">width=</span><span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span> penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>island), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">width=</span><span class="fl">0.2</span>)<span class="sc">+</span> <span class="co">#this is the raw data</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>meanbill, <span class="at">color=</span>island), <span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span> <span class="co">#this is the averages</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">ymin=</span>meanbill<span class="sc">-</span>se, <span class="at">ymax=</span>meanbill<span class="sc">+</span>se), <span class="at">width=</span><span class="fl">0.1</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 </div>
@@ -522,13 +585,13 @@ To continue your learning, have a look at this more detailed data visualization 
 </div>
 <p>An alternative to geom_jitter, which doesn’t always work, is to use geom_point but force the points to not overlap with position_dodge. Here is an example</p>
 <div class="cell">
-<div class="sourceCode" id="cb40"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#first we should define the distance of our position_dodge</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>pd<span class="ot">&lt;-</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.2</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>meanbill, <span class="at">color=</span>island))<span class="sc">+</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span> penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>island), <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span>pd)<span class="sc">+</span> <span class="co">#raw data</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>, <span class="at">position=</span>pd)<span class="sc">+</span> <span class="co">#averages</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>meanbill<span class="sc">-</span>se, <span class="at">ymax=</span>meanbill<span class="sc">+</span>se), <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span>pd)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#first we should define the distance of our position_dodge</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>pd<span class="ot">&lt;-</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.2</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>meanbill, <span class="at">color=</span>island))<span class="sc">+</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span> penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>island), <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span>pd)<span class="sc">+</span> <span class="co">#raw data</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>, <span class="at">position=</span>pd)<span class="sc">+</span> <span class="co">#averages</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>meanbill<span class="sc">-</span>se, <span class="at">ymax=</span>meanbill<span class="sc">+</span>se), <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span>pd)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in geom_point(data = penguins, aes(x = species, y = bill_length_mm, :
 Ignoring unknown parameters: `width`</code></pre>
@@ -542,10 +605,10 @@ Ignoring unknown parameters: `width`</code></pre>
 </div>
 <p>This code will produce the same graph as above. Note that in geom_jitter we just replaced width = with position =</p>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> meanbill, <span class="at">color=</span>island))<span class="sc">+</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span> penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>island), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">position=</span>pd)<span class="sc">+</span> <span class="co">#this is the raw data</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>,<span class="at">position=</span>pd)<span class="sc">+</span> <span class="co">#this is the averages</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>meanbill<span class="sc">-</span>se, <span class="at">ymax=</span>meanbill<span class="sc">+</span>se), <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span>pd)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sumpens, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> meanbill, <span class="at">color=</span>island))<span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span> penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>island), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">position=</span>pd)<span class="sc">+</span> <span class="co">#this is the raw data</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>,<span class="at">position=</span>pd)<span class="sc">+</span> <span class="co">#this is the averages</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>meanbill<span class="sc">-</span>se, <span class="at">ymax=</span>meanbill<span class="sc">+</span>se), <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span>pd)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 </div>
@@ -558,10 +621,10 @@ Ignoring unknown parameters: `width`</code></pre>
 </div>
 </div>
 <div id="quarto-navigation-envelope" class="hidden">
-<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Graphs</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Introduction to R for Bio/Eco/Evo</span> <span class="hidden" data-render-id="quarto-int-sidebar:/basic_graphs.html">Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-int-navbar:Home">Home</span> <span class="hidden" data-render-id="quarto-int-navbar:/index.html">/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:R Basics">R Basics</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with RStudio">Getting Started with RStudio</span> <span class="hidden" data-render-id="quarto-int-navbar:/getting_started.html">/getting_started.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Packages &amp; reading/writing data">Packages &amp; reading/writing data</span> <span class="hidden" data-render-id="quarto-int-navbar:/rbasics.html">/rbasics.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Graphs">Graphs</span> <span class="hidden" data-render-id="quarto-int-navbar:Intro to ggplot2">Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-int-navbar:/basic_graphs.html">/basic_graphs.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Using Quarto">Using Quarto</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with Quarto">Getting Started with Quarto</span> <span class="hidden" data-render-id="quarto-int-navbar:/usingquarto.html">/usingquarto.html</span> <span class="hidden" data-render-id="quarto-breadcrumbs-002e73c20a4fdce3569feb730a01d66b">Intro to ggplot2</span></p>
+<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Graphs</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Introduction to R for Biology &amp; Ecology</span> <span class="hidden" data-render-id="quarto-int-next">Colors</span> <span class="hidden" data-render-id="quarto-int-sidebar:/basic_graphs.html">Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-int-sidebar:/colors.html">Colors</span> <span class="hidden" data-render-id="quarto-int-sidebar:/shapes.html">Shapes</span> <span class="hidden" data-render-id="quarto-int-sidebar:/themes.html">Themes</span> <span class="hidden" data-render-id="quarto-int-sidebar:/axes.html">Axes labels and Titles</span> <span class="hidden" data-render-id="quarto-int-sidebar:/facets.html">Multiple panels and multiple graphs</span> <span class="hidden" data-render-id="quarto-int-navbar:Home">Home</span> <span class="hidden" data-render-id="quarto-int-navbar:/index.html">/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:R Basics">R Basics</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with RStudio">Getting Started with RStudio</span> <span class="hidden" data-render-id="quarto-int-navbar:/getting_started.html">/getting_started.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Packages &amp; reading/writing data">Packages &amp; reading/writing data</span> <span class="hidden" data-render-id="quarto-int-navbar:/rbasics.html">/rbasics.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Tidyverse data wrangling">Tidyverse data wrangling</span> <span class="hidden" data-render-id="quarto-int-navbar:Intro to the Tidyverse">Intro to the Tidyverse</span> <span class="hidden" data-render-id="quarto-int-navbar:/intro_tidyverse.html">/intro_tidyverse.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Stringing functions together with the pipe">Stringing functions together with the pipe</span> <span class="hidden" data-render-id="quarto-int-navbar:/pipe.html">/pipe.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Summarizing Data">Summarizing Data</span> <span class="hidden" data-render-id="quarto-int-navbar:/groupsmeans.html">/groupsmeans.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Date and Time">Date and Time</span> <span class="hidden" data-render-id="quarto-int-navbar:/datetime.html">/datetime.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Graphs">Graphs</span> <span class="hidden" data-render-id="quarto-int-navbar:Intro to ggplot2">Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-int-navbar:/basic_graphs.html">/basic_graphs.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Colors">Colors</span> <span class="hidden" data-render-id="quarto-int-navbar:/colors.html">/colors.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Shapes">Shapes</span> <span class="hidden" data-render-id="quarto-int-navbar:/shapes.html">/shapes.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Themes">Themes</span> <span class="hidden" data-render-id="quarto-int-navbar:/themes.html">/themes.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Axes labels and Titles">Axes labels and Titles</span> <span class="hidden" data-render-id="quarto-int-navbar:/axes.html">/axes.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Multiple panels and multiple graphs">Multiple panels and multiple graphs</span> <span class="hidden" data-render-id="quarto-int-navbar:/facets.html">/facets.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Using Quarto">Using Quarto</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with Quarto">Getting Started with Quarto</span> <span class="hidden" data-render-id="quarto-int-navbar:/usingquarto.html">/usingquarto.html</span> <span class="hidden" data-render-id="quarto-breadcrumbs-002e73c20a4fdce3569feb730a01d66b">Intro to ggplot2</span></p>
 </div>
 <div id="quarto-meta-markdown" class="hidden">
-<p><span class="hidden" data-render-id="quarto-metatitle">Introduction to R for Bio/Eco/Evo - Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Introduction to R for Bio/Eco/Evo - Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Introduction to R for Bio/Eco/Evo - Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-metasitename">Introduction to R for Bio/Eco/Evo</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
+<p><span class="hidden" data-render-id="quarto-metatitle">Introduction to R for Biology &amp; Ecology - Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Introduction to R for Biology &amp; Ecology - Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Introduction to R for Biology &amp; Ecology - Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-metasitename">Introduction to R for Biology &amp; Ecology</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
 </div>
 </section>
 

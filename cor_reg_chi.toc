@@ -1,0 +1,22 @@
+\contentsline {section}{\numberline {1}\textbf {Learning Objectives}}{2}{section.1}%
+\contentsline {section}{\numberline {2}\textbf {1: Load packages}}{2}{section.2}%
+\contentsline {section}{\numberline {3}\textbf {2: Correlation between numerical variables}}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Correlation Coefficients}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Multiple Correlations}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Categorical correlations (Chi-Square)}{8}{subsection.3.3}%
+\contentsline {section}{\numberline {4}\textbf {3. (Simple) Linear Regression}}{10}{section.4}%
+\contentsline {subsection}{\numberline {4.1}plotting a regression line}{10}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}\textbf {Assumptions}}{11}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}\textbf {when data are not linear}}{15}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}\textbf {Linear Regression with categorical variables}}{17}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}\textbf {Run the lm}}{18}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}\textbf {Check assumptions!}}{19}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}\textbf {4. t-test}}{20}{subsection.4.7}%
+\contentsline {section}{\numberline {5}Additional Tutorials and Resources for t-tests}{20}{section.5}%
+\contentsline {subsection}{\numberline {5.1}\textbf {A note on statistics and experimental design}}{21}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}\textbf {T-test theory}}{21}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}\textbf {Assumption 1.) Assessing normality}}{22}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}\textbf {Assumption 2.) Assessing equal variance}}{28}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}\textbf {When can we ignore assumptions?}}{35}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}\textbf {A basic T-test in R}}{35}{subsection.5.6}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

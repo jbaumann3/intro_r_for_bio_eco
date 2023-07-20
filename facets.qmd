@@ -16,6 +16,7 @@ editor: visual
 Often in science we are interested in comparing several graphs at once or looking at 3 or 4 variables at a time. This means we may want to have multi-panel graphs or multiple graphs on the same page. While it is common to produce graphs in R and combine them into "final" manuscript ready version in other programs, such as Adobe Illustrator or Inkscape (a free alternative to Illustrator), producing manuscript quality figures in R is possible! In fact, it is only getting easier, thanks to some new packages (like patchwork). Below I will show you how to make multipanel figures (aka facets) and how to put many figures on one page (using the patchwork package-- the easiest of the many options for doing this).
 
 ```{r}
+#| warning: false
 #Load packages
 library(tidyverse)
 library(ggsci) #for easy color scales

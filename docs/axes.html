@@ -8,7 +8,7 @@
 
 <meta name="author" content="Justin Baumann">
 
-<title>Introduction to R for Bio/Eco/Evo - Axes labels and Titles</title>
+<title>Introduction to R for Biology &amp; Ecology - Axes labels and Titles</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Introduction to R for Bio/Eco/Evo</span>
+    <span class="navbar-title">Introduction to R for Biology &amp; Ecology</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -135,6 +135,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tidyverse-data-wrangling" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Tidyverse data wrangling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tidyverse-data-wrangling">    
+        <li>
+    <a class="dropdown-item" href="./intro_tidyverse.html" rel="" target="">
+ <span class="dropdown-text">Intro to the Tidyverse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pipe.html" rel="" target="">
+ <span class="dropdown-text">Stringing functions together with the pipe</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./groupsmeans.html" rel="" target="">
+ <span class="dropdown-text">Summarizing Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./datetime.html" rel="" target="">
+ <span class="dropdown-text">Date and Time</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-graphs" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Graphs</span>
     </a>
@@ -158,6 +181,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./axes.html" rel="" target="">
  <span class="dropdown-text">Axes labels and Titles</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./facets.html" rel="" target="">
+ <span class="dropdown-text">Multiple panels and multiple graphs</span></a>
   </li>  
     </ul>
   </li>
@@ -225,6 +252,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Axes labels and Titles</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./facets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple panels and multiple graphs</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -267,31 +300,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   1.0.0 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-✔ readr   2.1.3      ✔ forcats 0.5.2 
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci) <span class="co">#for easy color scales</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork) <span class="co">#to make multi-panel plots </span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) <span class="co"># our fave penguin friends :)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci) <span class="co">#for easy color scales</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork) <span class="co">#to make multi-panel plots </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) <span class="co"># our fave penguin friends :)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="titles-and-axis-labels" class="level1">
 <h1><strong>titles and axis labels</strong></h1>
 <p>Titles and axis labels are easy to add and change in ggplot! We simply add another line to our code. <strong>NOTE</strong> you can also add a subtitle, caption, or change the legend title using labs!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>species))<span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_aaas</span>()<span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Species'</span>, <span class="at">y=</span><span class="st">'Bill length (mm)'</span>, <span class="at">title=</span><span class="st">'Penguin bill length by species'</span>, <span class="at">fill=</span><span class="st">'Species'</span>)<span class="sc">+</span> <span class="co">#here I change the x-axis and y-axis labels, add a title, and change the legend label (to capitalize the 'S' in 'species')</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>species))<span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_aaas</span>()<span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Species'</span>, <span class="at">y=</span><span class="st">'Bill length (mm)'</span>, <span class="at">title=</span><span class="st">'Penguin bill length by species'</span>, <span class="at">fill=</span><span class="st">'Species'</span>)<span class="sc">+</span> <span class="co">#here I change the x-axis and y-axis labels, add a title, and change the legend label (to capitalize the 'S' in 'species')</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing non-finite values (`stat_boxplot()`).</code></pre>
 </div>

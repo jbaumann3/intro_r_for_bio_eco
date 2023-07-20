@@ -15,13 +15,16 @@ editor: visual
 
 # **Dealing with Date and Time in R**
 
-Date and time are often important variables in scientific data analysis. We are often interested in change over time and we also often do time series sampling. Learning how to manage dates and times in R is essential! Luckily, there is a user friendly and tidyverse friendly package that can help us with dates, times, and datetimes. That package is called 'lubridate' and we will learn all about it below. 
+Date and time are often important variables in scientific data analysis. We are often interested in change over time and we also often do time series sampling. Learning how to manage dates and times in R is essential! Luckily, there is a user friendly and tidyverse friendly package that can help us with dates, times, and datetimes. That package is called 'lubridate' and we will learn all about it below.
 
 First, we need to load packages
+
 ```{r}
+#| warning: false
 library(tidyverse)
 library(lubridate)
 ```
+
 # **Date and Time in R**
 
 R and really all programming languages have a difficult time with dates and times. Luckily, programmers have developed ways to get computer to understand dates and times as time series (so we can plot them on a graph axis and do analysis, for example).
@@ -99,4 +102,3 @@ ggplot(exdat, aes(x=date, y=value))+
 ```
 
 ------------------------------------------------------------------------
-

@@ -25,18 +25,18 @@ editor: visual
 
 # **1: What makes a good graph vs a bad graph?**
 
-Take a look at some graphs of data for your field of interest. You may have a look at papers you have recently read or graphs you find in textbooks or assignments. Consider what you like or don't like about these graphs. What looks good and/or makes a graph easy to interpret? What doesn't? Making figures is both an art and a science. 
+Take a look at some graphs of data for your field of interest. You may have a look at papers you have recently read or graphs you find in textbooks or assignments. Consider what you like or don't like about these graphs. What looks good and/or makes a graph easy to interpret? What doesn't? Making figures is both an art and a science.
 
-To learn more about what makes graphs good (or bad), read Chapter 1 of Kieran Healy's online data visualization book --> [What makes figures bad?](https://socviz.co/lookatdata.html#lookatdata) \
+To learn more about what makes graphs good (or bad), read Chapter 1 of Kieran Healy's online data visualization book --\> [What makes figures bad?](https://socviz.co/lookatdata.html#lookatdata)\
 \
-To continue your learning, have a look at this more detailed data visualization book by Claus Wilke
-[Fundamentals of Data Visualization](https://clauswilke.com/dataviz/index.html)\
+To continue your learning, have a look at this more detailed data visualization book by Claus Wilke [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/index.html)\
 \
-# **2: Let's make some graphs!**
+\# **2: Let's make some graphs!**
 
 Making nice looking graphs is a key feature of R and of data science in general. The best way to do this in R is through use of the ggplot2 package. This package is the most user friendly and flexible way to make nice plots in R. Notably, ggplot2 is a package that is contained within the tidyverse package, which is more of a style of R usage than a package. So, let's load tidyverse and a few other useful packages for today.
 
 ```{r}
+#| warning: false
 #Load packages
 library(tidyverse)
 library(ggsci) #for easy color scales

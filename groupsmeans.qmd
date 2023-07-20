@@ -13,7 +13,6 @@ format:
 editor: visual
 ---
 
-
 ## **Grouping and summarize (average + error calculations)**
 
 The pipe becomes especially useful when we are interesting in calculating averages. This is something you'll almost certainly be doing at some point for graphs and statistics! Pipes make this pretty easy.
@@ -31,12 +30,13 @@ Here's what that looks like in code form:
 Let's use mtcars and calculate the mean miles per gallon (mpg) of cars by cylinder.
 
 Don't forget to load packages!
+
 ```{r}
+#| warning: false
 library(tidyverse)
 library(palmerpenguins)
 
 ```
-
 
 ```{r}
 mpgpercyl<-mtcars%>%
