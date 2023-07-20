@@ -8,7 +8,7 @@
 
 <meta name="author" content="Justin Baumann">
 
-<title>Introduction to R for Bio/Eco/Evo</title>
+<title>Introduction to R for Bio/Eco/Evo - Date and Time</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -82,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -154,14 +188,26 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#dealing-with-date-and-time-in-r" id="toc-dealing-with-date-and-time-in-r" class="nav-link active" data-scroll-target="#dealing-with-date-and-time-in-r"><strong>Dealing with Date and Time in R</strong></a></li>
+  <li><a href="#date-and-time-in-r" id="toc-date-and-time-in-r" class="nav-link" data-scroll-target="#date-and-time-in-r"><strong>Date and Time in R</strong></a>
+  <ul class="collapse">
+  <li><a href="#read-in-some-data-to-practice-with" id="toc-read-in-some-data-to-practice-with" class="nav-link" data-scroll-target="#read-in-some-data-to-practice-with"><strong>Read in some data to practice with</strong></a></li>
+  <li><a href="#change-date-column-factor-to-datetime-format" id="toc-change-date-column-factor-to-datetime-format" class="nav-link" data-scroll-target="#change-date-column-factor-to-datetime-format"><strong>Change date column (factor) to date/time format</strong></a></li>
+  <li><a href="#why-this-matters" id="toc-why-this-matters" class="nav-link" data-scroll-target="#why-this-matters"><strong>Why this matters</strong></a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="datetime.knit.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction to R for Bio/Eco/Evo</h1>
+<h1 class="title">Date and Time</h1>
 </div>
 
 
@@ -182,11 +228,112 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This is a Quarto website.</p>
-<p>I will do stuff here. updates things</p>
-<p>…</p>
+<section id="dealing-with-date-and-time-in-r" class="level1">
+<h1><strong>Dealing with Date and Time in R</strong></h1>
+<p>Date and time are often important variables in scientific data analysis. We are often interested in change over time and we also often do time series sampling. Learning how to manage dates and times in R is essential! Luckily, there is a user friendly and tidyverse friendly package that can help us with dates, times, and datetimes. That package is called ‘lubridate’ and we will learn all about it below.</p>
+<p>First, we need to load packages</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+v ggplot2 3.4.0      v purrr   1.0.0 
+v tibble  3.1.8      v dplyr   1.0.10
+v tidyr   1.2.1      v stringr 1.5.0 
+v readr   2.1.3      v forcats 0.5.2 
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: timechange
+
+Attaching package: 'lubridate'
+
+The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
+</div>
+</div>
+</section>
+<section id="date-and-time-in-r" class="level1">
+<h1><strong>Date and Time in R</strong></h1>
+<p>R and really all programming languages have a difficult time with dates and times. Luckily, programmers have developed ways to get computer to understand dates and times as time series (so we can plot them on a graph axis and do analysis, for example).</p>
+<p>There are several common formats of date and time that we don’t need to get into, but for many tools we use in the field we have a timestamp that includes day, month, year, and time (hours, minutes, and maybe seconds). When all of that info ends up in 1 column of a .csv it can be annoying and difficult to get R to understand what that column means. There are tons of ways to solve this problem but the easiest is definitely to just use some simple functions in the Lubridate package!</p>
+<section id="read-in-some-data-to-practice-with" class="level2">
+<h2 class="anchored" data-anchor-id="read-in-some-data-to-practice-with"><strong>Read in some data to practice with</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">'https://raw.githubusercontent.com/jbaumann3/Intro-to-R-for-Ecology/main/final_bucket_mesocosm_apex_data.csv'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat) <span class="co">#take a look at the data to see how it is formatted</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X                date probe_name probe_type value
+1 1 07/01/2021 00:00:00      B2_T2       Temp 18.10
+2 2 07/01/2021 00:00:00     B2_pH2         pH  4.53
+3 3 07/01/2021 00:00:00     B1_pH2         pH  8.12
+4 4 07/01/2021 00:00:00      B1_T2       Temp 17.70
+5 5 07/01/2021 00:00:00      B1_T1       Temp 17.70
+6 6 07/01/2021 00:00:00     B1_pH1         pH  8.12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat) <span class="co">#what are the attributes of each column (</span><span class="al">NOTE</span><span class="co"> the attirbutes of the date column -- it is a factor and we want it to be a date/time0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   47200 obs. of  5 variables:
+ $ X         : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ date      : chr  "07/01/2021 00:00:00" "07/01/2021 00:00:00" "07/01/2021 00:00:00" "07/01/2021 00:00:00" ...
+ $ probe_name: chr  "B2_T2" "B2_pH2" "B1_pH2" "B1_T2" ...
+ $ probe_type: chr  "Temp" "pH" "pH" "Temp" ...
+ $ value     : num  18.1 4.53 8.12 17.7 17.7 8.12 19.7 7.99 18.1 4.53 ...</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="change-date-column-factor-to-datetime-format" class="level2">
+<h2 class="anchored" data-anchor-id="change-date-column-factor-to-datetime-format"><strong>Change date column (factor) to date/time format</strong></h2>
+<p>To do this we just need to recognize the order of or date/time. For example, we might have year, month, day, hours, minutes OR day, month, year, hours, minutes in order from left to right.</p>
+<p>In this case we have: 07/01/2021 00:00:00 or month/day/year hours:minutes:seconds. We care about the order of these. So to simply, we have mdy_hms Lubridate has functions for all combinations of these formats. So, mdy_hms() is one. You may also have ymd_hm() or any other combo. You just enter your date info followed by an underscore and then your time info. Here’s how you apply this!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   47200 obs. of  5 variables:
+ $ X         : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ date      : chr  "07/01/2021 00:00:00" "07/01/2021 00:00:00" "07/01/2021 00:00:00" "07/01/2021 00:00:00" ...
+ $ probe_name: chr  "B2_T2" "B2_pH2" "B1_pH2" "B1_T2" ...
+ $ probe_type: chr  "Temp" "pH" "pH" "Temp" ...
+ $ value     : num  18.1 4.53 8.12 17.7 17.7 8.12 19.7 7.99 18.1 4.53 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>date<span class="ot">&lt;-</span><span class="fu">mdy_hms</span>(dat<span class="sc">$</span>date) <span class="co">#converts our date column into a date/time object based on the format (order) of our date and time </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat)<span class="co"># date is no longer a factor but is now a POSIXct object, which means it is in date/time format and can be used for plots and time series!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   47200 obs. of  5 variables:
+ $ X         : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ date      : POSIXct, format: "2021-07-01 00:00:00" "2021-07-01 00:00:00" ...
+ $ probe_name: chr  "B2_T2" "B2_pH2" "B1_pH2" "B1_T2" ...
+ $ probe_type: chr  "Temp" "pH" "pH" "Temp" ...
+ $ value     : num  18.1 4.53 8.12 17.7 17.7 8.12 19.7 7.99 18.1 4.53 ...</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="why-this-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters"><strong>Why this matters</strong></h2>
+<p>Here we have two example graphs that show why dates are annoying and how using lubridate helps us!</p>
+<p><strong>A graph using the raw data alone (not changing date to a date/time object)</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><embed src="datetime_files/figure-pdf/unnamed-chunk-4-1.pdf" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>same graph after making date into a date/time object</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><embed src="datetime_files/figure-pdf/unnamed-chunk-5-1.pdf" class="img-fluid"></p>
+</div>
+</div>
+<hr>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

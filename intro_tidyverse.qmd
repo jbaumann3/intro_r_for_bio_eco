@@ -1,0 +1,264 @@
+---
+title: "Intro to the Tidyverse"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+
+# **Introduction to the Tidyverse**
+
+The Tidyverse is a collection of R packages that can be used together for many different data science practices. They share syntax and are very versatile. For most users, the Tidyverse provides a structure of "best practices" that will allow a user to do just about anything with data.
+
+We can load the Tidyverse as a single package in R:
+
+```{r}
+library(tidyverse)
+```
+
+The tidyverse package contains the following packages: 1.) ggplot2: the best graphing package in R\
+2.) dplyr: most of our data wrangling tools come from here\
+3.) tidyr: tools for data tidying (cleaning, reshaping)\
+4.) readr: tools for reading in different types of data -- this is where the read_csv() function comes from\
+5.) purrr: tools for working with functions and vectors (useful but likely not right away for beginners)\
+6.) stringr: functions to help us work with strings (like sentences, paragraphs, lists, etc)\
+7.) forcats: "for categories" - makes working with factors (categorical data) easier!\
+[Learn more about the Tidyverse](tidyverse.org)\
+This section contains some worked examples of Tidyverse best practices for data manipulation. If you just want a quick refresher, you can take a look at the **cheat sheet** below!
+
+![](images/tidyverse_cheat_sheet-01.png)
+
+------------------------------------------------------------------------
+
+## **Read in some data**
+
+We can mess with a few data sets that are built into R or into R packages.
+
+A common one is mtcars, which is part of base R (attributes of a bunch of cars)
+
+```{r}
+head(mtcars)
+```
+
+Another fun one is CO2, which is also part of base R (CO2 uptake from different plants). Note: co2 (no caps) is also a dataset in R. It's just the CO2 concentration at Maona Loa observatory every year (as a list).
+
+```{r}
+head(CO2)
+```
+
+You are welcome to use these to practice with or you can choose from any of the datasets in the 'datasets' or 'MASS' packages (you have to load the package to get the datasets).
+
+You can also load in your own data or pick something from online, as we learned how to do last time.\
+Let's stick with what we know for now-- I will use the penguins data from the palmerpenguins package
+
+**load the data**
+
+```{r}
+library(palmerpenguins)
+penguins
+```
+
+**add the dataframe to our environment** As you learned in the Rstudio basics tutorial above, one of the four main panels of the RStudio window contains the Environment tab. In this tab, we can see data that are stored locally in our session of R. While penguins is pre-loaded in R, it is nice to make a local copy so we can modify it easily.\
+Here's how we do that:
+
+```{r}
+penguins<-penguins 
+
+```
+
+Here, the name of the new dataframe we want in our environment is to the left of the arrow and the name of the object we are calling is to the right. In simpler terms, we are defining a new dataframe called penguins (or any name we want) and it is defined as just an exact copy of penguins (the object that is already defined within palmerpenguins. This is the simplest example -- we will quickly move on to more complex things. You will see that when you run this the dataframe 'penguins' appears in the local environment. You can call your local file anything you want, it does not need to be an exact copy of the orignal name! Choose names that are meaningful to you, but keep the names short and avoid spaces and other special characters as much as possible.
+
+# **Tidyverse data wrangling**
+
+::: panel-tabset
+## **Select or remove columns/rows**
+
+Let's look at penguins
+
+```{r}
+head(penguins)
+```
+
+Now let's say we only really care about species and bill length. We can select those columns to keep and remove the rest of the columns because they are just clutter at this point. There are two ways we can do this: 1.) Select the columns we want to keep 2.) Select the columns we want to remove
+
+Here are two ways to do that:
+
+**Base R example** For those with some coding experience you may like this method as this syntax is common in other coding languages
+
+**Step 1.)** Count the column numbers. Column 1 is the left most column. Remember we can use ncol() to count the total number of columns (useful when we have a huge number of columns)
+
+```{r}
+ncol(penguins) # we have 8 columns
+```
+
+Species is column 1 and bill length is column 3. Those are the only columns we want!
+
+**Step 2.)** Select columns we want to keep using bracket syntax. Here we wil use this basic syntax: df\[rows, columns\] We can input the rows and/or columns we want inside our brackets. If we want more than 1 row or column we will need to use a 'c()' for concatenate (combine). To select just species and bill length we would do the following:
+
+```{r}
+head(penguins[,c(1,3)]) #Selecting NO specific rows and 2 columns (numbers 1 and 3)
+```
+
+**IMPORTANT** When we do this kind of manipulation it is super helpful to NAME the output. In the above example I didn't do that. If I don't name the output I cannot easily call it later. If I do name it, I can use it later and see it in my 'Environment' tab. So, I should do this:
+
+```{r}
+pens<-penguins[,c(1,3)]
+head(pens)
+```
+
+Now, here's how you do the same selection step by removing the columns you **DO NOT** want.
+
+```{r}
+pens2<-penguins[,-c(2,4:8)] #NOTE that ':' is just shorthand for all columns between 4 and 8. I could also use -c(2,4,5,6,7,8)
+head(pens2)
+```
+
+------------------------------------------------------------------------
+
+**Tidyverse example (select())**
+
+Perhaps that example above was a little confusing? This is why we like Tidyverse! We can do the same thing using the select() function in Tidyverse and it is easier!
+
+I still want just species and bill length. Here's how I select them:
+
+```{r}
+head(select(penguins, species, bill_length_mm))
+```
+
+EASY. Don't forget to **name the output** for use later :)
+
+Like this:
+
+```{r}
+shortpen<-select(penguins, species, bill_length_mm)
+head(shortpen)
+```
+
+------------------------------------------------------------------------
+
+## **Subsetting and filtering data**
+
+Sometimes we only want to look at data from a subset of the data frame\
+
+For example, maybe we only want to examine data from chinstrap penguins in the penguins data. OR perhaps we only care about 4 cylinder cars in mtcars. We can filter out the data we don't want easily using Tidyverse (filter) or base R (subset)
+
+**Tidyverse example - Using filter()**
+
+Let's go ahead and filter the penguins data to only include chinstraps and the mtcars data to only include 4 cylinder cars
+
+The syntax for filter is: filter(df, column =\>\<== number or factor)
+
+```{r}
+#filter penguins to only contain chinstrap
+chins<-filter(penguins, species=='Chinstrap')
+head(chins)
+#confirm that we only have chinstraps
+chins$species
+```
+
+Now for mtcars...
+
+```{r}
+#filter mtcars to only contain 4 cylinder cars
+cars4cyl<-filter(mtcars, cyl == "4")
+head(cars4cyl)
+
+#confirm it worked
+str(cars4cyl) #str shows us the observations and variables in each column
+cars4cyl$cyl #shows us only the observations in the cyl column!
+```
+
+**Base R example (subset)** In this case, the subset() function that is in base R works almost exactly like the filter() function. You can essentially use them interchangably.
+
+```{r}
+#subset mtcars to include only 4 cylinder cars
+cars4cyl2.0<-subset(mtcars, cyl=='4')
+cars4cyl2.0
+```
+
+------------------------------------------------------------------------
+
+## **Add new columns or change existing ones**
+
+**Adding a new column** Sometimes we may want to do some math on a column (or a series of columns). Maybe we want to calculate a ratio, volume, or area. Maybe we just want to scale a variable by taking the log or changing it from cm to mm. We can do all of this with the mutate() function in Tidyverse!
+
+```{r}
+#convert bill length to cm (and make a new column)
+head(penguins)
+mutpen<-(mutate(penguins, bill_length_cm=bill_length_mm/10))
+head(mutpen)         
+```
+
+**Change existing column** The code above makes a new column in which bill length in cm is added as a new column to the data frame. We could have also just done the math in the original column if we wanted. That would look like this:
+
+```{r}
+head(penguins)
+mutpen<-(mutate(penguins, bill_length_mm=bill_length_mm/10))
+head(mutpen) 
+```
+
+**NOTE** This is misleading because now the values in bill_length_mm are in cm. Thus, it was better to just make a new column in this case. But you don't have to make a new column every time if you would prefer not to. Just be careful.
+
+**Column math in Base R** Column manipulation is easy enough in base R as well. We can do the same thing we did above without Tidyverse like this:
+
+```{r}
+penguins$bill_length_cm = penguins$bill_length_mm /10
+head(penguins)
+```
+
+## **Pivot data (wide to long / long to wide)**
+
+'Pivoting' data means changing the format of the data. Tidyverse and ggplot in particular tend to like data in 'long' format. **Long format** means few columns and many rows. **Wide format** is the opposite- many columns and fewer rows.
+
+Wide format is usually how the human brain organizes data. For example, a spreadsheet in which every species is in its own column is wide format. You might take this sheet to the field and record present/absence or count of each species at each site or something. This is great but it might be easier for us to calculate averages or do group based analysis in R if we have a column called 'species' in which every single species observation is a row. This leads to A LOT of repeated categorical variables (site, date, etc), which is fine.
+
+**Example of Long Format** The built in dataset 'fish_encounters' is a simple example of long format data. Penguins, iris, and others are also in long format but are more complex
+
+```{r}
+head(fish_encounters) # here we see 3 columns that track each fish (column 1) across MANY stations (column 2) 
+
+```
+
+**Converting from long to wide using pivot_wider (Tidyverse)** Although we know that long format is preferred for working in Tidyverse and doing graphing and data analysis in R, we sometimes do want data to be in wide format. There are certain functions and operations that may require wide format. This is also the format that we are most likely to use in the field. So, let's convert fish_encounters back to what it likely was when the data were recorded in the field...
+
+```{r}
+#penguins long to wide using pivot_wider
+
+widefish<-fish_encounters %>%
+  pivot_wider(names_from= station, values_from = seen)
+
+head(widefish)
+
+```
+
+The resulting data frame above is a wide version of the orignal in which each station now has its own column. This is likely how we would record the data in the field!
+
+**Example of Wide Format Data** Let's just use widefish for this since we just made it into wide format :)
+
+```{r}
+head(widefish)
+```
+
+**Converting from Wide to Long using pivot_longer (Tidyverse)**
+
+```{r}
+longfish<- widefish %>%
+  pivot_longer(!fish, names_to = 'station', values_to = 'seen')
+
+head(longfish)
+```
+
+And now we are back to our original data frame! The '!fish' means simply that we do not wish to pivot the fish column. It remains unchanged. A '!' before something in code usually means to exclude or remove. We've used names_to and values_to to give names to our new columns. pivot_longer will look for factors and put those in the names_to column and it will look for values (numeric) to pupt in the values_to column.
+
+**NOTES** There are MANY other ways to modify pivot_wider() and pivot_longer(). I encourage you to look in the help tab, the tidyR/ Tidyverse documentation online, and for other examples on google and stack overflow.
+
+------------------------------------------------------------------------
+
+:::

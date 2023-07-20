@@ -116,15 +116,34 @@ write.csv(a, file='mtcars.csv')
 
 ## **Read a file in (import data into R)**
 
-NOTE: if you have a .xls file make sure you convert to .csv. Ensure the file is clean and orderly (rows x columns). Only 1 excel tab can be in each .csv, so plan accordingly
+NOTE: if you have a .xls file make sure you convert to .csv. Ensure the file is clean and orderly (rows x columns). Only 1 excel tab can be in each .csv, so plan accordingly. Note that in order to read a file in to R from your computer (or cloud server), that file MUST be located within your working directory (or you must know and enter the file path).
 
+**IF** your file is in your working directory, you can read it in like this: 
 ```{r}
 b<-read.csv('mtcars.csv')
 head(b)
 ```
 
-You are welcome to use other functions to read in data (including read_csv or read.xls). Especially for beginners, I strongly encourage you to use .csv format. Other file formats can get complicated (often unnecessarily complicated). That said, R can also handle .txt, .xls, images, shapefiles (for spatial analysis or GIS style work), etc. It is very versatile! Feel free to explore :)
-\
-A note on read_csv -> I consider this to be the "best" option for reading in .csv files. It is a 'smarter' version of read.csv and can automatically figure out what kind of data (numeric, factor, date, etc) each column is. If you use read.csv, you have often have to manually change these options. 
+You are welcome to use other functions to read in data (including read_csv or read.xls). Especially for beginners, I strongly encourage you to use .csv format. Other file formats can get complicated (often unnecessarily complicated). That said, R can also handle .txt, .xls, images, shapefiles (for spatial analysis or GIS style work), etc. It is very versatile! Feel free to explore :)\
+A note on read_csv -\> I consider this to be the "best" option for reading in .csv files. It is a 'smarter' version of read.csv and can automatically figure out what kind of data (numeric, factor, date, etc) each column is. If you use read.csv, you have often have to manually change these options.
+
+## **Read a file from an online source**
+In some cases you may be using data you've found online. Perhaps you can download, save, and then read your file into R. Sometimes that is more work than we want to do. You can just call a file directly from it's URL. Here is an example: 
+
+I have a dataframe on coral cover from Belize that I want to read in. It is located on my github
+[coral cover data](https://github.com/jbaumann3/BIOL234_Biostats_MHC/blob/main/coralcover.csv). Let's read it directly into R!
+The URL you see above is **NOT** what we use in R. If you find a file on Github you want to locate the 'raw' version of the file. To do this: \
+1.) Click the link above (or find a data file on github) \
+2.) Navigate to the top right menu and look for the box that says "Raw" in it. You can click on that and open the raw file and then copy the URL. OR, you can click the box next to the "Raw" box to copy the link to the raw file. We use this link to read our data into R. This will work for any .csv you find on github. I like to get practice data from the TidyTuesday project on Github. You can find their data at the following link: \
+[Tidy Tuesday Data](https://github.com/rfordatascience/tidytuesday/tree/master/data)\
+
+```{r}
+coralcover<- read_csv('https://raw.githubusercontent.com/jbaumann3/BIOL234_Biostats_MHC/main/coralcover.csv')
+head(coralcover)
+```
+
+
+
+
 
 ------------------------------------------------------------------------

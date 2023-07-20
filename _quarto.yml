@@ -23,6 +23,17 @@ website:
        - getting_started.qmd
        - rbasics.qmd
     
+    - id: wrangling
+      title: "Tidyverse data wrangling"
+      style: "docked"
+      background: light
+      contents: 
+       - intro_tidyverse.qmd
+       - pipe.qmd
+       - groupsmeans.qmd
+       - datetime.qmd
+       
+      
     - id: Graphs
       title: "Graphs"
       style: "docked"

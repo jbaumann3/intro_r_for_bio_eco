@@ -1,0 +1,130 @@
+---
+title: "Stringing functions together with the pipe"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+
+# **How to combine functions together and build data science pipelines using Pipe syntax and Tidyverse**
+
+First, we need to load packages!
+
+```{r}
+library(tidyverse)
+library(palmerpenguins) #for practice data :)
+```
+
+## **What is a pipe?**
+
+The pipe, denoted as '\|' in most programming languages but as '%\>%' in R, is used to link functions together. This is an oversimplification, but it works for our needs.
+
+A pipe (%\>%) is useful when we want to do a sequence of actions to an original data frame. For example, maybe we want to select() some columns and then filter() the resulting selection before finally calculating an average (or something). We can do all of those steps individually or we can use pipes to do them all at once and create one output.
+
+We can think of the pipe as the phrase "and then." I will show examples in the next section.
+
+When not to use a pipe: 1.) When you want to do manipulate multiple data frames at the same time 2.) When there are meanginful intermediate objects (aka we want an intermediate step to produce a named data frame)
+
+------------------------------------------------------------------------
+
+## **How to use the pipe**
+
+The pipe is coded as '%\>%' and should have a single space on either side of it at all times.
+
+Let's do an example with penguins. Here we will select only species and bill length and then we will filter so that we only have chinstrap penguins.
+
+Remember that we think of pipe as the phrase **'and then'**
+
+```{r}
+head(penguins)
+
+#pseudocode / logic: look at dataframe penguins AND THEN (%>%) select() species and bill length AND THEN (%>%) filter by chinstrap
+
+pipepen<- penguins %>% #first step of the pipe is to call the orignal dataframe so we can modify it!
+  select(species, bill_length_mm)%>% #selected our columns
+  filter(species == 'Chinstrap') #filtered for chinstrap
+
+head(pipepen) #it worked! We didn't have to mess with intermediate dataframes and we got exactly what we needed :)
+
+```
+
+Now we will learn how to use the pipe to do calculations that are more meaningful for us!
+
+------------------------------------------------------------------------
+
+## **Grouping and summarize (average + error calculations)**
+
+The pipe becomes especially useful when we are interesting in calculating averages. This is something you'll almost certainly be doing at some point for graphs and statistics! Pipes make this pretty easy.
+
+When thinking about scientific hypotheses and data analysis, we often consider how groups or populations vary (both within the group and between groups). As such, a simple statistical analysis that is common is called analysis of variance (ANOVA). We often also use linear models to assess differences between groups. We will get into statistical theory later, but this does mean that it is often meaningful to graph population and group level means (with error) for the sake of comparison. So let's learn how to calculate those!
+
+There are three steps: 1.) Manipulate the data as needed (correct format, select what you need, filter if necessary, etc)
+
+2.) Group the data as needed (so R know how to calculate the averages)
+
+3.) Do your calculatiuons!
+
+Here's what that looks like in code form:
+
+Let's use mtcars and calculate the mean miles per gallon (mpg) of cars by cylinder.
+
+```{r}
+mpgpercyl<-mtcars%>%
+  group_by(cyl)%>% #group = cylinder 
+  summarize(mean=mean(mpg),error=sd(mpg)) # a simple summarize with just mean and standard deviation
+
+head(mpgpercyl)
+
+```
+
+Now, maybe we want something more complex. Let's say we want to look only at 4 cylinder cars that have more than 100 horsepower. Then we want to see the min, max, and mean mpg in addition to some error.
+
+```{r}
+mpgdf<-mtcars%>%
+  filter(cyl=='4' , hp >100) %>% #filters mtcars to only include cars w/ 4 cylinders and hp greater than 100
+  summarize(min = min(mpg), max = max(mpg), mean = mean(mpg), error=sd(mpg))
+
+head(mpgdf)
+```
+
+Let's do one more using penguins. This time, I want to know how bill length various between species, islands, and sex. I also prefer to use standard error of the mean in my error bars over standard deviation. So I want to calculate that in my summarize function.
+
+```{r}
+head(penguins)
+
+sumpens<- penguins %>%
+  group_by(species, island, sex) %>%
+  summarize(meanbill=mean(bill_length_mm), sd=sd(bill_length_mm), n=n(), se=sd/sqrt(n))%>%
+  na.omit() #removes rows with NA values (a few rows would otherwise have NA in 'sex' due to sampling error in the field)
+
+sumpens
+```
+
+As you can see, this is complex but with just a few lines we have all of the info we might need to make some pretty cool plots and visually inspect for differences.
+
+Some notes on the pieces of the summarize function I used up there: meanbill is just a mean() calculation. sd is just a standard deviation calculation- sd(). n=n() calculate the sample size for each group. Standard error cannot be calculated with a built in function in R (without packages that we aren't using here) so I wrote the formula for it myself. Standard Error = standard deviation / squareroot(sample size) in other words: se=sd/sqrt(n)
+
+PS: here's the payoff... we can use the dataframe we just made to build a really nice plot, like the one below. You will be learning ggplot next time! NOTE: this plot is about as complex as we'd ever expect you to get. So don't worry, we aren't starting with this kind of plot.
+
+```{r echo=FALSE}
+library(ggsci)
+
+pd=position_dodge(width=0.5)
+ggplot(sumpens, aes(x=island, y=meanbill))+
+  geom_point(data=sumpens, aes(x=island, y=meanbill, color=sex), size=3)+
+  geom_errorbar(data=sumpens, aes(x=island, ymin=meanbill-se, ymax=meanbill+se),width=0.1)+
+  theme_classic()+
+  scale_color_aaas()+
+  facet_wrap(~species)+
+  theme(axis.text.x = element_text(angle = 90))
+
+```
+
+------------------------------------------------------------------------
