@@ -11,6 +11,7 @@ website:
       - href: index.qmd
         text: Home
       - sidebar:RBasics
+      - sidebar:wrangling
       - sidebar:Graphs
       - sidebar:quarto
   

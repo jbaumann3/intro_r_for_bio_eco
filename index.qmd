@@ -1,8 +1,20 @@
 ---
 title: "Introduction to R for Bio/Eco/Evo"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
 ---
 
 This is a Quarto website.
 
-I will do stuff here. 
-updates things...
+I will do stuff here. updates things
+
+...
