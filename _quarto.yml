@@ -11,6 +11,7 @@ website:
       - href: index.qmd
         text: Home
       - sidebar:RBasics
+      - sidebar:Graphs
       - sidebar:quarto
   
   sidebar:
@@ -22,8 +23,17 @@ website:
        - getting_started.qmd
        - rbasics.qmd
     
+    - id: Graphs
+      title: "Graphs"
+      style: "docked"
+      background: light
+      contents: 
+       - basic_graphs.qmd   
+       
     - id: quarto
       title: "Using Quarto"
+      style: "docked"
+      background: light
       contents: 
        - usingquarto.qmd
   
