@@ -10,10 +10,23 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - getting_started.qmd
-      - rbasics.qmd
-      - usingquarto.qmd
-          
+      - sidebar:Rbasics
+      - sidebar:quarto
+  
+  sidebar:
+    - id: RBasics
+      title: "R Basics"
+      style: "docked"
+      background: light
+      contents: 
+       - getting_started.qmd
+       - rbasics.qmd
+    
+    - id: quarto
+      title: "Using Quarto"
+      contents: 
+       - usingquarto.qmd
+  
 format:
   html:
     theme: flatly
