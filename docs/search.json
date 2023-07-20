@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Introduction to R for Bio/Eco/Evo",
+    "title": "Introduction to R for Biology & Ecology",
     "section": "",
-    "text": "This is a Quarto website.\nI will do stuff here. updates things\n…"
+    "text": "If you are here you are likely learning R and RStudio or you are teaching R and RStudio. Thanks for being here. I hope you find these resources helpful.\n\n\n\nThe materials on this website have been designed for use in teaching R to undergraduate students who range in experience from never using R (or any programming language before) to beginner and intermediate R users. I have designed these resources for use in my 200 level Biostatistics course, 300 level Biology electives, and to teach my research students how to use R. That said, anyone who is trying to learn R (or learning how to teach R) may find these tutorials and excerises useful.\n\n\n\n\nNavigate using the navbar at the top of the page. You can find specific tutorials using the drop down menus. Tutorial content is organized by section. If you are looking for exercises to do yourself (assignments, challenges, etc), you can find those in the “exercises” drop down menu in the navbar. These are downloadable .qmd files that you can open in your own instance of R and modify!\n\n\n\nYou can visit my professional website, github, and twitter pages. You can also email me with questions, comments, and suggestions.\n…"
   },
   {
     "objectID": "Lab1.html",
@@ -299,5 +299,26 @@
     "title": "Date and Time",
     "section": "Why this matters",
     "text": "Why this matters\nHere we have two example graphs that show why dates are annoying and how using lubridate helps us!\nA graph using the raw data alone (not changing date to a date/time object)\n\n\n\n\n\nsame graph after making date into a date/time object"
+  },
+  {
+    "objectID": "index.html#who-this-page-is-for",
+    "href": "index.html#who-this-page-is-for",
+    "title": "Introduction to R for Biology & Ecology",
+    "section": "",
+    "text": "The materials on this website have been designed for use in teaching R to undergraduate students who range in experience from never using R (or any programming language before) to beginner and intermediate R users. I have designed these resources for use in my 200 level Biostatistics course, 300 level Biology electives, and to teach my research students how to use R. That said, anyone who is trying to learn R (or learning how to teach R) may find these tutorials and excerises useful."
+  },
+  {
+    "objectID": "index.html#how-to-use-this-page",
+    "href": "index.html#how-to-use-this-page",
+    "title": "Introduction to R for Biology & Ecology",
+    "section": "",
+    "text": "Navigate using the navbar at the top of the page. You can find specific tutorials using the drop down menus. Tutorial content is organized by section. If you are looking for exercises to do yourself (assignments, challenges, etc), you can find those in the “exercises” drop down menu in the navbar. These are downloadable .qmd files that you can open in your own instance of R and modify!"
+  },
+  {
+    "objectID": "index.html#for-more-about-me",
+    "href": "index.html#for-more-about-me",
+    "title": "Introduction to R for Biology & Ecology",
+    "section": "",
+    "text": "You can visit my professional website, github, and twitter pages. You can also email me with questions, comments, and suggestions.\n…"
   }
 ]

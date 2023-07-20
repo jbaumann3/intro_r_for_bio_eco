@@ -13,8 +13,17 @@ format:
 editor: visual
 ---
 
-This is a Quarto website.
+# Welcome!
 
-I will do stuff here. updates things
+If you are here you are likely learning R and RStudio or you are teaching R and RStudio. Thanks for being here. I hope you find these resources helpful.\
+
+## Who this page is for
+The materials on this website have been designed for use in teaching R to undergraduate students who range in experience from never using R (or any programming language before) to beginner and intermediate R users. I have designed these resources for use in my 200 level Biostatistics course, 300 level Biology electives, and to teach my research students how to use R. That said, anyone who is trying to learn R (or learning how to teach R) may find these tutorials and excerises useful. \
+
+## How to use this page
+Navigate using the navbar at the top of the page. You can find specific tutorials using the drop down menus. Tutorial content is organized by section. If you are looking for exercises to do yourself (assignments, challenges, etc), you can find those in the "exercises" drop down menu in the navbar. These are downloadable .qmd files that you can open in your own instance of R and modify!
+
+## For more about me
+You can visit my [professional website](jbaumann3.wordpress.com), [github](github.com/jbaumann3), and [twitter](twitter.com/jbaumann3) pages. You can also email me with questions, comments, and suggestions. 
 
 ...

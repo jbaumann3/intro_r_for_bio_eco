@@ -3,7 +3,7 @@ project:
   output-dir: docs
   
 website:
-  title: "Introduction to R for Bio/Eco/Evo"
+  title: "Introduction to R for Biology & Ecology"
   navbar:
     background: primary
     search: true
