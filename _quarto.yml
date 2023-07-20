@@ -10,7 +10,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - sidebar:Rbasics
+      - sidebar:RBasics
       - sidebar:quarto
   
   sidebar:
