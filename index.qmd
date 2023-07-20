@@ -1,5 +1,5 @@
 ---
-title: "Introduction to R for Bio/Eco/Evo"
+title: "Introduction to R for Biology & Ecology"
 author: "Justin Baumann"
 format: 
   html:
