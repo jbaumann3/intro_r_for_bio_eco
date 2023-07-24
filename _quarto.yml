@@ -15,6 +15,7 @@ website:
       - sidebar:Graphs
       - sidebar:quarto
       - sidebar:b_stats
+      - sidebar:I_stats
   
   sidebar:
     - id: RBasics
