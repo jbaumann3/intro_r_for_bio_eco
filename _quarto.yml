@@ -62,7 +62,7 @@ website:
       contents: 
        - cor_chi.qmd
        - regression.qmd
-       - t-test.qmd
+       - t_test.qmd
   
 format:
   html:
