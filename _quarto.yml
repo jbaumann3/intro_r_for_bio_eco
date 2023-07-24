@@ -63,6 +63,15 @@ website:
        - cor_chi.qmd
        - regression.qmd
        - t_test.qmd
+       - ANOVA.qmd
+
+    - id: I_stats
+      title: "Intermediate Stats"
+      style: "docked"
+      background: light
+      contents: 
+       - multiple_regression.qmd
+       - CIs.qmd
   
 format:
   html:

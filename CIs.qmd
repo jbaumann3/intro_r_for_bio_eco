@@ -1,0 +1,242 @@
+---
+title: "Bootstrapping and Confidence Intervals"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+
+# **Bootstrapping (and eventually confidence intervals)**
+
+# Resources
+
+[Smith College SDS CIs tutorial](https://moderndive.com/8-confidence-intervals.html)\
+[Modern Data Science with R text chapter](https://mdsr-book.github.io/mdsr2e/ch-foundations.html#sec:boot)
+
+# Load Packages
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(palmerpenguins)
+library(data.table)
+library(performance)
+library(patchwork)
+library(rsample) #for lm bootstraps
+library(car) #to check collinearity
+library(skimr)
+library(broom)
+
+```
+
+# Get Penguins data!
+
+```{r}
+penguins<-palmerpenguins::penguins
+```
+
+# Fit a simple LM and have a look at results
+
+```{r}
+simple_mod<-lm(bill_depth_mm ~ bill_length_mm*species*sex, data=penguins)
+
+summary(simple_mod)
+broom::tidy(simple_mod)
+```
+
+# Now, let's bootstrap!
+
+Bootstrapping is a resampling technique. We will discuss how it works!
+
+```{r}
+set.seed(356) #any number is fine
+
+penguins_intervals<- reg_intervals(bill_depth_mm ~ bill_length_mm*species*sex, data=penguins, 
+                                   type='percentile',
+                                   keep_reps=FALSE)
+
+penguins_intervals
+
+#plot the results
+penboots<-ggplot(data=penguins_intervals, aes(x=.estimate, y=term))+
+  geom_vline(xintercept=0, linetype=2)+
+  geom_errorbarh(aes(xmin=.lower, xmax=.upper),height=0.2)+
+  geom_point(size=3)+
+  theme_classic()
+penboots
+
+
+```
+
+# **Understanding resampling and bootstrapping using tidyverse**
+
+## Let's take a sample of the penguins data
+
+```{r}
+lilpen<- penguins %>%
+  slice_sample(n=10, replace= FALSE) %>%
+  select(species, sex, year, bill_length_mm)
+
+lilpen
+
+#let's turn resampling on (let's us include duplicates-- we can choose from entire dataset AGAIN when we collect a separate sample)
+lilpen2<- penguins %>%
+  slice_sample(n=10, replace= TRUE) %>%
+  select(species, sex, year, bill_length_mm)
+
+lilpen2 #if we run this enough times we will eventually see duplicates! This is the concept upon which bootstrapping is based
+
+```
+
+## Now we can scale up (working towards bootstrapping)
+
+```{r}
+n<- 200
+
+orig_sample <- penguins %>%
+  slice_sample(n=n, replace=FALSE)
+
+orig_sample
+#with this sample in hand we can draw a rsample of the sample size and calc mean arrival dealy
+
+orig_sample %>%
+  slice_sample(n=n, replace=TRUE) %>%
+  summarize(meanbill=mean(bill_length_mm))
+#44.2
+
+#compare to orignal dataset
+penguins %>%
+  summarize(meanbill=mean(bill_length_mm))
+#44.0 -- different because n=150 in the df but we sampled extra (n=200)
+
+#by repeating this process many times we can see how much variation there is from sample to sample
+
+pen_200_bs<- 1:1000 %>% #1000 = number of trials / resamples
+  map_dfr(
+    ~orig_sample %>%
+      slice_sample(n=n, replace=TRUE) %>%
+      summarize(meanbill=mean(bill_length_mm))) %>%
+  mutate(n=n)
+
+pen_200_bs #you will see we now have means for 1000 trials!
+```
+
+## We can compare outputs to see how things change
+
+```{r}
+pen_200_bs %>%
+  skim(meanbill) #mean = 44, sd=0.391
+
+#histo
+bootplot<-ggplot(data=pen_200_bs, aes(x=meanbill))+
+         geom_histogram(binwidth=0.1)
+bootplot
+#check against original df
+pen_df_bs<- 1:1000 %>% #1000 = number of trials / resamples
+  map_dfr(
+    ~penguins %>%
+      slice_sample(n=n, replace=TRUE) %>%
+      summarize(meanbill=mean(bill_length_mm))) %>%
+  mutate(n=n)
+
+pen_df_bs 
+
+pen_df_bs %>%
+  skim(meanbill) #mean=44, sd=0.370
+
+
+#histo
+raw<-ggplot(data=pen_df_bs, aes(x=meanbill))+
+  geom_histogram(binwidth=0.1)
+raw
+
+#compare:
+raw/bootplot
+```
+
+-The distribution of values we get when we build a series of bootstrap trials is called the bootstrap distribution. It is not exactly the same as the sampling distribution but for sufficiently large n is is a good approximation!
+
+-Remember that if we have a roughly normal distribution we can get 95% CIs by using the rule of thump CI=2*SE (or standard error of the mean) #the "real" value here is 1.96*SE
+
+## calculating boostrapped CIs thus, could look like this
+
+```{r}
+pen_200_bs<- 1:1000 %>% #1000 = number of trials / resamples
+  map_dfr(
+    ~orig_sample %>%
+      slice_sample(n=n, replace=TRUE) %>%
+      summarize(meanbill=mean(bill_length_mm))) %>%
+  mutate(n=n)
+
+calc_CIs<-pen_200_bs %>%
+  summarize(meanbillboot=mean(meanbill), CI=1.96*sd(meanbill))
+
+calc_CIs
+
+```
+
+We did it!
+
+# How to use the infer package to do CIs!
+
+```{r}
+library(infer)
+
+orig_sample
+
+#dplyr method for mean
+orig_sample %>%
+  summarize(stat=mean(bill_length_mm))
+#44.0
+x_bar=44.0
+
+
+#infer method for mean
+orig_sample %>%
+  specify(response = bill_length_mm) %>%
+  calculate(stat='mean')
+
+#make bootstrap distribution 
+boot_dist <-orig_sample %>%
+  specify(response=bill_length_mm) %>%
+  generate(reps=1000) %>%
+  calculate(stat='mean')
+
+boot_dist
+
+#look at the histo
+visualize(boot_dist)
+
+#percentile based CIs
+percentile_ci <- boot_dist %>% 
+  get_confidence_interval(level = 0.95, type = "percentile")
+
+percentile_ci
+
+#graphically....
+visualize(boot_dist) + 
+  shade_confidence_interval(endpoints = percentile_ci)
+
+#CIs via standard error
+se_CI<- boot_dist %>%
+  get_confidence_interval(type='se', point_estimate = x_bar) #where x_bar is the original sample mean
+
+se_CI
+
+### let's see how the CI values line up: 
+calc_CIs
+44-0.783 #43.217
+44+0.783 #44.783
+
+percentile_ci #43.2, 44.8
+
+se_CI # 43.2, 44.8
+#all super close!
+```

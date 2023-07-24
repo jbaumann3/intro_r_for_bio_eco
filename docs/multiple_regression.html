@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Justin Baumann">
+
+<title>Introduction to R for Biology &amp; Ecology - Multiple Regression &amp; Model Selection</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Introduction to R for Biology &amp; Ecology</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-r-basics" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">R Basics</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-r-basics">    
+        <li>
+    <a class="dropdown-item" href="./getting_started.html" rel="" target="">
+ <span class="dropdown-text">Getting Started with RStudio</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./rbasics.html" rel="" target="">
+ <span class="dropdown-text">Packages &amp; reading/writing data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tidyverse-data-wrangling" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Tidyverse data wrangling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tidyverse-data-wrangling">    
+        <li>
+    <a class="dropdown-item" href="./intro_tidyverse.html" rel="" target="">
+ <span class="dropdown-text">Intro to the Tidyverse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pipe.html" rel="" target="">
+ <span class="dropdown-text">Stringing functions together with the pipe</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./groupsmeans.html" rel="" target="">
+ <span class="dropdown-text">Summarizing Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./datetime.html" rel="" target="">
+ <span class="dropdown-text">Date and Time</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-graphs" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Graphs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-graphs">    
+        <li>
+    <a class="dropdown-item" href="./basic_graphs.html" rel="" target="">
+ <span class="dropdown-text">Intro to ggplot2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./colors.html" rel="" target="">
+ <span class="dropdown-text">Colors</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./shapes.html" rel="" target="">
+ <span class="dropdown-text">Shapes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./themes.html" rel="" target="">
+ <span class="dropdown-text">Themes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./axes.html" rel="" target="">
+ <span class="dropdown-text">Axes labels and Titles</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./facets.html" rel="" target="">
+ <span class="dropdown-text">Multiple panels and multiple graphs</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-using-quarto" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Using Quarto</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-using-quarto">    
+        <li>
+    <a class="dropdown-item" href="./usingquarto.html" rel="" target="">
+ <span class="dropdown-text">Getting Started with Quarto</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-beginner-stats" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Beginner Stats</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-beginner-stats">    
+        <li>
+    <a class="dropdown-item" href="./cor_chi.html" rel="" target="">
+ <span class="dropdown-text">Correlation and Chi Square</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./regression.html" rel="" target="">
+ <span class="dropdown-text">linear regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./t_test.html" rel="" target="">
+ <span class="dropdown-text">T Test</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ANOVA.html" rel="" target="">
+ <span class="dropdown-text">ANOVA</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./multiple_regression.html">Multiple Regression &amp; Model Selection</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiple_regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Multiple Regression &amp; Model Selection</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#multiple-regression-and-model-selection" id="toc-multiple-regression-and-model-selection" class="nav-link active" data-scroll-target="#multiple-regression-and-model-selection"><strong>Multiple Regression and Model Selection</strong></a>
+  <ul class="collapse">
+  <li><a href="#load-packages" id="toc-load-packages" class="nav-link" data-scroll-target="#load-packages">Load packages</a></li>
+  <li><a href="#get-our-penguin-data-ready" id="toc-get-our-penguin-data-ready" class="nav-link" data-scroll-target="#get-our-penguin-data-ready">Get our penguin data ready!</a></li>
+  <li><a href="#what-is-the-effect-of-year-on-bill-depth-by-species" id="toc-what-is-the-effect-of-year-on-bill-depth-by-species" class="nav-link" data-scroll-target="#what-is-the-effect-of-year-on-bill-depth-by-species">What is the effect of year on bill depth by species?</a></li>
+  <li><a href="#an-example-with-numerical-vars" id="toc-an-example-with-numerical-vars" class="nav-link" data-scroll-target="#an-example-with-numerical-vars">An example with numerical vars</a></li>
+  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection">Model Selection</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="multiple_regression.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Multiple Regression &amp; Model Selection</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Justin Baumann </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="multiple-regression-and-model-selection" class="level1">
+<h1><strong>Multiple Regression and Model Selection</strong></h1>
+<section id="load-packages" class="level2">
+<h2 class="anchored" data-anchor-id="load-packages">Load packages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co">#to check collinearity</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>My favorite mixed models selection tutorial: <a href="https://ourcodingclub.github.io/tutorials/mixed-models/">Our Coding Club</a></p>
+</section>
+<section id="get-our-penguin-data-ready" class="level2">
+<h2 class="anchored" data-anchor-id="get-our-penguin-data-ready">Get our penguin data ready!</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> palmerpenguins<span class="sc">::</span>penguins</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+1 Adelie  Torgersen           39.1          18.7               181        3750
+2 Adelie  Torgersen           39.5          17.4               186        3800
+3 Adelie  Torgersen           40.3          18                 195        3250
+4 Adelie  Torgersen           NA            NA                  NA          NA
+5 Adelie  Torgersen           36.7          19.3               193        3450
+6 Adelie  Torgersen           39.3          20.6               190        3650
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="ot">&lt;-</span><span class="fu">drop_na</span>(penguins)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">$</span>year<span class="ot">=</span><span class="fu">as.factor</span>(penguins<span class="sc">$</span>year) <span class="co">#we are interested in year as a grouping/categorical variable so we will make it a factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="what-is-the-effect-of-year-on-bill-depth-by-species" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-the-effect-of-year-on-bill-depth-by-species">What is the effect of year on bill depth by species?</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">1.) Make a graph to visualize!</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">2.) Build the model</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">3.) view tabular results</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">4.) Model fit assessment</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">5.) A 95% CI plot of model coefficients</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>We will start with a boxplot for a quick check. We would eventually want to calculate means and error bars for the final visualization though! Note that the graph below is a good way to view the interaction of our explanatory variables, which is not what we modeled… We only consider the additive effects (each variable on its own)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># effect of year on bill depth by species</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.factor</span>(year), <span class="at">y=</span>bill_depth_mm, <span class="at">color=</span>species))<span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Visualization of each variable on its own:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>speciesgraph<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_depth_mm))<span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sexgraph<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span>sex, <span class="at">y=</span>bill_depth_mm))<span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>yeargraph<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>penguins, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.factor</span>(year), <span class="at">y=</span>bill_depth_mm))<span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>speciesgraph<span class="sc">+</span>sexgraph<span class="sc">+</span>yeargraph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#build the model</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lm1<span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_depth_mm <span class="sc">~</span> species<span class="sc">+</span>sex<span class="sc">+</span>year, <span class="at">data=</span>penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1) <span class="co">#check R2 and p-value! How well does the model fit?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bill_depth_mm ~ species + sex + year, data = penguins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.07890 -0.56431 -0.00782  0.48485  3.12581 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      17.71835    0.10760 164.672   &lt;2e-16 ***
+speciesChinstrap  0.05649    0.12232   0.462   0.6445    
+speciesGentoo    -3.36375    0.10268 -32.760   &lt;2e-16 ***
+sexmale           1.50471    0.09107  16.523   &lt;2e-16 ***
+year2008         -0.21053    0.11374  -1.851   0.0651 .  
+year2009         -0.14416    0.11239  -1.283   0.2005    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8308 on 327 degrees of freedom
+Multiple R-squared:  0.8247,    Adjusted R-squared:  0.822 
+F-statistic: 307.6 on 5 and 327 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)<span class="sc">$</span>coefficient <span class="co">#just the coef table from the summary!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Estimate Std. Error     t value      Pr(&gt;|t|)
+(Intercept)      17.71835149 0.10759801 164.6717403 1.229960e-316
+speciesChinstrap  0.05649237 0.12231501   0.4618597  6.444891e-01
+speciesGentoo    -3.36375169 0.10267709 -32.7604888 2.664705e-105
+sexmale           1.50470770 0.09106922  16.5226813  5.184519e-45
+year2008         -0.21053181 0.11373677  -1.8510443  6.506474e-02
+year2009         -0.14416134 0.11238907  -1.2826989  2.005060e-01</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm1) <span class="co"># an ANOVA table of our lm</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: bill_depth_mm
+           Df Sum Sq Mean Sq  F value Pr(&gt;F)    
+species     2 870.79  435.39 630.7435 &lt;2e-16 ***
+sex         1 188.50  188.50 273.0716 &lt;2e-16 ***
+year        2   2.45    1.23   1.7771 0.1708    
+Residuals 327 225.72    0.69                    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(lm1) <span class="co">#CIs for our model predictors!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      2.5 %      97.5 %
+(Intercept)      17.5066798 17.93002315
+speciesChinstrap -0.1841312  0.29711599
+speciesGentoo    -3.5657427 -3.16176068
+sexmale           1.3255522  1.68386318
+year2008         -0.4342799  0.01321630
+year2009         -0.3652582  0.07693551</code></pre>
+</div>
+</div>
+<p>-t / pvalue tells us whether there is a sig association between the predictor and the outcome variable…</p>
+<p>-in stats terms, this tells us whether the beta coef of predictor is significantly different form zero</p>
+<p>-coefficient can be interpreted as average effect on y of a one unit increase in predictor, holding all other predictors fixed</p>
+<p>Here, we have an additive model and we see from the anova table and the lm summary that there are significant effects of species and sex on bill depth but that there is not effect on year. Next, let’s look at the data again to confirm!</p>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p>Here, we want to know how well the model represent the data. We need: 1. The R2 value of the model (closer to 1 is best) 2. The p-value of the model (&lt;0.05 is required for there to be a relationship) 3. We can calculate residual standard error. Lower = more accurate!</p>
+<p>The R2 and p are in the summary! Below is the formula for RMSE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bill_depth_mm ~ species + sex + year, data = penguins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.07890 -0.56431 -0.00782  0.48485  3.12581 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      17.71835    0.10760 164.672   &lt;2e-16 ***
+speciesChinstrap  0.05649    0.12232   0.462   0.6445    
+speciesGentoo    -3.36375    0.10268 -32.760   &lt;2e-16 ***
+sexmale           1.50471    0.09107  16.523   &lt;2e-16 ***
+year2008         -0.21053    0.11374  -1.851   0.0651 .  
+year2009         -0.14416    0.11239  -1.283   0.2005    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8308 on 327 degrees of freedom
+Multiple R-squared:  0.8247,    Adjusted R-squared:  0.822 
+F-statistic: 307.6 on 5 and 327 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#RSE: &lt;- LOWER RSE= more accurate the model!</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sigma</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8308337</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(penguins<span class="sc">$</span>bill_depth_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17.16486</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sigma</span>(lm1)<span class="sc">/</span><span class="fu">mean</span>(penguins<span class="sc">$</span>bill_depth_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04840316</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#0.048, or 4.8% error rate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can also get this information from the performance package using model_performance. This function tells us many things, including R2 and RMSE. We will discuss the rest of this later</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_performance</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Indices of model performance
+
+AIC     |    AICc |     BIC |    R2 | R2 (adj.) |  RMSE | Sigma
+---------------------------------------------------------------
+829.532 | 829.876 | 856.189 | 0.825 |     0.822 | 0.823 | 0.831</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p>combine data! Use tidy() from the broom package to get nice neat dataframes from models</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>coefs<span class="ot">&lt;-</span><span class="fu">tidy</span>(lm1, <span class="at">quick=</span><span class="cn">FALSE</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>coefs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  term             estimate std.error statistic   p.value
+  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)       17.7       0.108    165.    1.23e-316
+2 speciesChinstrap   0.0565    0.122      0.462 6.44e-  1
+3 speciesGentoo     -3.36      0.103    -32.8   2.66e-105
+4 sexmale            1.50      0.0911    16.5   5.18e- 45
+5 year2008          -0.211     0.114     -1.85  6.51e-  2
+6 year2009          -0.144     0.112     -1.28  2.01e-  1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ci<span class="ot">&lt;-</span><span class="fu">data.table</span>(<span class="fu">confint</span>(lm1), <span class="at">keep.rownames=</span><span class="st">'term'</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               term      2.5 %      97.5 %
+1:      (Intercept) 17.5066798 17.93002315
+2: speciesChinstrap -0.1841312  0.29711599
+3:    speciesGentoo -3.5657427 -3.16176068
+4:          sexmale  1.3255522  1.68386318
+5:         year2008 -0.4342799  0.01321630
+6:         year2009 -0.3652582  0.07693551</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>cidf<span class="ot">&lt;-</span><span class="fu">cbind</span>(coefs,ci)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>cidf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              term    estimate  std.error   statistic       p.value
+1      (Intercept) 17.71835149 0.10759801 164.6717403 1.229960e-316
+2 speciesChinstrap  0.05649237 0.12231501   0.4618597  6.444891e-01
+3    speciesGentoo -3.36375169 0.10267709 -32.7604888 2.664705e-105
+4          sexmale  1.50470770 0.09106922  16.5226813  5.184519e-45
+5         year2008 -0.21053181 0.11373677  -1.8510443  6.506474e-02
+6         year2009 -0.14416134 0.11238907  -1.2826989  2.005060e-01
+              term      2.5 %      97.5 %
+1      (Intercept) 17.5066798 17.93002315
+2 speciesChinstrap -0.1841312  0.29711599
+3    speciesGentoo -3.5657427 -3.16176068
+4          sexmale  1.3255522  1.68386318
+5         year2008 -0.4342799  0.01321630
+6         year2009 -0.3652582  0.07693551</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(cidf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "term"      "estimate"  "std.error" "statistic" "p.value"   "term"     
+[7] "2.5 %"     "97.5 %"   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cidf<span class="ot">&lt;-</span>cidf[,<span class="sc">-</span><span class="dv">6</span>]</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>cidf<span class="ot">&lt;-</span> cidf <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"lower"</span><span class="ot">=</span><span class="st">"2.5 %"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">"upper"</span><span class="ot">=</span><span class="st">"97.5 %"</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>cidf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              term    estimate  std.error   statistic       p.value      lower
+1      (Intercept) 17.71835149 0.10759801 164.6717403 1.229960e-316 17.5066798
+2 speciesChinstrap  0.05649237 0.12231501   0.4618597  6.444891e-01 -0.1841312
+3    speciesGentoo -3.36375169 0.10267709 -32.7604888 2.664705e-105 -3.5657427
+4          sexmale  1.50470770 0.09106922  16.5226813  5.184519e-45  1.3255522
+5         year2008 -0.21053181 0.11373677  -1.8510443  6.506474e-02 -0.4342799
+6         year2009 -0.14416134 0.11238907  -1.2826989  2.005060e-01 -0.3652582
+        upper
+1 17.93002315
+2  0.29711599
+3 -3.16176068
+4  1.68386318
+5  0.01321630
+6  0.07693551</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cidf<span class="sc">$</span>term<span class="ot">=</span><span class="fu">as.factor</span>(cidf<span class="sc">$</span>term)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now make a plot!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>cidf, <span class="fu">aes</span>(<span class="at">x=</span>estimate, <span class="at">y=</span>term))<span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmax=</span>lower, <span class="at">xmin=</span>upper),<span class="at">height=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Note that there are many ways to build a dataframe and plot for these. This is just one example. Here we can visualize that the effects of each variable individually are not very large.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="an-example-with-numerical-vars" class="level2">
+<h2 class="anchored" data-anchor-id="an-example-with-numerical-vars">An example with numerical vars</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">1.) Run an additive model and an interactive model. View summaries</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">2.) make the coef data neat and look at model fits</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">3.) make a pretty graph!</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>lm2<span class="ot">&lt;-</span><span class="fu">lm</span>(bill_depth_mm <span class="sc">~</span> bill_length_mm <span class="sc">+</span> species, <span class="at">data=</span>penguins)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>lm3<span class="ot">&lt;-</span><span class="fu">lm</span>(bill_depth_mm <span class="sc">~</span> bill_length_mm <span class="sc">*</span> species, <span class="at">data=</span>penguins)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">#look at summary</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bill_depth_mm ~ bill_length_mm + species, data = penguins)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.4579 -0.6814 -0.0431  0.5441  3.5994 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      10.56526    0.69093  15.291  &lt; 2e-16 ***
+bill_length_mm    0.20044    0.01768  11.337  &lt; 2e-16 ***
+speciesChinstrap -1.93308    0.22572  -8.564 4.26e-16 ***
+speciesGentoo    -5.10332    0.19440 -26.252  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9543 on 329 degrees of freedom
+Multiple R-squared:  0.7673,    Adjusted R-squared:  0.7652 
+F-statistic: 361.6 on 3 and 329 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bill_depth_mm ~ bill_length_mm * species, data = penguins)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.6574 -0.6559 -0.0483  0.5203  3.4990 
+
+Coefficients:
+                                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                     11.48771    1.15987   9.904  &lt; 2e-16 ***
+bill_length_mm                   0.17668    0.02981   5.928 7.79e-09 ***
+speciesChinstrap                -3.91857    2.06731  -1.895   0.0589 .  
+speciesGentoo                   -6.36675    1.77990  -3.577   0.0004 ***
+bill_length_mm:speciesChinstrap  0.04553    0.04594   0.991   0.3224    
+bill_length_mm:speciesGentoo     0.03093    0.04112   0.752   0.4525    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9556 on 327 degrees of freedom
+Multiple R-squared:  0.7681,    Adjusted R-squared:  0.7645 
+F-statistic: 216.6 on 5 and 327 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term             estimate std.error statistic  p.value
+  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)        10.6      0.691      15.3  2.98e-40
+2 bill_length_mm      0.200    0.0177     11.3  2.26e-25
+3 speciesChinstrap   -1.93     0.226      -8.56 4.26e-16
+4 speciesGentoo      -5.10     0.194     -26.3  1.04e-82</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  term                            estimate std.error statistic  p.value
+  &lt;chr&gt;                              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)                      11.5       1.16       9.90  2.14e-20
+2 bill_length_mm                    0.177     0.0298     5.93  7.79e- 9
+3 speciesChinstrap                 -3.92      2.07      -1.90  5.89e- 2
+4 speciesGentoo                    -6.37      1.78      -3.58  4.00e- 4
+5 bill_length_mm:speciesChinstrap   0.0455    0.0459     0.991 3.22e- 1
+6 bill_length_mm:speciesGentoo      0.0309    0.0411     0.752 4.52e- 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#have a look at model fit</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm2) <span class="co">#R2 is really good-&gt; 76.5!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.767         0.765 0.954      362. 8.88e-104     3  -455.  920.  939.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm3) <span class="co">#r2 is 0.768!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.768         0.765 0.956      217. 1.87e-101     5  -454.  923.  949.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>lm2g<span class="ot">&lt;-</span>lm2 <span class="sc">%&gt;%</span> </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">color=</span>species))<span class="sc">+</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>.fitted))<span class="sc">+</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>lm3g<span class="ot">&lt;-</span>lm3 <span class="sc">%&gt;%</span> </span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">color=</span>species))<span class="sc">+</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>.fitted))<span class="sc">+</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>lm2g<span class="sc">/</span>lm3g <span class="co">#lm2 has same y int for all! lm3 does not (because of the interaction term!!!)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-selection" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection">Model Selection</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">1.) test assumptions (use performance!)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">2.) check the model performances and choose the best fit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">3.) MORE COMPLEX EXAMPLE :)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_performance</span>(lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Indices of model performance
+
+AIC     |    AICc |     BIC |    R2 | R2 (adj.) |  RMSE | Sigma
+---------------------------------------------------------------
+919.835 | 920.018 | 938.875 | 0.767 |     0.765 | 0.949 | 0.954</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(lm2)<span class="co">#things look good, including low collinearity (VIF)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   GVIF Df GVIF^(1/(2*Df))
+bill_length_mm 3.407875  1        1.846043
+species        3.407875  2        1.358692</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_performance</span>(lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Indices of model performance
+
+AIC     |    AICc |     BIC |    R2 | R2 (adj.) |  RMSE | Sigma
+---------------------------------------------------------------
+922.729 | 923.074 | 949.386 | 0.768 |     0.765 | 0.947 | 0.956</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(lm3) <span class="co">#things look good, but we have super high VIF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Model has interaction terms. VIFs might be inflated.
+  You may check multicollinearity among predictors of a model without
+  interaction terms.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_collinearity</span>(lm3) <span class="co">#a table of collinearity results - we would need to remove stuff from the model until the model has VIG that are all below 5 or so (below 10 is fine )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Model has interaction terms. VIFs might be inflated.
+  You may check multicollinearity among predictors of a model without
+  interaction terms.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Check for Multicollinearity
+
+Moderate Correlation
+
+           Term  VIF           VIF 95% CI Increased SE Tolerance
+ bill_length_mm 9.66 [    7.94,    11.81]         3.11      0.10
+ Tolerance 95% CI
+     [0.08, 0.13]
+
+High Correlation
+
+                   Term      VIF           VIF 95% CI Increased SE Tolerance
+                species 49899.43 [40473.88, 61520.04]       223.38  2.00e-05
+ bill_length_mm:species 64717.85 [52493.21, 79789.42]       254.40  1.55e-05
+ Tolerance 95% CI
+     [0.00, 0.00]
+     [0.00, 0.00]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lm3) <span class="co">#gives us a more useful table- tells us that species and species*bill length are looking bad. SO BAD that we cannot run this model....</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>there are higher-order terms (interactions) in this model
+consider setting type = 'predictor'; see ?vif</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                               GVIF Df GVIF^(1/(2*Df))
+bill_length_mm             9.658784  1        3.107858
+species                49899.425896  2       14.945962
+bill_length_mm:species 64717.849261  2       15.949829</code></pre>
+</div>
+</div>
+<p>What do we do? We remove interaction terms one by one, thereby simplifying the model, until the VIF are low enough to be meaningful (all below 5 is a good rule of thumb)</p>
+<p>since the model without the * is just lm2, we are all set.</p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_performance</span>(lm2,lm3,<span class="at">rank=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name | Model |    R2 | R2 (adj.) |  RMSE | Sigma | AIC weights | AICc weights | BIC weights | Performance-Score
+---------------------------------------------------------------------------------------------------------------
+lm2  |    lm | 0.767 |     0.765 | 0.949 | 0.954 |       0.810 |        0.822 |       0.995 |            71.43%
+lm3  |    lm | 0.768 |     0.765 | 0.947 | 0.956 |       0.190 |        0.178 |       0.005 |            28.57%</code></pre>
+</div>
+</div>
+<p>-This is a comprehensive model check that uses many vars to assess the best model.</p>
+<p>-Here, lm2 wins easily! R2 are about the same, RMSE (residual mean square error) is about the same.</p>
+<p>-AICweights tell us thje relative likelihood of a model– closer to 1 is best. ***when you look at AIC scores (slightly different from AIC weights, the lower the value, the better)</p>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>lm4<span class="ot">&lt;-</span><span class="fu">lm</span>(bill_depth_mm <span class="sc">~</span> bill_length_mm <span class="sc">*</span> species <span class="sc">*</span> sex, <span class="at">data=</span>penguins)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="co">#look at summary</span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bill_depth_mm ~ bill_length_mm * species * sex, 
+    data = penguins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.06730 -0.52452 -0.06471  0.45593  2.90319 
+
+Coefficients:
+                                         Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)                              14.84023    1.77185   8.376 1.73e-15
+bill_length_mm                            0.07466    0.04749   1.572   0.1169
+speciesChinstrap                         -0.25160    2.77579  -0.091   0.9278
+speciesGentoo                            -5.76780    2.98938  -1.929   0.0546
+sexmale                                   4.92359    2.46355   1.999   0.0465
+bill_length_mm:speciesChinstrap          -0.01026    0.06596  -0.155   0.8765
+bill_length_mm:speciesGentoo              0.03871    0.07101   0.545   0.5860
+bill_length_mm:sexmale                   -0.09177    0.06360  -1.443   0.1500
+speciesChinstrap:sexmale                -11.35403    5.67926  -1.999   0.0464
+speciesGentoo:sexmale                    -2.41202    3.94469  -0.611   0.5413
+bill_length_mm:speciesChinstrap:sexmale   0.24451    0.12006   2.037   0.0425
+bill_length_mm:speciesGentoo:sexmale      0.06197    0.09131   0.679   0.4978
+                                           
+(Intercept)                             ***
+bill_length_mm                             
+speciesChinstrap                           
+speciesGentoo                           .  
+sexmale                                 *  
+bill_length_mm:speciesChinstrap            
+bill_length_mm:speciesGentoo               
+bill_length_mm:sexmale                     
+speciesChinstrap:sexmale                *  
+speciesGentoo:sexmale                      
+bill_length_mm:speciesChinstrap:sexmale *  
+bill_length_mm:speciesGentoo:sexmale       
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8175 on 321 degrees of freedom
+Multiple R-squared:  0.8334,    Adjusted R-squared:  0.8277 
+F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make that pretty</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 5
+   term                                    estimate std.error statistic  p.value
+   &lt;chr&gt;                                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 (Intercept)                              14.8       1.77      8.38   1.73e-15
+ 2 bill_length_mm                            0.0747    0.0475    1.57   1.17e- 1
+ 3 speciesChinstrap                         -0.252     2.78     -0.0906 9.28e- 1
+ 4 speciesGentoo                            -5.77      2.99     -1.93   5.46e- 2
+ 5 sexmale                                   4.92      2.46      2.00   4.65e- 2
+ 6 bill_length_mm:speciesChinstrap          -0.0103    0.0660   -0.155  8.77e- 1
+ 7 bill_length_mm:speciesGentoo              0.0387    0.0710    0.545  5.86e- 1
+ 8 bill_length_mm:sexmale                   -0.0918    0.0636   -1.44   1.50e- 1
+ 9 speciesChinstrap:sexmale                -11.4       5.68     -2.00   4.64e- 2
+10 speciesGentoo:sexmale                    -2.41      3.94     -0.611  5.41e- 1
+11 bill_length_mm:speciesChinstrap:sexmale   0.245     0.120     2.04   4.25e- 2
+12 bill_length_mm:speciesGentoo:sexmale      0.0620    0.0913    0.679  4.98e- 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co">#look at fit</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm4) <span class="co">#nice r2!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.833         0.828 0.818      146. 9.55e-118    11  -399.  825.  874.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a pretty graph!</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>lm4 <span class="sc">%&gt;%</span> </span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm,<span class="at">color=</span>species))<span class="sc">+</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>.fitted))<span class="sc">+</span></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co">#oops, that isn't quite right. What are we missing?</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>lm4g2<span class="ot">&lt;-</span>lm4 <span class="sc">%&gt;%</span> </span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm,<span class="at">color=</span>species, <span class="at">shape=</span>sex))<span class="sc">+</span></span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>.fitted))<span class="sc">+</span></span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a><span class="co">#OR</span></span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>lm4g3<span class="ot">&lt;-</span>lm4 <span class="sc">%&gt;%</span> </span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm,<span class="at">color=</span>species, <span class="at">shape=</span>sex))<span class="sc">+</span></span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>.fitted))<span class="sc">+</span></span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb76-17"><a href="#cb76-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sex)</span>
+<span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-19"><a href="#cb76-19" aria-hidden="true" tabindex="-1"></a><span class="co">#compare graphs!</span></span>
+<span id="cb76-20"><a href="#cb76-20" aria-hidden="true" tabindex="-1"></a>lm4g2<span class="sc">/</span>lm4g3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="cis-and-a-graph-for-this-one" class="level4">
+<h4 class="anchored" data-anchor-id="cis-and-a-graph-for-this-one">CIs and a graph for this one!</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>coefs<span class="ot">&lt;-</span><span class="fu">tidy</span>(lm4)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>coefs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 5
+   term                                    estimate std.error statistic  p.value
+   &lt;chr&gt;                                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 (Intercept)                              14.8       1.77      8.38   1.73e-15
+ 2 bill_length_mm                            0.0747    0.0475    1.57   1.17e- 1
+ 3 speciesChinstrap                         -0.252     2.78     -0.0906 9.28e- 1
+ 4 speciesGentoo                            -5.77      2.99     -1.93   5.46e- 2
+ 5 sexmale                                   4.92      2.46      2.00   4.65e- 2
+ 6 bill_length_mm:speciesChinstrap          -0.0103    0.0660   -0.155  8.77e- 1
+ 7 bill_length_mm:speciesGentoo              0.0387    0.0710    0.545  5.86e- 1
+ 8 bill_length_mm:sexmale                   -0.0918    0.0636   -1.44   1.50e- 1
+ 9 speciesChinstrap:sexmale                -11.4       5.68     -2.00   4.64e- 2
+10 speciesGentoo:sexmale                    -2.41      3.94     -0.611  5.41e- 1
+11 bill_length_mm:speciesChinstrap:sexmale   0.245     0.120     2.04   4.25e- 2
+12 bill_length_mm:speciesGentoo:sexmale      0.0620    0.0913    0.679  4.98e- 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>cis<span class="ot">&lt;-</span><span class="fu">data.table</span>(<span class="fu">confint</span>(lm4), <span class="at">keep.rownames =</span> <span class="st">'term'</span>)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>cis</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                       term         2.5 %      97.5 %
+ 1:                             (Intercept)  11.354321139 18.32613470
+ 2:                          bill_length_mm  -0.018764802  0.16808708
+ 3:                        speciesChinstrap  -5.712636771  5.20943941
+ 4:                           speciesGentoo -11.649049135  0.11344307
+ 5:                                 sexmale   0.076849623  9.77033563
+ 6:         bill_length_mm:speciesChinstrap  -0.140025236  0.11951459
+ 7:            bill_length_mm:speciesGentoo  -0.100987370  0.17840241
+ 8:                  bill_length_mm:sexmale  -0.216904270  0.03335517
+ 9:                speciesChinstrap:sexmale -22.527308826 -0.18075321
+10:                   speciesGentoo:sexmale -10.172726533  5.34869591
+11: bill_length_mm:speciesChinstrap:sexmale   0.008304843  0.48071943
+12:    bill_length_mm:speciesGentoo:sexmale  -0.117669226  0.24160110</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>CI<span class="ot">&lt;-</span><span class="fu">merge</span>(coefs,cis)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>CI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                      term     estimate  std.error   statistic
+1                              (Intercept)  14.84022792 1.77185076  8.37555183
+2                           bill_length_mm   0.07466114 0.04748745  1.57222883
+3                   bill_length_mm:sexmale  -0.09177455 0.06360216 -1.44294716
+4          bill_length_mm:speciesChinstrap  -0.01025532 0.06596072 -0.15547623
+5  bill_length_mm:speciesChinstrap:sexmale   0.24451214 0.12006175  2.03655314
+6             bill_length_mm:speciesGentoo   0.03870752 0.07100548  0.54513425
+7     bill_length_mm:speciesGentoo:sexmale   0.06196594 0.09130672  0.67865695
+8                                  sexmale   4.92359263 2.46354990  1.99857638
+9                         speciesChinstrap  -0.25159868 2.77578981 -0.09064039
+10                speciesChinstrap:sexmale -11.35403102 5.67926283 -1.99920859
+11                           speciesGentoo  -5.76780303 2.98937724 -1.92943298
+12                   speciesGentoo:sexmale  -2.41201531 3.94469014 -0.61145875
+        p.value         2.5 %      97.5 %
+1  1.731943e-15  11.354321139 18.32613470
+2  1.168826e-01  -0.018764802  0.16808708
+3  1.500104e-01  -0.216904270  0.03335517
+4  8.765436e-01  -0.140025236  0.11951459
+5  4.251519e-02   0.008304843  0.48071943
+6  5.860397e-01  -0.100987370  0.17840241
+7  4.978442e-01  -0.117669226  0.24160110
+8  4.649725e-02   0.076849623  9.77033563
+9  9.278349e-01  -5.712636771  5.20943941
+10 4.642846e-02 -22.527308826 -0.18075321
+11 5.455827e-02 -11.649049135  0.11344307
+12 5.413287e-01 -10.172726533  5.34869591</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>CI<span class="ot">&lt;-</span> CI <span class="sc">%&gt;%</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"lower"</span><span class="ot">=</span><span class="st">"2.5 %"</span>,</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">"upper"</span><span class="ot">=</span><span class="st">"97.5 %"</span>)</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>CI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                      term     estimate  std.error   statistic
+1                              (Intercept)  14.84022792 1.77185076  8.37555183
+2                           bill_length_mm   0.07466114 0.04748745  1.57222883
+3                   bill_length_mm:sexmale  -0.09177455 0.06360216 -1.44294716
+4          bill_length_mm:speciesChinstrap  -0.01025532 0.06596072 -0.15547623
+5  bill_length_mm:speciesChinstrap:sexmale   0.24451214 0.12006175  2.03655314
+6             bill_length_mm:speciesGentoo   0.03870752 0.07100548  0.54513425
+7     bill_length_mm:speciesGentoo:sexmale   0.06196594 0.09130672  0.67865695
+8                                  sexmale   4.92359263 2.46354990  1.99857638
+9                         speciesChinstrap  -0.25159868 2.77578981 -0.09064039
+10                speciesChinstrap:sexmale -11.35403102 5.67926283 -1.99920859
+11                           speciesGentoo  -5.76780303 2.98937724 -1.92943298
+12                   speciesGentoo:sexmale  -2.41201531 3.94469014 -0.61145875
+        p.value         lower       upper
+1  1.731943e-15  11.354321139 18.32613470
+2  1.168826e-01  -0.018764802  0.16808708
+3  1.500104e-01  -0.216904270  0.03335517
+4  8.765436e-01  -0.140025236  0.11951459
+5  4.251519e-02   0.008304843  0.48071943
+6  5.860397e-01  -0.100987370  0.17840241
+7  4.978442e-01  -0.117669226  0.24160110
+8  4.649725e-02   0.076849623  9.77033563
+9  9.278349e-01  -5.712636771  5.20943941
+10 4.642846e-02 -22.527308826 -0.18075321
+11 5.455827e-02 -11.649049135  0.11344307
+12 5.413287e-01 -10.172726533  5.34869591</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>ciplot<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>CI, <span class="fu">aes</span>(<span class="at">x=</span>estimate, <span class="at">y=</span>term))<span class="sc">+</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span></span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>lower, <span class="at">xmax=</span>upper), <span class="at">height=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>ciplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co">#a graph of the good stuff</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>ciplot<span class="sc">/</span>lm4g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_regression_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

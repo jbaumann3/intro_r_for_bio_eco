@@ -1,0 +1,327 @@
+---
+title: "Multiple Regression & Model Selection"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+
+# **Multiple Regression and Model Selection**
+
+## Load packages
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(broom)
+library(palmerpenguins)
+library(data.table)
+library(performance)
+library(patchwork)
+library(car) #to check collinearity
+```
+
+My favorite mixed models selection tutorial: [Our Coding Club](https://ourcodingclub.github.io/tutorials/mixed-models/)
+
+## Get our penguin data ready!
+
+```{r}
+penguins <- palmerpenguins::penguins
+
+head(penguins)
+
+penguins<-drop_na(penguins)
+
+penguins$year=as.factor(penguins$year) #we are interested in year as a grouping/categorical variable so we will make it a factor
+
+```
+
+## What is the effect of year on bill depth by species?
+
+::: panel-tabset
+### 1.) Make a graph to visualize!
+
+We will start with a boxplot for a quick check. We would eventually want to calculate means and error bars for the final visualization though! Note that the graph below is a good way to view the interaction of our explanatory variables, which is not what we modeled... We only consider the additive effects (each variable on its own)
+
+```{r}
+# effect of year on bill depth by species
+ggplot(data=penguins, aes(x=as.factor(year), y=bill_depth_mm, color=species))+
+  geom_boxplot()+
+  theme_classic()
+
+```
+
+Visualization of each variable on its own:
+
+```{r}
+speciesgraph<-ggplot(data=penguins, aes(x=species, y=bill_depth_mm))+
+  geom_boxplot()+
+  theme_classic()
+
+sexgraph<-ggplot(data=penguins, aes(x=sex, y=bill_depth_mm))+
+  geom_boxplot()+
+  theme_classic()
+
+yeargraph<-ggplot(data=penguins, aes(x=as.factor(year), y=bill_depth_mm))+
+  geom_boxplot()+
+  theme_classic()
+
+speciesgraph+sexgraph+yeargraph
+
+```
+
+### 2.) Build the model
+
+```{r}
+#build the model
+lm1<- lm(bill_depth_mm ~ species+sex+year, data=penguins)
+
+```
+
+### 3.) view tabular results
+
+```{r}
+summary(lm1) #check R2 and p-value! How well does the model fit?
+
+summary(lm1)$coefficient #just the coef table from the summary!
+
+anova(lm1) # an ANOVA table of our lm
+
+confint(lm1) #CIs for our model predictors!
+```
+
+-t / pvalue tells us whether there is a sig association between the predictor and the outcome variable...
+
+-in stats terms, this tells us whether the beta coef of predictor is significantly different form zero
+
+-coefficient can be interpreted as average effect on y of a one unit increase in predictor, holding all other predictors fixed
+
+Here, we have an additive model and we see from the anova table and the lm summary that there are significant effects of species and sex on bill depth but that there is not effect on year. Next, let's look at the data again to confirm!
+
+### 4.) Model fit assessment
+
+Here, we want to know how well the model represent the data. We need: 1. The R2 value of the model (closer to 1 is best) 2. The p-value of the model (\<0.05 is required for there to be a relationship) 3. We can calculate residual standard error. Lower = more accurate!
+
+The R2 and p are in the summary! Below is the formula for RMSE
+
+```{r}
+summary(lm1)
+
+#RSE: <- LOWER RSE= more accurate the model!
+sigma(lm1)
+mean(penguins$bill_depth_mm)
+sigma(lm1)/mean(penguins$bill_depth_mm)
+#0.048, or 4.8% error rate
+
+
+```
+
+We can also get this information from the performance package using model_performance. This function tells us many things, including R2 and RMSE. We will discuss the rest of this later
+
+```{r}
+model_performance(lm1)
+```
+
+### 5.) A 95% CI plot of model coefficients
+
+combine data! Use tidy() from the broom package to get nice neat dataframes from models
+
+```{r}
+coefs<-tidy(lm1, quick=FALSE)
+coefs
+
+ci<-data.table(confint(lm1), keep.rownames='term')
+ci
+
+cidf<-cbind(coefs,ci)
+cidf
+
+colnames(cidf)
+
+cidf<-cidf[,-6]
+
+cidf<- cidf %>%
+  rename("lower"="2.5 %",
+         "upper"="97.5 %")
+
+cidf
+
+cidf$term=as.factor(cidf$term)
+```
+
+Now make a plot!
+
+```{r}
+ggplot(data=cidf, aes(x=estimate, y=term))+
+  geom_vline(xintercept = 0, linetype=2)+
+  geom_point(size=3)+
+  geom_errorbarh(aes(xmax=lower, xmin=upper),height=0.2)+
+  theme_classic()
+```
+
+Note that there are many ways to build a dataframe and plot for these. This is just one example. Here we can visualize that the effects of each variable individually are not very large.
+:::
+
+## An example with numerical vars
+
+::: panel-tabset
+### 1.) Run an additive model and an interactive model. View summaries
+
+```{r}
+lm2<-lm(bill_depth_mm ~ bill_length_mm + species, data=penguins)
+lm3<-lm(bill_depth_mm ~ bill_length_mm * species, data=penguins)
+
+#look at summary
+summary(lm2)
+summary(lm3)
+```
+
+### 2.) make the coef data neat and look at model fits
+
+```{r}
+tidy(lm2)
+tidy(lm3)
+
+#have a look at model fit
+glance(lm2) #R2 is really good-> 76.5!
+glance(lm3) #r2 is 0.768!
+```
+
+### 3.) make a pretty graph!
+
+```{r}
+
+lm2g<-lm2 %>% 
+  augment() %>%
+  ggplot(aes(x=bill_length_mm, y=bill_depth_mm, color=species))+
+  geom_point()+
+  geom_line(aes(y=.fitted))+
+  theme_classic()
+
+lm3g<-lm3 %>% 
+  augment() %>%
+  ggplot(aes(x=bill_length_mm, y=bill_depth_mm, color=species))+
+  geom_point()+
+  geom_line(aes(y=.fitted))+
+  theme_classic()
+
+lm2g/lm3g #lm2 has same y int for all! lm3 does not (because of the interaction term!!!)
+```
+:::
+
+## Model Selection
+
+::: panel-tabset
+we have 2 models of the same thing (ish) and we know the R2 of each. But that isn't all we need to figure out which model is best.
+
+### 1.) test assumptions (use performance!)
+
+```{r}
+model_performance(lm2)
+check_model(lm2)#things look good, including low collinearity (VIF)
+vif(lm2)
+
+model_performance(lm3)
+check_model(lm3) #things look good, but we have super high VIF
+check_collinearity(lm3) #a table of collinearity results - we would need to remove stuff from the model until the model has VIG that are all below 5 or so (below 10 is fine )
+vif(lm3) #gives us a more useful table- tells us that species and species*bill length are looking bad. SO BAD that we cannot run this model....
+```
+
+What do we do? We remove interaction terms one by one, thereby simplifying the model, until the VIF are low enough to be meaningful (all below 5 is a good rule of thumb)
+
+since the model without the \* is just lm2, we are all set.
+
+### 2.) check the model performances and choose the best fit
+
+```{r}
+compare_performance(lm2,lm3,rank=TRUE)
+```
+
+-This is a comprehensive model check that uses many vars to assess the best model.
+
+-Here, lm2 wins easily! R2 are about the same, RMSE (residual mean square error) is about the same.
+
+-AICweights tell us thje relative likelihood of a model-- closer to 1 is best. \*\*\*when you look at AIC scores (slightly different from AIC weights, the lower the value, the better)
+
+### 3.) MORE COMPLEX EXAMPLE :)
+
+```{r}
+
+lm4<-lm(bill_depth_mm ~ bill_length_mm * species * sex, data=penguins)
+
+#look at summary
+summary(lm4)
+
+#make that pretty
+tidy(lm4)
+
+#look at fit
+glance(lm4) #nice r2!
+
+# make a pretty graph!
+lm4 %>% 
+  augment() %>%
+  ggplot(aes(x=bill_length_mm, y=bill_depth_mm,color=species))+
+  geom_point()+
+  geom_line(aes(y=.fitted))+
+  theme_classic()
+
+#oops, that isn't quite right. What are we missing?
+lm4g2<-lm4 %>% 
+  augment() %>%
+  ggplot(aes(x=bill_length_mm, y=bill_depth_mm,color=species, shape=sex))+
+  geom_point()+
+  geom_line(aes(y=.fitted))+
+  theme_classic()
+
+#OR
+
+lm4g3<-lm4 %>% 
+  augment() %>%
+  ggplot(aes(x=bill_length_mm, y=bill_depth_mm,color=species, shape=sex))+
+  geom_point()+
+  geom_line(aes(y=.fitted))+
+  theme_classic()+
+  facet_wrap(~sex)
+
+#compare graphs!
+lm4g2/lm4g3
+
+```
+
+#### CIs and a graph for this one!
+
+```{r}
+coefs<-tidy(lm4)
+coefs
+
+cis<-data.table(confint(lm4), keep.rownames = 'term')
+cis
+
+CI<-merge(coefs,cis)
+CI
+
+CI<- CI %>%
+  rename("lower"="2.5 %",
+         "upper"="97.5 %")
+CI
+
+ciplot<-ggplot(data=CI, aes(x=estimate, y=term))+
+  geom_vline(xintercept = 0, linetype=2)+
+  geom_point(size=3)+
+  geom_errorbarh(aes(xmin=lower, xmax=upper), height=0.2)+
+  theme_classic()
+
+ciplot
+
+#a graph of the good stuff
+ciplot/lm4g2
+```
+:::
