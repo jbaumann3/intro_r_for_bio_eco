@@ -20,6 +20,7 @@ The Tidyverse is a collection of R packages that can be used together for many d
 We can load the Tidyverse as a single package in R:
 
 ```{r}
+#| warning: false
 library(tidyverse)
 ```
 
@@ -260,5 +261,4 @@ And now we are back to our original data frame! The '!fish' means simply that we
 **NOTES** There are MANY other ways to modify pivot_wider() and pivot_longer(). I encourage you to look in the help tab, the tidyR/ Tidyverse documentation online, and for other examples on google and stack overflow.
 
 ------------------------------------------------------------------------
-
 :::
