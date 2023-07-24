@@ -1,0 +1,199 @@
+---
+title: "linear regression"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+
+
+# **Load packages**
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(see)
+library(car)
+library(patchwork)
+library(ggsci)
+library(ggridges)
+library(performance)
+library(Hmisc) #for correlation matrix
+library(corrplot)#to visualize correlation matrices
+library(car) #contains some statistical tests we need to assess assumptions
+
+```
+
+
+# **(Simple) Linear Regression**
+
+A linear regression essentially compares the correlation of one variable with another. The closer the relationship is to 1:1 (a diagonal line at 45 degrees from the x and y axis) the more correlated the two variables are. Does correlation imply causation? NO, it does not. But this type of analysis driven by hypotheses can help us seek causation/ mechanisms and statistically assess relationships.
+
+Let's take a look at a simple linear regression. To do this, we will use the lm() function in R. The syntax should always be reponsevariable \~ explanatoryvariable We will do this with the iris data.
+
+```{r}
+lm1<-lm(Sepal.Length ~ Petal.Length, data=iris)
+summary(lm1)
+```
+
+The above table produces estimates for the slope and intercept of the line.
+
+At the bottom we see R2 values (multiple and adjusted. We usually use adjusted Rsquared). We also see an overall p-value for our linear regression model (H0= slope of our regression line = 0).
+
+## plotting a regression line
+
+It is very easy to make a regression line in ggplot. We can plot our scatterplot as we normally would and then we add the regression line using the geom_smooth() argument.
+
+```{r}
+
+ggplot(iris, aes(x=Petal.Length, y=Sepal.Length))+
+  geom_point()+
+  geom_smooth(method='lm')+
+  theme_classic()
+
+```
+
+\
+The blue line represents our regression line (y\~x). The gray around the line is the SE. We can add SE=FALSE to our geom_smooth() to turn that off:
+
+geom_smooth(method='lm', SE=FALSE)
+
+## **Assumptions**
+
+Linear regressions have 4 assumptions:
+
+**1.)** Linearity of the data: We assume the relationship between predictor (x) and outcome/dependent variable (y) is approx. linear. At each value of X there is a population of possible Y-values whose mean lies on the regression line.\
+
+**2.)** Normality of residuals: The residual error are assumed to be normally distributed. In other words: at each value of X, the distribution of possible Y values is normal\
+
+**3.)** Homogeneity of residual variance (homoscedasticity): We assume residual variance is approx. constant. In other words: the variance of Y values is the same at all values of X\
+**4.)** Independence of residual error terms: At each value of X, the Y-measurements represent a random sample from the population of possible Y values.\
+
+We can also make a residual plot to check some of our assumptions. **Residuals** measure the scatter of points above or below the least-squares regression line. When we calculate the residuals for a linear regression and plot them, y=0 is the least squares line. Residuals essentially represent the distance between each point and the linear regression line we see in our regression graph.
+
+```{r}
+residuals(lm1)
+ggplot(lm1, aes(x=.fitted, y=.resid))+
+  geom_point()+
+  geom_hline(yintercept=0, linetype='dashed')+
+  labs(x='Petal Legnth', y='Residuals')+
+  theme_classic()
+
+```
+
+\
+If assumptions of normality and equal variance are met, a residual plot should have: - A roughly symmetric cloud of points above and below the horizontal line at 0 with a higher density of points close to the line ran away from it.\
+- Little noticeable curvature as we move from left to right\
+- Approx. equal variance of points above and below the line at all values of X\
+\
+
+The residual plot above shows meets all assumptions, though this analysis is somewhat subjective.
+
+**An alternative assumption check** I think it is easier to do a more comprehensive visual check with the performance package in R. We can easily visually check the first 3 assumptions using check_model(). Assumption 4 requires us to think about experimental design.
+
+```{r}
+lm1<-lm(Sepal.Length ~ Petal.Length, data=iris)
+
+check_model(lm1)
+
+```
+
+\
+Using the plots above, we can check 3 / 4 of our assumptions and look for influential observations/outliers. The plots even tell us what to look for on them! This is a bit simpler than trying to analyze the residual plot.\
+As with the residual plot, this analysis of assumptions is somewhat subjective. That is ok.
+
+## **when data are not linear**
+
+Sometimes the relationship between two variables is not linear! There are many types of common relationships including logarithmic and exponential. We can often visualize these relationships and **Transform** our data to make them linear with some simple math.
+
+Let's look at an example:
+
+```{r}
+head(Loblolly)
+p1<-ggplot(Loblolly, aes(x=age, y=height))+
+  geom_point()+
+  geom_smooth()+
+  geom_smooth(method='lm', linetype='dashed', color='firebrick')+
+  theme_classic()+
+  labs(title='original')
+#this is roughly logarithmic in shape
+
+lob<-Loblolly
+lob$age2<-log(lob$age)
+
+p2<-ggplot(lob, aes(x=age2, y=height))+
+  geom_point()+
+  geom_smooth()+
+  geom_smooth(method='lm', linetype='dashed', color='firebrick')+
+  theme_classic()+
+  labs(title='log transformed')
+
+lob$age3=(lob$age2)^2
+p3<-ggplot(lob, aes(x=age3, y=height))+
+  geom_point()+
+  geom_smooth()+
+  geom_smooth(method='lm', linetype='dashed', color='firebrick')+
+  theme_classic()+
+  labs(title='squared')
+
+p1/p2/p3
+
+
+```
+
+Here we can see that the transformation was fairly trivial (the data were close enough to a straight line already). BUT, technically, the first plot shows a logarithmic trend. We can transform one of the variables to generate a more linear trend. We can guess a transformation and check it with graphs or we can use our knowledge of mathematical relationships to understand how we might make our relationship more linear.
+
+## **Linear Regression with categorical variables**
+
+We can look at mtcars this time...
+
+```{r}
+head(mtcars)
+```
+
+Now, I want to hypothesize that there will be no effect of cylinder on horsepower (this is called a "null hypothesis"). We've seen similar hypothesis before in our ANOVA.
+
+First, let's make cylinder a factor and plot a boxplot so we can see whether there may be a trend here...
+
+```{r}
+mtcars$cyl1=as.factor(mtcars$cyl)
+
+ggplot(mtcars, aes(x=cyl1, y=hp))+
+         geom_boxplot()+
+         theme_bw()
+
+```
+
+\
+I think it is safe to say we see what we might suspect to be a linear(ish) relationship between cyl and hp, where hp increases as cyl increases. What do you think?
+
+Now, let's do some stats on this.
+
+## **Run the lm**
+
+```{r}
+lmhp<-lm(hp~cyl1, data = mtcars)
+summary(lmhp)
+```
+
+This time we used a categorical x variable, which makes things a little more interesting. In the coefficients table this time we see cyl = 6 and cyl =8 represented as well as "intercept." R takes the categorical variables and places them in alpha numeric order in these tables. So "intercept" is actually cyl=4. The "estimate" tells us the effect size of each category relative to "intercept." SO, the mean of cyl=4 should be 82.64 (check the boxplot above to confirm). The mean of cyl=6 is not 39.65, but is actually 39.65 higher than mean of cyl=4 (82.64 + 39.65 = 132.29, which checks out). The p-values associated with each of the coefficients test the null hypothesis that each coefficient has no effect. A p \<0.05 indicates that the coefficient is likely to be meaningful in the model (changes in the predictor's value are related to changes in the response value). </br>
+
+Further down, we see an R-squared of nearly 0.70, which is very good evidence of a linear relationship (70% of the variance in y can be explained by x!). The p-value is very nearly 0.00, which indicates a significant linear correlation.
+
+## **Check assumptions!**
+
+```{r meesage=FALSE, warning=FALSE}
+check_model(lmhp)
+```
+
+\
+Here we see some concern about Homoscedasticity and homogeneity of variance. We can probably still assume our model is reliable, but we may want to be careful. We learned ways to numerically assess this last week, but again, with high enough sample size, this won't be an issue. Here, I would suggest that n is too small, so if this were a real statistical test we would have limitations to discuss.\
+
+Remember our hypothesis (null) was: "There will be no effect of cylinder on horsepower." We are able to reject this null hypothesis and suggest that indeed horsepower increases as cylinder increases. We might also add caveats that homoscedasticity was not confirmed due to low sample size, but the result seems clear enough that this likely doesn't matter.\

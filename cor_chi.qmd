@@ -1,0 +1,140 @@
+---
+title: "Correlation and Chi Square"
+author: "Justin Baumann"
+format: 
+  html:
+    toc: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    self-contained: true
+
+editor: visual
+---
+
+# **Load packages**
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(see)
+library(car)
+library(patchwork)
+library(ggsci)
+library(ggridges)
+library(performance)
+library(Hmisc) #for correlation matrix
+library(corrplot)#to visualize correlation matrices
+library(car) #contains some statistical tests we need to assess assumptions
+
+```
+
+# **Correlation between numerical variables**
+
+Often in science, it can be useful to assess the correlation between numerical variables (how does a change in one variable impact a change in another?). We may use these correlations to tell us which variables to include or exclude from more complex models and we can also use these correlations to understand relationships between variables and thus, possibly search for mechanisms to explain said relationships.
+
+## Correlation Coefficients
+
+A **correlation coefficient (r)** tells us the relationship (strength and direction) between two variables. These coefficients can be positive or negative and will range from 0 to 1 (or negative 1). Values nearer to 1 (or negative 1) indicate stronger correlations and values closer to 0 indicate weaker correlations
+
+Let's try out some correlations using the iris data.\
+Is there a correlation between sepal length and sepal width? Let's test each species separately for now.\
+**Step 1: make a scatterplot**
+
+```{r}
+#filter down to a single species
+virg<-iris %>%
+  filter(Species=='virginica')
+
+#make a plot
+ggplot(virg, aes(x=Sepal.Length, y=Sepal.Width))+
+  geom_point()+
+  theme_classic()
+```
+
+\
+**Step 2: Calculate a correlation coeficient (r)**
+
+```{r}
+cor(virg$Sepal.Length, virg$Sepal.Width)
+```
+
+This value (r=0.45) positive and middle of the road/strong. This tells us that some correlation likely exists.
+
+**Step 3: Do a hypothesis test on the correlation** **Spearman's Test**\
+H0: The correlation between these two variables is 0\
+Ha: The correlation != 0\
+
+```{r}
+cor.test(virg$Sepal.Length, virg$Sepal.Width, method="spearman")
+```
+
+The above output gives us the r value (cor=0.457) AND a p-value for a hypothesis test that the two correlations do not differ. If p\<0.05 we can reject our H0 and say that the correlation differs from 0. Here, p=0.0008 so we can reject H0 and suggest that we have a significant positive correlation! Rho is similar to r and is this case our correlation coefficient (0.42). It is slightly lower than the r we calculated above.
+
+## Multiple Correlations
+
+```{r}
+iris2<-iris[,c(1:4)] #filter iris so we only have the numerical columns!
+
+iris_cor<-cor(iris2, method="spearman")
+
+iris_cor
+
+```
+
+The above correlation matrix shows r (correlation coefficient) not p values!
+
+**Getting r and p values**
+
+```{r}
+mydata.rcorr = rcorr(as.matrix(iris2))
+mydata.rcorr #top matrix = r, bottom matrix = p
+```
+
+**Plotting our correlations**
+
+```{r}
+corrplot(iris_cor)
+```
+
+## Categorical correlations (Chi-Square)
+
+A Chi-square test is a statistical test used to determine if two categorical variables have a significant correlation between them. These two variables should be selected from the same population. An example - Is the color of a thing red or green? Is the answer to a simple question yes or no?\
+\
+**Data format** Technically, a chi-square test is done on data that are in a contingency table (contains columns (variables) in which numbers represent counts. For example, here is a contingency table of household chore data (exciting)
+
+```{r}
+chore <- read.delim("http://www.sthda.com/sthda/RDoc/data/housetasks.txt", row.names=1)
+chore
+```
+
+**H0** = The row and column data of the contingency table are independent (no relationship) **Ha**= Row and column variables are dependent (there is a relationship between them)
+
+**The test**
+
+```{r}
+chorechi<-chisq.test(chore)
+chorechi
+```
+
+This result demonstrates that there is a significant association between the columns and rows in the data (they are dependent).\
+
+**A second example**
+
+Let's try to assess correlation between two categorical variables in a dataframe we know! We will use mtcars
+
+```{r}
+head(mtcars)
+
+#make a contingency table
+cartab<-table(mtcars$carb, mtcars$cyl)
+
+chisq.test(cartab)
+
+#note that we don't NEED to make the table. We can just do this
+chisq.test(mtcars$carb, mtcars$cyl)
+
+```
+
+Both tests above are the same (just two options for you). We see that p\<0.05, thus we have evidence to reject H0 and suggest that carb and cyl are dependent / correlated.

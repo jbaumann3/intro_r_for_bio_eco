@@ -53,6 +53,15 @@ website:
       background: light
       contents: 
        - usingquarto.qmd
+       
+    - id: b_stats
+      title: "Beginner Stats"
+      style: "docked"
+      background: light
+      contents: 
+       - cor_chi.qmd
+       - regression.qmd
+       - t-test.qmd
   
 format:
   html:
