@@ -14,6 +14,7 @@ website:
       - sidebar:wrangling
       - sidebar:Graphs
       - sidebar:quarto
+      - sidebar:b_stats
   
   sidebar:
     - id: RBasics

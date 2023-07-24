@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.3.353" />
 
-<meta name="author" content="Justin Baumann">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
-<title>Introduction to R for Biology &amp; Ecology - linear regression</title>
+<meta name="author" content="Justin Baumann" />
+
+<title>Introduction to R for Biology & Ecology – linear regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,23 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<!-- htmldependencies:E3FAD763 -->
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -95,28 +81,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 </head>
 
-<body class="nav-fixed">
+<body>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="/index.html">
     <span class="navbar-title">Introduction to R for Biology &amp; Ecology</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
+    <a class="nav-link" href="/index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -125,11 +113,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-r-basics">    
         <li>
-    <a class="dropdown-item" href="./getting_started.html" rel="" target="">
+    <a class="dropdown-item" href="/getting_started.html" rel="" target="">
  <span class="dropdown-text">Getting Started with RStudio</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./rbasics.html" rel="" target="">
+    <a class="dropdown-item" href="/rbasics.html" rel="" target="">
  <span class="dropdown-text">Packages &amp; reading/writing data</span></a>
   </li>  
     </ul>
@@ -140,19 +128,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tidyverse-data-wrangling">    
         <li>
-    <a class="dropdown-item" href="./intro_tidyverse.html" rel="" target="">
+    <a class="dropdown-item" href="/intro_tidyverse.html" rel="" target="">
  <span class="dropdown-text">Intro to the Tidyverse</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./pipe.html" rel="" target="">
+    <a class="dropdown-item" href="/pipe.html" rel="" target="">
  <span class="dropdown-text">Stringing functions together with the pipe</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./groupsmeans.html" rel="" target="">
+    <a class="dropdown-item" href="/groupsmeans.html" rel="" target="">
  <span class="dropdown-text">Summarizing Data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./datetime.html" rel="" target="">
+    <a class="dropdown-item" href="/datetime.html" rel="" target="">
  <span class="dropdown-text">Date and Time</span></a>
   </li>  
     </ul>
@@ -163,27 +151,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-graphs">    
         <li>
-    <a class="dropdown-item" href="./basic_graphs.html" rel="" target="">
+    <a class="dropdown-item" href="/basic_graphs.html" rel="" target="">
  <span class="dropdown-text">Intro to ggplot2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./colors.html" rel="" target="">
+    <a class="dropdown-item" href="/colors.html" rel="" target="">
  <span class="dropdown-text">Colors</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./shapes.html" rel="" target="">
+    <a class="dropdown-item" href="/shapes.html" rel="" target="">
  <span class="dropdown-text">Shapes</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./themes.html" rel="" target="">
+    <a class="dropdown-item" href="/themes.html" rel="" target="">
  <span class="dropdown-text">Themes</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./axes.html" rel="" target="">
+    <a class="dropdown-item" href="/axes.html" rel="" target="">
  <span class="dropdown-text">Axes labels and Titles</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./facets.html" rel="" target="">
+    <a class="dropdown-item" href="/facets.html" rel="" target="">
  <span class="dropdown-text">Multiple panels and multiple graphs</span></a>
   </li>  
     </ul>
@@ -194,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-using-quarto">    
         <li>
-    <a class="dropdown-item" href="./usingquarto.html" rel="" target="">
+    <a class="dropdown-item" href="/usingquarto.html" rel="" target="">
  <span class="dropdown-text">Getting Started with Quarto</span></a>
   </li>  
     </ul>
@@ -211,22 +199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#load-packages" id="toc-load-packages" class="nav-link active" data-scroll-target="#load-packages"><strong>Load packages</strong></a></li>
-  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><strong>(Simple) Linear Regression</strong></a>
-  <ul class="collapse">
-  <li><a href="#plotting-a-regression-line" id="toc-plotting-a-regression-line" class="nav-link" data-scroll-target="#plotting-a-regression-line">plotting a regression line</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><strong>Assumptions</strong></a></li>
-  <li><a href="#when-data-are-not-linear" id="toc-when-data-are-not-linear" class="nav-link" data-scroll-target="#when-data-are-not-linear"><strong>when data are not linear</strong></a></li>
-  <li><a href="#linear-regression-with-categorical-variables" id="toc-linear-regression-with-categorical-variables" class="nav-link" data-scroll-target="#linear-regression-with-categorical-variables"><strong>Linear Regression with categorical variables</strong></a></li>
-  <li><a href="#run-the-lm" id="toc-run-the-lm" class="nav-link" data-scroll-target="#run-the-lm"><strong>Run the lm</strong></a></li>
-  <li><a href="#check-assumptions" id="toc-check-assumptions" class="nav-link" data-scroll-target="#check-assumptions"><strong>Check assumptions!</strong></a></li>
-  </ul></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="regression.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+        <div id="quarto-toc-target"></div>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -253,11 +226,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 </header>
-
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#load-packages" id="toc-load-packages"><strong>Load packages</strong></a></li>
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression"><strong>(Simple) Linear Regression</strong></a>
+  <ul>
+  <li><a href="#plotting-a-regression-line" id="toc-plotting-a-regression-line">plotting a regression line</a></li>
+  <li><a href="#assumptions" id="toc-assumptions"><strong>Assumptions</strong></a></li>
+  <li><a href="#when-data-are-not-linear" id="toc-when-data-are-not-linear"><strong>when data are not linear</strong></a></li>
+  <li><a href="#linear-regression-with-categorical-variables" id="toc-linear-regression-with-categorical-variables"><strong>Linear Regression with categorical variables</strong></a></li>
+  <li><a href="#run-the-lm" id="toc-run-the-lm"><strong>Run the lm</strong></a></li>
+  <li><a href="#check-assumptions" id="toc-check-assumptions"><strong>Check assumptions!</strong></a></li>
+  </ul></li>
+  </ul>
+</nav>
 <section id="load-packages" class="level1">
 <h1><strong>Load packages</strong></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(see)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
@@ -266,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc) <span class="co">#for correlation matrix</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)<span class="co">#to visualize correlation matrices</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co">#contains some statistical tests we need to assess assumptions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co">#contains some statistical tests we need to assess assumptions</span></span></code></pre></div>
 </div>
 </section>
 <section id="simple-linear-regression" class="level1">
@@ -274,8 +262,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A linear regression essentially compares the correlation of one variable with another. The closer the relationship is to 1:1 (a diagonal line at 45 degrees from the x and y axis) the more correlated the two variables are. Does correlation imply causation? NO, it does not. But this type of analysis driven by hypotheses can help us seek causation/ mechanisms and statistically assess relationships.</p>
 <p>Let’s take a look at a simple linear regression. To do this, we will use the lm() function in R. The syntax should always be reponsevariable ~ explanatoryvariable We will do this with the iris data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lm1<span class="ot">&lt;-</span><span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Petal.Length, <span class="at">data=</span>iris)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lm1<span class="ot">&lt;-</span><span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Petal.Length, <span class="at">data=</span>iris)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -290,7 +278,7 @@ Coefficients:
 (Intercept)   4.30660    0.07839   54.94   &lt;2e-16 ***
 Petal.Length  0.40892    0.01889   21.65   &lt;2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 Residual standard error: 0.4071 on 148 degrees of freedom
 Multiple R-squared:   0.76, Adjusted R-squared:  0.7583 
@@ -300,37 +288,37 @@ F-statistic: 468.6 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>The above table produces estimates for the slope and intercept of the line.</p>
 <p>At the bottom we see R2 values (multiple and adjusted. We usually use adjusted Rsquared). We also see an overall p-value for our linear regression model (H0= slope of our regression line = 0).</p>
 <section id="plotting-a-regression-line" class="level2">
-<h2 class="anchored" data-anchor-id="plotting-a-regression-line">plotting a regression line</h2>
+<h2>plotting a regression line</h2>
 <p>It is very easy to make a regression line in ggplot. We can plot our scatterplot as we normally would and then we add the regression line using the geom_smooth() argument.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Sepal.Length))<span class="sc">+</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Sepal.Length))<span class="sc">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>)<span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>)<span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+<pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="regression_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="regression_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
-<p><br>
+<p><br />
 The blue line represents our regression line (y~x). The gray around the line is the SE. We can add SE=FALSE to our geom_smooth() to turn that off:</p>
 <p>geom_smooth(method=‘lm’, SE=FALSE)</p>
 </section>
 <section id="assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="assumptions"><strong>Assumptions</strong></h2>
+<h2><strong>Assumptions</strong></h2>
 <p>Linear regressions have 4 assumptions:</p>
-<p><strong>1.)</strong> Linearity of the data: We assume the relationship between predictor (x) and outcome/dependent variable (y) is approx. linear. At each value of X there is a population of possible Y-values whose mean lies on the regression line.<br>
+<p><strong>1.)</strong> Linearity of the data: We assume the relationship between predictor (x) and outcome/dependent variable (y) is approx. linear. At each value of X there is a population of possible Y-values whose mean lies on the regression line.<br />
 </p>
-<p><strong>2.)</strong> Normality of residuals: The residual error are assumed to be normally distributed. In other words: at each value of X, the distribution of possible Y values is normal<br>
+<p><strong>2.)</strong> Normality of residuals: The residual error are assumed to be normally distributed. In other words: at each value of X, the distribution of possible Y values is normal<br />
 </p>
-<p><strong>3.)</strong> Homogeneity of residual variance (homoscedasticity): We assume residual variance is approx. constant. In other words: the variance of Y values is the same at all values of X<br>
-<strong>4.)</strong> Independence of residual error terms: At each value of X, the Y-measurements represent a random sample from the population of possible Y values.<br>
+<p><strong>3.)</strong> Homogeneity of residual variance (homoscedasticity): We assume residual variance is approx. constant. In other words: the variance of Y values is the same at all values of X<br />
+<strong>4.)</strong> Independence of residual error terms: At each value of X, the Y-measurements represent a random sample from the population of possible Y values.<br />
 </p>
 <p>We can also make a residual plot to check some of our assumptions. <strong>Residuals</strong> measure the scatter of points above or below the least-squares regression line. When we calculate the residuals for a linear regression and plot them, y=0 is the least squares line. Residuals essentially represent the distance between each point and the linear regression line we see in our regression graph.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(lm1)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          1           2           3           4           5           6 
  0.22090540  0.02090540 -0.13820238 -0.31998683  0.12090540  0.39822871 
@@ -383,45 +371,45 @@ The blue line represents our regression line (y~x). The gray around the line is 
         145         146         147         148         149         150 
  0.06253960  0.26700074 -0.05121480  0.06700074 -0.31478371 -0.49210703 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lm1, <span class="fu">aes</span>(<span class="at">x=</span>.fitted, <span class="at">y=</span>.resid))<span class="sc">+</span></span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lm1, <span class="fu">aes</span>(<span class="at">x=</span>.fitted, <span class="at">y=</span>.resid))<span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">'dashed'</span>)<span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">'Petal Legnth'</span>, <span class="at">y=</span><span class="st">'Residuals'</span>)<span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&#39;dashed&#39;</span>)<span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;Petal Legnth&#39;</span>, <span class="at">y=</span><span class="st">&#39;Residuals&#39;</span>)<span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="regression_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="regression_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
-<p><br>
-If assumptions of normality and equal variance are met, a residual plot should have: - A roughly symmetric cloud of points above and below the horizontal line at 0 with a higher density of points close to the line ran away from it.<br>
-- Little noticeable curvature as we move from left to right<br>
-- Approx. equal variance of points above and below the line at all values of X<br>
-<br>
+<p><br />
+If assumptions of normality and equal variance are met, a residual plot should have: - A roughly symmetric cloud of points above and below the horizontal line at 0 with a higher density of points close to the line ran away from it.<br />
+- Little noticeable curvature as we move from left to right<br />
+- Approx. equal variance of points above and below the line at all values of X<br />
+<br />
 </p>
 <p>The residual plot above shows meets all assumptions, though this analysis is somewhat subjective.</p>
 <p><strong>An alternative assumption check</strong> I think it is easier to do a more comprehensive visual check with the performance package in R. We can easily visually check the first 3 assumptions using check_model(). Assumption 4 requires us to think about experimental design.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lm1<span class="ot">&lt;-</span><span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Petal.Length, <span class="at">data=</span>iris)</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lm1<span class="ot">&lt;-</span><span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Petal.Length, <span class="at">data=</span>iris)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(lm1)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Not enough model terms in the conditional part of the model to check for
   multicollinearity.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="regression_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="regression_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
-<p><br>
-Using the plots above, we can check 3 / 4 of our assumptions and look for influential observations/outliers. The plots even tell us what to look for on them! This is a bit simpler than trying to analyze the residual plot.<br>
+<p><br />
+Using the plots above, we can check 3 / 4 of our assumptions and look for influential observations/outliers. The plots even tell us what to look for on them! This is a bit simpler than trying to analyze the residual plot.<br />
 As with the residual plot, this analysis of assumptions is somewhat subjective. That is ok.</p>
 </section>
 <section id="when-data-are-not-linear" class="level2">
-<h2 class="anchored" data-anchor-id="when-data-are-not-linear"><strong>when data are not linear</strong></h2>
+<h2><strong>when data are not linear</strong></h2>
 <p>Sometimes the relationship between two variables is not linear! There are many types of common relationships including logarithmic and exponential. We can often visualize these relationships and <strong>Transform</strong> our data to make them linear with some simple math.</p>
 <p>Let’s look at an example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Loblolly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Loblolly)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Grouped Data: height ~ age | Seed
    height age Seed
@@ -432,12 +420,12 @@ As with the residual plot, this analysis of assumptions is somewhat subjective. 
 57  52.70  20  301
 71  60.92  25  301</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span><span class="fu">ggplot</span>(Loblolly, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>height))<span class="sc">+</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span><span class="fu">ggplot</span>(Loblolly, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>height))<span class="sc">+</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">linetype=</span><span class="st">'dashed'</span>, <span class="at">color=</span><span class="st">'firebrick'</span>)<span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>, <span class="at">linetype=</span><span class="st">&#39;dashed&#39;</span>, <span class="at">color=</span><span class="st">&#39;firebrick&#39;</span>)<span class="sc">+</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">'original'</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&#39;original&#39;</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#this is roughly logarithmic in shape</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>lob<span class="ot">&lt;-</span>Loblolly</span>
@@ -446,38 +434,38 @@ As with the residual plot, this analysis of assumptions is somewhat subjective. 
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>p2<span class="ot">&lt;-</span><span class="fu">ggplot</span>(lob, <span class="fu">aes</span>(<span class="at">x=</span>age2, <span class="at">y=</span>height))<span class="sc">+</span></span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">linetype=</span><span class="st">'dashed'</span>, <span class="at">color=</span><span class="st">'firebrick'</span>)<span class="sc">+</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>, <span class="at">linetype=</span><span class="st">&#39;dashed&#39;</span>, <span class="at">color=</span><span class="st">&#39;firebrick&#39;</span>)<span class="sc">+</span></span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">'log transformed'</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&#39;log transformed&#39;</span>)</span>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>lob<span class="sc">$</span>age3<span class="ot">=</span>(lob<span class="sc">$</span>age2)<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>p3<span class="ot">&lt;-</span><span class="fu">ggplot</span>(lob, <span class="fu">aes</span>(<span class="at">x=</span>age3, <span class="at">y=</span>height))<span class="sc">+</span></span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">linetype=</span><span class="st">'dashed'</span>, <span class="at">color=</span><span class="st">'firebrick'</span>)<span class="sc">+</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>, <span class="at">linetype=</span><span class="st">&#39;dashed&#39;</span>, <span class="at">color=</span><span class="st">&#39;firebrick&#39;</span>)<span class="sc">+</span></span>
 <span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">'squared'</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&#39;squared&#39;</span>)</span>
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">/</span>p2<span class="sc">/</span>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">/</span>p2<span class="sc">/</span>p3</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-`geom_smooth()` using formula = 'y ~ x'
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-`geom_smooth()` using formula = 'y ~ x'
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-`geom_smooth()` using formula = 'y ~ x'</code></pre>
+<pre><code>`geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
+`geom_smooth()` using formula = &#39;y ~ x&#39;
+`geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
+`geom_smooth()` using formula = &#39;y ~ x&#39;
+`geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
+`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="regression_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="regression_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
 <p>Here we can see that the transformation was fairly trivial (the data were close enough to a straight line already). BUT, technically, the first plot shows a logarithmic trend. We can transform one of the variables to generate a more linear trend. We can guess a transformation and check it with graphs or we can use our knowledge of mathematical relationships to understand how we might make our relationship more linear.</p>
 </section>
 <section id="linear-regression-with-categorical-variables" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression-with-categorical-variables"><strong>Linear Regression with categorical variables</strong></h2>
+<h2><strong>Linear Regression with categorical variables</strong></h2>
 <p>We can look at mtcars this time…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
 Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
@@ -491,24 +479,24 @@ Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre
 <p>Now, I want to hypothesize that there will be no effect of cylinder on horsepower (this is called a “null hypothesis”). We’ve seen similar hypothesis before in our ANOVA.</p>
 <p>First, let’s make cylinder a factor and plot a boxplot so we can see whether there may be a trend here…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>cyl1<span class="ot">=</span><span class="fu">as.factor</span>(mtcars<span class="sc">$</span>cyl)</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>cyl1<span class="ot">=</span><span class="fu">as.factor</span>(mtcars<span class="sc">$</span>cyl)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x=</span>cyl1, <span class="at">y=</span>hp))<span class="sc">+</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="regression_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="regression_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
-<p><br>
+<p><br />
 I think it is safe to say we see what we might suspect to be a linear(ish) relationship between cyl and hp, where hp increases as cyl increases. What do you think?</p>
 <p>Now, let’s do some stats on this.</p>
 </section>
 <section id="run-the-lm" class="level2">
-<h2 class="anchored" data-anchor-id="run-the-lm"><strong>Run the lm</strong></h2>
+<h2><strong>Run the lm</strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>lmhp<span class="ot">&lt;-</span><span class="fu">lm</span>(hp<span class="sc">~</span>cyl1, <span class="at">data =</span> mtcars)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmhp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>lmhp<span class="ot">&lt;-</span><span class="fu">lm</span>(hp<span class="sc">~</span>cyl1, <span class="at">data =</span> mtcars)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmhp)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -524,40 +512,44 @@ Coefficients:
 cyl16          39.65      18.33   2.163   0.0389 *  
 cyl18         126.58      15.28   8.285 3.92e-09 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 Residual standard error: 37.92 on 29 degrees of freedom
 Multiple R-squared:  0.7139,    Adjusted R-squared:  0.6941 
 F-statistic: 36.18 on 2 and 29 DF,  p-value: 1.319e-08</code></pre>
 </div>
 </div>
-<p>This time we used a categorical x variable, which makes things a little more interesting. In the coefficients table this time we see cyl = 6 and cyl =8 represented as well as “intercept.” R takes the categorical variables and places them in alpha numeric order in these tables. So “intercept” is actually cyl=4. The “estimate” tells us the effect size of each category relative to “intercept.” SO, the mean of cyl=4 should be 82.64 (check the boxplot above to confirm). The mean of cyl=6 is not 39.65, but is actually 39.65 higher than mean of cyl=4 (82.64 + 39.65 = 132.29, which checks out). The p-values associated with each of the coefficients test the null hypothesis that each coefficient has no effect. A p &lt;0.05 indicates that the coefficient is likely to be meaningful in the model (changes in the predictor’s value are related to changes in the response value). <br></p>
+<p>This time we used a categorical x variable, which makes things a little more interesting. In the coefficients table this time we see cyl = 6 and cyl =8 represented as well as “intercept.” R takes the categorical variables and places them in alpha numeric order in these tables. So “intercept” is actually cyl=4. The “estimate” tells us the effect size of each category relative to “intercept.” SO, the mean of cyl=4 should be 82.64 (check the boxplot above to confirm). The mean of cyl=6 is not 39.65, but is actually 39.65 higher than mean of cyl=4 (82.64 + 39.65 = 132.29, which checks out). The p-values associated with each of the coefficients test the null hypothesis that each coefficient has no effect. A p &lt;0.05 indicates that the coefficient is likely to be meaningful in the model (changes in the predictor’s value are related to changes in the response value). </br></p>
 <p>Further down, we see an R-squared of nearly 0.70, which is very good evidence of a linear relationship (70% of the variance in y can be explained by x!). The p-value is very nearly 0.00, which indicates a significant linear correlation.</p>
 </section>
 <section id="check-assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="check-assumptions"><strong>Check assumptions!</strong></h2>
+<h2><strong>Check assumptions!</strong></h2>
 <div class="cell" data-meesage="false">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(lmhp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(lmhp)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Not enough model terms in the conditional part of the model to check for
   multicollinearity.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="regression_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="regression_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672" /></p>
 </div>
 </div>
-<p><br>
-Here we see some concern about Homoscedasticity and homogeneity of variance. We can probably still assume our model is reliable, but we may want to be careful. We learned ways to numerically assess this last week, but again, with high enough sample size, this won’t be an issue. Here, I would suggest that n is too small, so if this were a real statistical test we would have limitations to discuss.<br>
+<p><br />
+Here we see some concern about Homoscedasticity and homogeneity of variance. We can probably still assume our model is reliable, but we may want to be careful. We learned ways to numerically assess this last week, but again, with high enough sample size, this won’t be an issue. Here, I would suggest that n is too small, so if this were a real statistical test we would have limitations to discuss.<br />
 </p>
-<p>Remember our hypothesis (null) was: “There will be no effect of cylinder on horsepower.” We are able to reject this null hypothesis and suggest that indeed horsepower increases as cylinder increases. We might also add caveats that homoscedasticity was not confirmed due to low sample size, but the result seems clear enough that this likely doesn’t matter.<br>
+<p>Remember our hypothesis (null) was: “There will be no effect of cylinder on horsepower.” We are able to reject this null hypothesis and suggest that indeed horsepower increases as cylinder increases. We might also add caveats that homoscedasticity was not confirmed due to low sample size, but the result seems clear enough that this likely doesn’t matter.<br />
 </p>
-
-
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Introduction to R for Biology &amp; Ecology</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Introduction to R for Biology &amp; Ecology</span> <span class="hidden" data-render-id="quarto-int-navbar:Home">Home</span> <span class="hidden" data-render-id="quarto-int-navbar:/index.html">/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:R Basics">R Basics</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with RStudio">Getting Started with RStudio</span> <span class="hidden" data-render-id="quarto-int-navbar:/getting_started.html">/getting_started.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Packages &amp; reading/writing data">Packages &amp; reading/writing data</span> <span class="hidden" data-render-id="quarto-int-navbar:/rbasics.html">/rbasics.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Tidyverse data wrangling">Tidyverse data wrangling</span> <span class="hidden" data-render-id="quarto-int-navbar:Intro to the Tidyverse">Intro to the Tidyverse</span> <span class="hidden" data-render-id="quarto-int-navbar:/intro_tidyverse.html">/intro_tidyverse.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Stringing functions together with the pipe">Stringing functions together with the pipe</span> <span class="hidden" data-render-id="quarto-int-navbar:/pipe.html">/pipe.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Summarizing Data">Summarizing Data</span> <span class="hidden" data-render-id="quarto-int-navbar:/groupsmeans.html">/groupsmeans.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Date and Time">Date and Time</span> <span class="hidden" data-render-id="quarto-int-navbar:/datetime.html">/datetime.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Graphs">Graphs</span> <span class="hidden" data-render-id="quarto-int-navbar:Intro to ggplot2">Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-int-navbar:/basic_graphs.html">/basic_graphs.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Colors">Colors</span> <span class="hidden" data-render-id="quarto-int-navbar:/colors.html">/colors.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Shapes">Shapes</span> <span class="hidden" data-render-id="quarto-int-navbar:/shapes.html">/shapes.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Themes">Themes</span> <span class="hidden" data-render-id="quarto-int-navbar:/themes.html">/themes.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Axes labels and Titles">Axes labels and Titles</span> <span class="hidden" data-render-id="quarto-int-navbar:/axes.html">/axes.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Multiple panels and multiple graphs">Multiple panels and multiple graphs</span> <span class="hidden" data-render-id="quarto-int-navbar:/facets.html">/facets.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Using Quarto">Using Quarto</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with Quarto">Getting Started with Quarto</span> <span class="hidden" data-render-id="quarto-int-navbar:/usingquarto.html">/usingquarto.html</span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden" data-render-id="quarto-metatitle">Introduction to R for Biology &amp; Ecology - linear regression</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Introduction to R for Biology &amp; Ecology - linear regression</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Introduction to R for Biology &amp; Ecology - linear regression</span> <span class="hidden" data-render-id="quarto-metasitename">Introduction to R for Biology &amp; Ecology</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
+</div>
 </section>
 </section>
 
 </main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script id = "quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -792,6 +784,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 
+</body>
 
-
-</body></html>
+</html>
