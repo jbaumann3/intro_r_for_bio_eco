@@ -16,9 +16,9 @@ editor: visual
 # **Learning Objectives**
 
 IN THIS TUTORIAL YOU WILL LEARN:\
-1.) How to access and/or install R and RStudio \
-2.) How to navigate RStudio \
-3.) How to set and change the working directory \
+1.) How to access and/or install R and RStudio\
+2.) How to navigate RStudio\
+3.) How to set and change the working directory\
 4.) How to setup an RStudio Project
 
 # Additional Tutorials and Resources
@@ -143,4 +143,3 @@ RStudio Projects are a great way to compartmentalize your coding work! You can s
 2.) Once you have a MAIN directory folder created (whether you've made subdirectories or not) you can create a project! Set your main folder as your working directory. Next, navigate to the TOP RIGHT of your screen and select the down arrow next to the Big "R" in a blue box. NOW, select "New Project" --\> Existing directory --\> Name the project and hit done! At this point you will see a .Rproj file appear in your MAIN directory. This means you did it right :) This .Rproj file is how you save all of your project info. It autosaves and when you select your project (Again, TOP RIGHT of your screen, select the down arrow next to the R in the blue box and then select your project name) it will load up your scripts, environment, and set your working directory as the MAIN folder. You can navigate VERY easily from here :)
 
 ------------------------------------------------------------------------
-

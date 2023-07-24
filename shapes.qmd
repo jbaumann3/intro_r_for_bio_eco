@@ -28,7 +28,7 @@ ggplot gives us options to change point shape using the aesethic option 'shape' 
 
 Below is a table of shape options:
 
-![ggplot shape options](/home/jbaumann/BIOL234_Biostats_MHC/Spring%202023/Labs/images/ggplot_shapes.png)
+![ggplot shape options](C:/Users/Justin Baumann/Desktop/r_for_bioeco/intro_r_for_bio_eco/images/ggplot_shapes.png)
 
 **Conditional Shape Change**
 

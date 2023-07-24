@@ -194,7 +194,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, interior hidden, frame hidden, enhanced, boxrule=0pt, sharp corners, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, boxrule=0pt, breakable, interior hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -289,9 +289,8 @@ Warning: Removed 2 rows containing non-finite values (`stat_boxplot()`).
 \end{figure}
 
 Here's a giant table of color options in ggplot
-\includegraphics{./home/jbaumann/BIOL234_Biostats_MHC/Spring 2023/Labs/images/ggplot_colors.png}
-You can also \textbf{make your own color palette} and apply that to your
-figure!
+\includegraphics{images/ggplot_colors.png} You can also \textbf{make
+your own color palette} and apply that to your figure!
 
 \begin{Shaded}
 \begin{Highlighting}[]

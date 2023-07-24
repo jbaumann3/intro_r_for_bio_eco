@@ -51,7 +51,7 @@ ggplot(data=penguins, aes(x=species, y= bill_length_mm)) +
 
 ```
 
-Here's a giant table of color options in ggplot ![ggplot color options](/home/jbaumann/BIOL234_Biostats_MHC/Spring%202023/Labs/images/ggplot_colors.png) You can also **make your own color palette** and apply that to your figure!
+Here's a giant table of color options in ggplot ![ggplot color options](images/ggplot_colors.png) You can also **make your own color palette** and apply that to your figure!
 
 ```{r}
 mypal<-c('dodgerblue', 'forestgreen', 'coral') # here I've made a 3 color palette
