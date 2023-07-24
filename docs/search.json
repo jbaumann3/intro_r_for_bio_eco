@@ -396,7 +396,7 @@
     "href": "regression.html",
     "title": "linear regression",
     "section": "",
-    "text": "library(tidyverse)\nlibrary(see)\nlibrary(car)\nlibrary(patchwork)\nlibrary(ggsci)\nlibrary(ggridges)\nlibrary(performance)\nlibrary(Hmisc) #for correlation matrix\nlibrary(corrplot)#to visualize correlation matrices\nlibrary(car) #contains some statistical tests we need to assess assumptions"
+    "text": "library(tidyverse)\nlibrary(see)\nlibrary(car)\nlibrary(patchwork)\nlibrary(ggsci)\nlibrary(ggridges)\nlibrary(performance)\nlibrary(car) #contains some statistical tests we need to assess assumptions"
   },
   {
     "objectID": "regression.html#plotting-a-regression-line",

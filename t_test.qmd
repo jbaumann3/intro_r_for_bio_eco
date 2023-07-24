@@ -13,7 +13,7 @@ format:
 editor: visual
 ---
 
-## \*\* The T-test\*\*
+## ** The T-test**
 
 # Additional Tutorials and Resources for t-tests
 
@@ -30,8 +30,6 @@ library(patchwork)
 library(ggsci)
 library(ggridges)
 library(performance)
-library(Hmisc) #for correlation matrix
-library(corrplot)#to visualize correlation matrices
 library(car) #contains some statistical tests we need to assess assumptions
 
 ```

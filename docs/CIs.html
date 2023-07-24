@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<head>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
 
-<meta charset="utf-8" />
-<meta name="generator" content="quarto-1.3.353" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<meta name="author" content="Justin Baumann">
 
-<meta name="author" content="Justin Baumann" />
-
-<title>Introduction to R for Biology & Ecology – Bootstrapping and Confidence Intervals</title>
+<title>Introduction to R for Biology &amp; Ecology - Bootstrapping and Confidence Intervals</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,7 +57,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-<!-- htmldependencies:E3FAD763 -->
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -81,30 +95,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="/index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Introduction to R for Biology &amp; Ecology</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
-  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="/index.html" rel="" target="">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -113,11 +125,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-r-basics">    
         <li>
-    <a class="dropdown-item" href="/getting_started.html" rel="" target="">
+    <a class="dropdown-item" href="./getting_started.html" rel="" target="">
  <span class="dropdown-text">Getting Started with RStudio</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/rbasics.html" rel="" target="">
+    <a class="dropdown-item" href="./rbasics.html" rel="" target="">
  <span class="dropdown-text">Packages &amp; reading/writing data</span></a>
   </li>  
     </ul>
@@ -128,19 +140,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tidyverse-data-wrangling">    
         <li>
-    <a class="dropdown-item" href="/intro_tidyverse.html" rel="" target="">
+    <a class="dropdown-item" href="./intro_tidyverse.html" rel="" target="">
  <span class="dropdown-text">Intro to the Tidyverse</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/pipe.html" rel="" target="">
+    <a class="dropdown-item" href="./pipe.html" rel="" target="">
  <span class="dropdown-text">Stringing functions together with the pipe</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/groupsmeans.html" rel="" target="">
+    <a class="dropdown-item" href="./groupsmeans.html" rel="" target="">
  <span class="dropdown-text">Summarizing Data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/datetime.html" rel="" target="">
+    <a class="dropdown-item" href="./datetime.html" rel="" target="">
  <span class="dropdown-text">Date and Time</span></a>
   </li>  
     </ul>
@@ -151,27 +163,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-graphs">    
         <li>
-    <a class="dropdown-item" href="/basic_graphs.html" rel="" target="">
+    <a class="dropdown-item" href="./basic_graphs.html" rel="" target="">
  <span class="dropdown-text">Intro to ggplot2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/colors.html" rel="" target="">
+    <a class="dropdown-item" href="./colors.html" rel="" target="">
  <span class="dropdown-text">Colors</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/shapes.html" rel="" target="">
+    <a class="dropdown-item" href="./shapes.html" rel="" target="">
  <span class="dropdown-text">Shapes</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/themes.html" rel="" target="">
+    <a class="dropdown-item" href="./themes.html" rel="" target="">
  <span class="dropdown-text">Themes</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/axes.html" rel="" target="">
+    <a class="dropdown-item" href="./axes.html" rel="" target="">
  <span class="dropdown-text">Axes labels and Titles</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/facets.html" rel="" target="">
+    <a class="dropdown-item" href="./facets.html" rel="" target="">
  <span class="dropdown-text">Multiple panels and multiple graphs</span></a>
   </li>  
     </ul>
@@ -182,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-using-quarto">    
         <li>
-    <a class="dropdown-item" href="/usingquarto.html" rel="" target="">
+    <a class="dropdown-item" href="./usingquarto.html" rel="" target="">
  <span class="dropdown-text">Getting Started with Quarto</span></a>
   </li>  
     </ul>
@@ -193,19 +205,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-beginner-stats">    
         <li>
-    <a class="dropdown-item" href="/cor_chi.html" rel="" target="">
+    <a class="dropdown-item" href="./cor_chi.html" rel="" target="">
  <span class="dropdown-text">Correlation and Chi Square</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/regression.html" rel="" target="">
+    <a class="dropdown-item" href="./regression.html" rel="" target="">
  <span class="dropdown-text">linear regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/t_test.html" rel="" target="">
+    <a class="dropdown-item" href="./t_test.html" rel="" target="">
  <span class="dropdown-text">T Test</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/ANOVA.html" rel="" target="">
+    <a class="dropdown-item" href="./ANOVA.html" rel="" target="">
  <span class="dropdown-text">ANOVA</span></a>
   </li>  
     </ul>
@@ -216,11 +228,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-intermediate-stats">    
         <li>
-    <a class="dropdown-item" href="/multiple_regression.html" rel="" target="">
+    <a class="dropdown-item" href="./multiple_regression.html" rel="" target="">
  <span class="dropdown-text">Multiple Regression &amp; Model Selection</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/CIs.html" rel="" target="">
+    <a class="dropdown-item" href="./CIs.html" rel="" target="">
  <span class="dropdown-text">Bootstrapping and Confidence Intervals</span></a>
   </li>  
     </ul>
@@ -233,16 +245,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn"
-      data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" 
-      aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation"
-      onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <h1 class="quarto-secondary-nav-title"></h1>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" 
-      aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation"
-      onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./CIs.html">Bootstrapping and Confidence Intervals</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
   </nav>
@@ -255,23 +262,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/multiple_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multiple Regression & Model Selection</span></a>
+  <a href="./multiple_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple Regression &amp; Model Selection</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/CIs.html" class="sidebar-item-text sidebar-link active">
+  <a href="./CIs.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Bootstrapping and Confidence Intervals</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" ></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <div id="quarto-toc-target"></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#bootstrapping-and-eventually-confidence-intervals" id="toc-bootstrapping-and-eventually-confidence-intervals" class="nav-link active" data-scroll-target="#bootstrapping-and-eventually-confidence-intervals"><strong>Bootstrapping (and eventually confidence intervals)</strong></a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  <li><a href="#load-packages" id="toc-load-packages" class="nav-link" data-scroll-target="#load-packages">Load Packages</a></li>
+  <li><a href="#get-penguins-data" id="toc-get-penguins-data" class="nav-link" data-scroll-target="#get-penguins-data">Get Penguins data!</a></li>
+  <li><a href="#fit-a-simple-lm-and-have-a-look-at-results" id="toc-fit-a-simple-lm-and-have-a-look-at-results" class="nav-link" data-scroll-target="#fit-a-simple-lm-and-have-a-look-at-results">Fit a simple LM and have a look at results</a></li>
+  <li><a href="#now-lets-bootstrap" id="toc-now-lets-bootstrap" class="nav-link" data-scroll-target="#now-lets-bootstrap">Now, let’s bootstrap!</a></li>
+  <li><a href="#understanding-resampling-and-bootstrapping-using-tidyverse" id="toc-understanding-resampling-and-bootstrapping-using-tidyverse" class="nav-link" data-scroll-target="#understanding-resampling-and-bootstrapping-using-tidyverse"><strong>Understanding resampling and bootstrapping using tidyverse</strong></a>
+  <ul class="collapse">
+  <li><a href="#lets-take-a-sample-of-the-penguins-data" id="toc-lets-take-a-sample-of-the-penguins-data" class="nav-link" data-scroll-target="#lets-take-a-sample-of-the-penguins-data">Let’s take a sample of the penguins data</a></li>
+  <li><a href="#now-we-can-scale-up-working-towards-bootstrapping" id="toc-now-we-can-scale-up-working-towards-bootstrapping" class="nav-link" data-scroll-target="#now-we-can-scale-up-working-towards-bootstrapping">Now we can scale up (working towards bootstrapping)</a></li>
+  <li><a href="#we-can-compare-outputs-to-see-how-things-change" id="toc-we-can-compare-outputs-to-see-how-things-change" class="nav-link" data-scroll-target="#we-can-compare-outputs-to-see-how-things-change">We can compare outputs to see how things change</a></li>
+  <li><a href="#calculating-boostrapped-cis-thus-could-look-like-this" id="toc-calculating-boostrapped-cis-thus-could-look-like-this" class="nav-link" data-scroll-target="#calculating-boostrapped-cis-thus-could-look-like-this">calculating boostrapped CIs thus, could look like this</a></li>
+  </ul></li>
+  <li><a href="#how-to-use-the-infer-package-to-do-cis" id="toc-how-to-use-the-infer-package-to-do-cis" class="nav-link" data-scroll-target="#how-to-use-the-infer-package-to-do-cis">How to use the infer package to do CIs!</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="CIs.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -298,38 +324,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 </header>
-<nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#bootstrapping-and-eventually-confidence-intervals" id="toc-bootstrapping-and-eventually-confidence-intervals"><strong>Bootstrapping (and eventually confidence intervals)</strong></a></li>
-  <li><a href="#resources" id="toc-resources">Resources</a></li>
-  <li><a href="#load-packages" id="toc-load-packages">Load Packages</a></li>
-  <li><a href="#get-penguins-data" id="toc-get-penguins-data">Get Penguins data!</a></li>
-  <li><a href="#fit-a-simple-lm-and-have-a-look-at-results" id="toc-fit-a-simple-lm-and-have-a-look-at-results">Fit a simple LM and have a look at results</a></li>
-  <li><a href="#now-lets-bootstrap" id="toc-now-lets-bootstrap">Now, let’s bootstrap!</a></li>
-  <li><a href="#understanding-resampling-and-bootstrapping-using-tidyverse" id="toc-understanding-resampling-and-bootstrapping-using-tidyverse"><strong>Understanding resampling and bootstrapping using tidyverse</strong></a>
-  <ul>
-  <li><a href="#lets-take-a-sample-of-the-penguins-data" id="toc-lets-take-a-sample-of-the-penguins-data">Let’s take a sample of the penguins data</a></li>
-  <li><a href="#now-we-can-scale-up-working-towards-bootstrapping" id="toc-now-we-can-scale-up-working-towards-bootstrapping">Now we can scale up (working towards bootstrapping)</a></li>
-  <li><a href="#we-can-compare-outputs-to-see-how-things-change" id="toc-we-can-compare-outputs-to-see-how-things-change">We can compare outputs to see how things change</a></li>
-  <li><a href="#calculating-boostrapped-cis-thus-could-look-like-this" id="toc-calculating-boostrapped-cis-thus-could-look-like-this">calculating boostrapped CIs thus, could look like this</a></li>
-  </ul></li>
-  <li><a href="#how-to-use-the-infer-package-to-do-cis" id="toc-how-to-use-the-infer-package-to-do-cis">How to use the infer package to do CIs!</a></li>
-  </ul>
-</nav>
+
 <section id="bootstrapping-and-eventually-confidence-intervals" class="level1">
 <h1><strong>Bootstrapping (and eventually confidence intervals)</strong></h1>
 </section>
 <section id="resources" class="level1">
 <h1>Resources</h1>
-<p><a href="https://moderndive.com/8-confidence-intervals.html">Smith College SDS CIs tutorial</a><br />
+<p><a href="https://moderndive.com/8-confidence-intervals.html">Smith College SDS CIs tutorial</a><br>
 <a href="https://mdsr-book.github.io/mdsr2e/ch-foundations.html#sec:boot">Modern Data Science with R text chapter</a></p>
 </section>
 <section id="load-packages" class="level1">
 <h1>Load Packages</h1>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
@@ -337,21 +344,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample) <span class="co">#for lm bootstraps</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co">#to check collinearity</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="get-penguins-data" class="level1">
 <h1>Get Penguins data!</h1>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="ot">&lt;-</span>palmerpenguins<span class="sc">::</span>penguins</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="ot">&lt;-</span>palmerpenguins<span class="sc">::</span>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fit-a-simple-lm-and-have-a-look-at-results" class="level1">
 <h1>Fit a simple LM and have a look at results</h1>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>simple_mod<span class="ot">&lt;-</span><span class="fu">lm</span>(bill_depth_mm <span class="sc">~</span> bill_length_mm<span class="sc">*</span>species<span class="sc">*</span>sex, <span class="at">data=</span>penguins)</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>simple_mod<span class="ot">&lt;-</span><span class="fu">lm</span>(bill_depth_mm <span class="sc">~</span> bill_length_mm<span class="sc">*</span>species<span class="sc">*</span>sex, <span class="at">data=</span>penguins)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(simple_mod)</span></code></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(simple_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -390,14 +397,14 @@ speciesGentoo:sexmale
 bill_length_mm:speciesChinstrap:sexmale *  
 bill_length_mm:speciesGentoo:sexmale       
 ---
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.8175 on 321 degrees of freedom
   (11 observations deleted due to missingness)
 Multiple R-squared:  0.8334,    Adjusted R-squared:  0.8277 
 F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(simple_mod)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(simple_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 5
    term                                    estimate std.error statistic  p.value
@@ -421,13 +428,13 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h1>Now, let’s bootstrap!</h1>
 <p>Bootstrapping is a resampling technique. We will discuss how it works!</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">356</span>) <span class="co">#any number is fine</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">356</span>) <span class="co">#any number is fine</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>penguins_intervals<span class="ot">&lt;-</span> <span class="fu">reg_intervals</span>(bill_depth_mm <span class="sc">~</span> bill_length_mm<span class="sc">*</span>species<span class="sc">*</span>sex, <span class="at">data=</span>penguins, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">type=</span><span class="st">&#39;percentile&#39;</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">type=</span><span class="st">'percentile'</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">keep_reps=</span><span class="cn">FALSE</span>)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>penguins_intervals</span></code></pre></div>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>penguins_intervals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 11 × 6
    term                                  .lower .estimate  .upper .alpha .method
@@ -444,28 +451,28 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 10 speciesGentoo                       -11.0     -5.82    -0.426    0.05 percen…
 11 speciesGentoo:sexmale               -10.8     -2.30     6.08     0.05 percen…</code></pre>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the results</span></span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the results</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>penboots<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>penguins_intervals, <span class="fu">aes</span>(<span class="at">x=</span>.estimate, <span class="at">y=</span>term))<span class="sc">+</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="dv">2</span>)<span class="sc">+</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>.lower, <span class="at">xmax=</span>.upper),<span class="at">height=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>penboots</span></code></pre></div>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>penboots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="CIs_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672" /></p>
+<p><img src="CIs_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="understanding-resampling-and-bootstrapping-using-tidyverse" class="level1">
 <h1><strong>Understanding resampling and bootstrapping using tidyverse</strong></h1>
 <section id="lets-take-a-sample-of-the-penguins-data" class="level2">
-<h2>Let’s take a sample of the penguins data</h2>
+<h2 class="anchored" data-anchor-id="lets-take-a-sample-of-the-penguins-data">Let’s take a sample of the penguins data</h2>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lilpen<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lilpen<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">10</span>, <span class="at">replace=</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, sex, year, bill_length_mm)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>lilpen</span></code></pre></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>lilpen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 4
    species   sex     year bill_length_mm
@@ -481,12 +488,12 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
  9 Chinstrap female  2007           58  
 10 Gentoo    male    2009           52.5</code></pre>
 </div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#let&#39;s turn resampling on (let&#39;s us include duplicates-- we can choose from entire dataset AGAIN when we collect a separate sample)</span></span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#let's turn resampling on (let's us include duplicates-- we can choose from entire dataset AGAIN when we collect a separate sample)</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lilpen2<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">10</span>, <span class="at">replace=</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, sex, year, bill_length_mm)</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>lilpen2 <span class="co">#if we run this enough times we will eventually see duplicates! This is the concept upon which bootstrapping is based</span></span></code></pre></div>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>lilpen2 <span class="co">#if we run this enough times we will eventually see duplicates! This is the concept upon which bootstrapping is based</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 4
    species   sex     year bill_length_mm
@@ -505,14 +512,14 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </section>
 <section id="now-we-can-scale-up-working-towards-bootstrapping" class="level2">
-<h2>Now we can scale up (working towards bootstrapping)</h2>
+<h2 class="anchored" data-anchor-id="now-we-can-scale-up-working-towards-bootstrapping">Now we can scale up (working towards bootstrapping)</h2>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span> <span class="dv">200</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>orig_sample <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span>n, <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>orig_sample</span></code></pre></div>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>orig_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 8
    species   island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
@@ -530,29 +537,29 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 # ℹ 190 more rows
 # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#with this sample in hand we can draw a rsample of the sample size and calc mean arrival dealy</span></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#with this sample in hand we can draw a rsample of the sample size and calc mean arrival dealy</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>orig_sample <span class="sc">%&gt;%</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span>n, <span class="at">replace=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanbill=</span><span class="fu">mean</span>(bill_length_mm))</span></code></pre></div>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanbill=</span><span class="fu">mean</span>(bill_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   meanbill
      &lt;dbl&gt;
 1       NA</code></pre>
 </div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#44.2</span></span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#44.2</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#compare to orignal dataset</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanbill=</span><span class="fu">mean</span>(bill_length_mm))</span></code></pre></div>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanbill=</span><span class="fu">mean</span>(bill_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   meanbill
      &lt;dbl&gt;
 1       NA</code></pre>
 </div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#44.0 -- different because n=150 in the df but we sampled extra (n=200)</span></span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#44.0 -- different because n=150 in the df but we sampled extra (n=200)</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#by repeating this process many times we can see how much variation there is from sample to sample</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -563,7 +570,7 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">meanbill=</span><span class="fu">mean</span>(bill_length_mm))) <span class="sc">%&gt;%</span></span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n=</span>n)</span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>pen_200_bs <span class="co">#you will see we now have means for 1000 trials!</span></span></code></pre></div>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>pen_200_bs <span class="co">#you will see we now have means for 1000 trials!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 2
    meanbill     n
@@ -583,12 +590,12 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </section>
 <section id="we-can-compare-outputs-to-see-how-things-change" class="level2">
-<h2>We can compare outputs to see how things change</h2>
+<h2 class="anchored" data-anchor-id="we-can-compare-outputs-to-see-how-things-change">We can compare outputs to see how things change</h2>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pen_200_bs <span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(meanbill) <span class="co">#mean = 44, sd=0.391</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pen_200_bs <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(meanbill) <span class="co">#mean = 44, sd=0.391</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table>
+<table class="table table-sm table-striped small">
 <caption>Data summary</caption>
 <tbody>
 <tr class="odd">
@@ -626,19 +633,19 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 </tbody>
 </table>
 <p><strong>Variable type: numeric</strong></p>
-<table style="width:100%;">
+<table class="table table-sm table-striped small">
 <colgroup>
-<col style="width: 16%" />
-<col style="width: 11%" />
-<col style="width: 16%" />
-<col style="width: 7%" />
-<col style="width: 5%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
+<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -672,17 +679,17 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#histo</span></span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#histo</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>bootplot<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>pen_200_bs, <span class="fu">aes</span>(<span class="at">x=</span>meanbill))<span class="sc">+</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">geom_histogram</span>(<span class="at">binwidth=</span><span class="fl">0.1</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>bootplot</span></code></pre></div>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>bootplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 863 rows containing non-finite values (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="CIs_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672" /></p>
+<p><img src="CIs_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check against original df</span></span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check against original df</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pen_df_bs<span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span> <span class="sc">%&gt;%</span> <span class="co">#1000 = number of trials / resamples</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>penguins <span class="sc">%&gt;%</span></span>
@@ -690,7 +697,7 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">meanbill=</span><span class="fu">mean</span>(bill_length_mm))) <span class="sc">%&gt;%</span></span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n=</span>n)</span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>pen_df_bs </span></code></pre></div>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>pen_df_bs </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 2
    meanbill     n
@@ -707,10 +714,10 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 10     NA     200
 # ℹ 990 more rows</code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pen_df_bs <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(meanbill) <span class="co">#mean=44, sd=0.370</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pen_df_bs <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(meanbill) <span class="co">#mean=44, sd=0.370</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table>
+<table class="table table-sm table-striped small">
 <caption>Data summary</caption>
 <tbody>
 <tr class="odd">
@@ -748,19 +755,19 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 </tbody>
 </table>
 <p><strong>Variable type: numeric</strong></p>
-<table style="width:100%;">
+<table class="table table-sm table-striped small">
 <colgroup>
-<col style="width: 16%" />
-<col style="width: 11%" />
-<col style="width: 16%" />
-<col style="width: 7%" />
-<col style="width: 5%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
+<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -794,33 +801,33 @@ F-statistic: 145.9 on 11 and 321 DF,  p-value: &lt; 2.2e-16</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#histo</span></span>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#histo</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>raw<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>pen_df_bs, <span class="fu">aes</span>(<span class="at">x=</span>meanbill))<span class="sc">+</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth=</span><span class="fl">0.1</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>raw</span></code></pre></div>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>raw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 685 rows containing non-finite values (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="CIs_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="672" /></p>
+<p><img src="CIs_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#compare:</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>raw<span class="sc">/</span>bootplot</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#compare:</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>raw<span class="sc">/</span>bootplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 685 rows containing non-finite values (`stat_bin()`).
 Removed 863 rows containing non-finite values (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="CIs_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid" width="672" /></p>
+<p><img src="CIs_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>-The distribution of values we get when we build a series of bootstrap trials is called the bootstrap distribution. It is not exactly the same as the sampling distribution but for sufficiently large n is is a good approximation!</p>
 <p>-Remember that if we have a roughly normal distribution we can get 95% CIs by using the rule of thump CI=2<em>SE (or standard error of the mean) #the “real” value here is 1.96</em>SE</p>
 </section>
 <section id="calculating-boostrapped-cis-thus-could-look-like-this" class="level2">
-<h2>calculating boostrapped CIs thus, could look like this</h2>
+<h2 class="anchored" data-anchor-id="calculating-boostrapped-cis-thus-could-look-like-this">calculating boostrapped CIs thus, could look like this</h2>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>pen_200_bs<span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span> <span class="sc">%&gt;%</span> <span class="co">#1000 = number of trials / resamples</span></span>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>pen_200_bs<span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span> <span class="sc">%&gt;%</span> <span class="co">#1000 = number of trials / resamples</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>orig_sample <span class="sc">%&gt;%</span></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">slice_sample</span>(<span class="at">n=</span>n, <span class="at">replace=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
@@ -830,7 +837,7 @@ Removed 863 rows containing non-finite values (`stat_bin()`).</code></pre>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>calc_CIs<span class="ot">&lt;-</span>pen_200_bs <span class="sc">%&gt;%</span></span>
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanbillboot=</span><span class="fu">mean</span>(meanbill), <span class="at">CI=</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sd</span>(meanbill))</span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>calc_CIs</span></code></pre></div>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>calc_CIs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   meanbillboot    CI
@@ -844,11 +851,11 @@ Removed 863 rows containing non-finite values (`stat_bin()`).</code></pre>
 <section id="how-to-use-the-infer-package-to-do-cis" class="level1">
 <h1>How to use the infer package to do CIs!</h1>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package &#39;infer&#39; was built under R version 4.2.3</code></pre>
+<pre><code>Warning: package 'infer' was built under R version 4.2.3</code></pre>
 </div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>orig_sample</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>orig_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 8
    species   island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
@@ -866,23 +873,23 @@ Removed 863 rows containing non-finite values (`stat_bin()`).</code></pre>
 # ℹ 190 more rows
 # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#dplyr method for mean</span></span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#dplyr method for mean</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>orig_sample <span class="sc">%&gt;%</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">stat=</span><span class="fu">mean</span>(bill_length_mm))</span></code></pre></div>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">stat=</span><span class="fu">mean</span>(bill_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
    stat
   &lt;dbl&gt;
 1    NA</code></pre>
 </div>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#44.0</span></span>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#44.0</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>x_bar<span class="ot">=</span><span class="fl">44.0</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co">#infer method for mean</span></span>
 <span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>orig_sample <span class="sc">%&gt;%</span></span>
 <span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> bill_length_mm) <span class="sc">%&gt;%</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat=</span><span class="st">&#39;mean&#39;</span>)</span></code></pre></div>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat=</span><span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values.</code></pre>
 </div>
@@ -893,18 +900,18 @@ Removed 863 rows containing non-finite values (`stat_bin()`).</code></pre>
   &lt;dbl&gt;
 1  43.6</code></pre>
 </div>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make bootstrap distribution </span></span>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make bootstrap distribution </span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>boot_dist <span class="ot">&lt;-</span>orig_sample <span class="sc">%&gt;%</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response=</span>bill_length_mm) <span class="sc">%&gt;%</span></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps=</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat=</span><span class="st">&#39;mean&#39;</span>)</span></code></pre></div>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat=</span><span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Setting `type = &quot;bootstrap&quot;` in `generate()`.</code></pre>
+<pre><code>Setting `type = "bootstrap"` in `generate()`.</code></pre>
 </div>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>boot_dist</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>boot_dist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Response: bill_length_mm (numeric)
 # A tibble: 1,000 × 2
@@ -922,83 +929,79 @@ Removed 863 rows containing non-finite values (`stat_bin()`).</code></pre>
 10        10  43.6
 # ℹ 990 more rows</code></pre>
 </div>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#look at the histo</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(boot_dist)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#look at the histo</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(boot_dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="CIs_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672" /></p>
+<p><img src="CIs_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#percentile based CIs</span></span>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#percentile based CIs</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>percentile_ci <span class="ot">&lt;-</span> boot_dist <span class="sc">%&gt;%</span> </span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">type =</span> <span class="st">&quot;percentile&quot;</span>)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">type =</span> <span class="st">"percentile"</span>)</span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>percentile_ci</span></code></pre></div>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>percentile_ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
 1     42.9     44.3</code></pre>
 </div>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#graphically....</span></span>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#graphically....</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(boot_dist) <span class="sc">+</span> </span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_confidence_interval</span>(<span class="at">endpoints =</span> percentile_ci)</span></code></pre></div>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_confidence_interval</span>(<span class="at">endpoints =</span> percentile_ci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="CIs_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672" /></p>
+<p><img src="CIs_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#CIs via standard error</span></span>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#CIs via standard error</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>se_CI<span class="ot">&lt;-</span> boot_dist <span class="sc">%&gt;%</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(<span class="at">type=</span><span class="st">&#39;se&#39;</span>, <span class="at">point_estimate =</span> x_bar) <span class="co">#where x_bar is the original sample mean</span></span></code></pre></div>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(<span class="at">type=</span><span class="st">'se'</span>, <span class="at">point_estimate =</span> x_bar) <span class="co">#where x_bar is the original sample mean</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using `level = 0.95` to compute confidence interval.</code></pre>
 </div>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>se_CI</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>se_CI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
 1     43.2     44.8</code></pre>
 </div>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="do">### let&#39;s see how the CI values line up: </span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>calc_CIs</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="do">### let's see how the CI values line up: </span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>calc_CIs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   meanbillboot    CI
          &lt;dbl&gt; &lt;dbl&gt;
 1           NA    NA</code></pre>
 </div>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="dv">44</span><span class="fl">-0.783</span> <span class="co">#43.217</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="dv">44</span><span class="fl">-0.783</span> <span class="co">#43.217</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 43.217</code></pre>
 </div>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="dv">44</span><span class="fl">+0.783</span> <span class="co">#44.783</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="dv">44</span><span class="fl">+0.783</span> <span class="co">#44.783</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 44.783</code></pre>
 </div>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>percentile_ci <span class="co">#43.2, 44.8</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>percentile_ci <span class="co">#43.2, 44.8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
 1     42.9     44.3</code></pre>
 </div>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>se_CI <span class="co"># 43.2, 44.8</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>se_CI <span class="co"># 43.2, 44.8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
 1     43.2     44.8</code></pre>
 </div>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co">#all super close!</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co">#all super close!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="quarto-navigation-envelope" class="hidden">
-<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Intermediate Stats</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Introduction to R for Biology &amp; Ecology</span> <span class="hidden" data-render-id="quarto-int-prev">Multiple Regression &amp; Model Selection</span> <span class="hidden" data-render-id="quarto-int-sidebar:/multiple_regression.html">Multiple Regression &amp; Model Selection</span> <span class="hidden" data-render-id="quarto-int-sidebar:/CIs.html">Bootstrapping and Confidence Intervals</span> <span class="hidden" data-render-id="quarto-int-navbar:Home">Home</span> <span class="hidden" data-render-id="quarto-int-navbar:/index.html">/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:R Basics">R Basics</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with RStudio">Getting Started with RStudio</span> <span class="hidden" data-render-id="quarto-int-navbar:/getting_started.html">/getting_started.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Packages &amp; reading/writing data">Packages &amp; reading/writing data</span> <span class="hidden" data-render-id="quarto-int-navbar:/rbasics.html">/rbasics.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Tidyverse data wrangling">Tidyverse data wrangling</span> <span class="hidden" data-render-id="quarto-int-navbar:Intro to the Tidyverse">Intro to the Tidyverse</span> <span class="hidden" data-render-id="quarto-int-navbar:/intro_tidyverse.html">/intro_tidyverse.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Stringing functions together with the pipe">Stringing functions together with the pipe</span> <span class="hidden" data-render-id="quarto-int-navbar:/pipe.html">/pipe.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Summarizing Data">Summarizing Data</span> <span class="hidden" data-render-id="quarto-int-navbar:/groupsmeans.html">/groupsmeans.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Date and Time">Date and Time</span> <span class="hidden" data-render-id="quarto-int-navbar:/datetime.html">/datetime.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Graphs">Graphs</span> <span class="hidden" data-render-id="quarto-int-navbar:Intro to ggplot2">Intro to ggplot2</span> <span class="hidden" data-render-id="quarto-int-navbar:/basic_graphs.html">/basic_graphs.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Colors">Colors</span> <span class="hidden" data-render-id="quarto-int-navbar:/colors.html">/colors.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Shapes">Shapes</span> <span class="hidden" data-render-id="quarto-int-navbar:/shapes.html">/shapes.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Themes">Themes</span> <span class="hidden" data-render-id="quarto-int-navbar:/themes.html">/themes.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Axes labels and Titles">Axes labels and Titles</span> <span class="hidden" data-render-id="quarto-int-navbar:/axes.html">/axes.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Multiple panels and multiple graphs">Multiple panels and multiple graphs</span> <span class="hidden" data-render-id="quarto-int-navbar:/facets.html">/facets.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Using Quarto">Using Quarto</span> <span class="hidden" data-render-id="quarto-int-navbar:Getting Started with Quarto">Getting Started with Quarto</span> <span class="hidden" data-render-id="quarto-int-navbar:/usingquarto.html">/usingquarto.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Beginner Stats">Beginner Stats</span> <span class="hidden" data-render-id="quarto-int-navbar:Correlation and Chi Square">Correlation and Chi Square</span> <span class="hidden" data-render-id="quarto-int-navbar:/cor_chi.html">/cor_chi.html</span> <span class="hidden" data-render-id="quarto-int-navbar:linear regression">linear regression</span> <span class="hidden" data-render-id="quarto-int-navbar:/regression.html">/regression.html</span> <span class="hidden" data-render-id="quarto-int-navbar:T Test">T Test</span> <span class="hidden" data-render-id="quarto-int-navbar:/t_test.html">/t_test.html</span> <span class="hidden" data-render-id="quarto-int-navbar:ANOVA">ANOVA</span> <span class="hidden" data-render-id="quarto-int-navbar:/ANOVA.html">/ANOVA.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Intermediate Stats">Intermediate Stats</span> <span class="hidden" data-render-id="quarto-int-navbar:Multiple Regression &amp; Model Selection">Multiple Regression &amp; Model Selection</span> <span class="hidden" data-render-id="quarto-int-navbar:/multiple_regression.html">/multiple_regression.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Bootstrapping and Confidence Intervals">Bootstrapping and Confidence Intervals</span> <span class="hidden" data-render-id="quarto-int-navbar:/CIs.html">/CIs.html</span> <span class="hidden" data-render-id="quarto-breadcrumbs-2e89331b19dfac0d6f2dc098c696a947">Bootstrapping and Confidence Intervals</span></p>
-</div>
-<div id="quarto-meta-markdown" class="hidden">
-<p><span class="hidden" data-render-id="quarto-metatitle">Introduction to R for Biology &amp; Ecology - Bootstrapping and Confidence Intervals</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Introduction to R for Biology &amp; Ecology - Bootstrapping and Confidence Intervals</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Introduction to R for Biology &amp; Ecology - Bootstrapping and Confidence Intervals</span> <span class="hidden" data-render-id="quarto-metasitename">Introduction to R for Biology &amp; Ecology</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
-</div>
+
+
 </section>
 
 </main> <!-- /main -->
-<script id = "quarto-html-after-body" type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1233,6 +1236,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 
-</body>
 
-</html>
+
+</body></html>

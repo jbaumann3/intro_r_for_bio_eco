@@ -13,7 +13,6 @@ format:
 editor: visual
 ---
 
-
 # **Load packages**
 
 ```{r}
@@ -25,12 +24,9 @@ library(patchwork)
 library(ggsci)
 library(ggridges)
 library(performance)
-library(Hmisc) #for correlation matrix
-library(corrplot)#to visualize correlation matrices
 library(car) #contains some statistical tests we need to assess assumptions
 
 ```
-
 
 # **(Simple) Linear Regression**
 
