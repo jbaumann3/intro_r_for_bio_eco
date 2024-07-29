@@ -37,7 +37,7 @@ The best way to learn is to GOOGLE IT and try stuff
 
 ------------------------------------------------------------------------
 
-# **1.) Install R and RStudio and access the Rstudio server**
+# **1.) Install R and RStudio**
 
 In this course we will learn how to program in R (a coding language) using RStudio (a coding environment). RStudio makes using R easier and more user friendly!\
 We will also learn how to make pdf and html output files that include code and outputs (tables and graphs).\
@@ -46,7 +46,7 @@ Your lab reports will all be built using Quarto.
 
 **You have options:**\
 1. Install R and RStudio on your device(s) and use it locally\
-2. Sign up for a posit cloud account here: https://posit.cloud/plans/free. Posit Cloud is a way to access RStudio online without downloading and installing anything. 
+2. Sign up for a posit cloud account here: https://posit.cloud/plans/free. Posit Cloud is a way to access RStudio online without downloading and installing anything.
 
 ::: panel-tabset
 ## **Install R**
@@ -60,7 +60,6 @@ To install R, we will use this link: [install R](https://cran.r-project.org/bin/
 
 1.) Click [this link](https://www.rstudio.com/products/rstudio/download/#download) and follow instructions\
 2.) OPEN RStudio (not R). Click on the logo that is a white R inside a blue circle (RStudio). We never need to open R, we can use RStudio.
-
 :::
 
 ------------------------------------------------------------------------
