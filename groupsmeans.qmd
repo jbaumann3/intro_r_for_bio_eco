@@ -39,6 +39,9 @@ library(palmerpenguins)
 ```
 
 ```{r}
+
+# A quick reminder that that %>% and |> syntax are equivalent and interchangable 
+
 mpgpercyl<-mtcars%>%
   group_by(cyl)%>% #group = cylinder 
   summarize(mean=mean(mpg),error=sd(mpg)) # a simple summarize with just mean and standard deviation
@@ -64,8 +67,8 @@ head(penguins)
 
 sumpens<- penguins %>%
   group_by(species, island, sex) %>%
-  summarize(meanbill=mean(bill_length_mm), sd=sd(bill_length_mm), n=n(), se=sd/sqrt(n))%>%
-  na.omit() #removes rows with NA values (a few rows would otherwise have NA in 'sex' due to sampling error in the field)
+  drop_na(sex) %>% #removes rows with NA values (a few rows would otherwise have NA in 'sex' due to sampling error in the field)
+  summarize(meanbill=mean(bill_length_mm), sd=sd(bill_length_mm), n=n(), se=sd/sqrt(n))
 
 sumpens
 ```
