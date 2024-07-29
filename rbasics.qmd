@@ -80,7 +80,7 @@ str() is very important because it allows you to see the type of data in each co
 mtcars$mpg=as.factor(mtcars$mpg) # Makes mpg a factor instead of a number
 str(mtcars)
 
-mtcars$mpg=as.numeric(mtcars$mpg) #Changes mpg back to a number
+mtcars$mpg=as.numeric(as.character(mtcars$mpg)) #Changes mpg back to a number
 str(mtcars)
 
 ```
