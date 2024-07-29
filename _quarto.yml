@@ -3,6 +3,10 @@ project:
   output-dir: docs
   
 website:
+  cookie-consent:
+    type: express
+    style: headline
+    palette: dark  
   title: "Introduction to R for Biology & Ecology"
   navbar:
     background: primary
