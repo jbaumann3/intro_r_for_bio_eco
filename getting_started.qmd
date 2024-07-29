@@ -46,7 +46,7 @@ Your lab reports will all be built using Quarto.
 
 **You have options:**\
 1. Install R and RStudio on your device(s) and use it locally\
-2. Sign up for a posit cloud account here: https://posit.cloud/plans/free. Posit Cloud is a way to access RStudio online without downloading and installing anything. If you are a student, faculty, or staff at a college or university, your school may have an RStudio server. Mount Holyoke has one, for example. You can access it for free (if you are an affiliate) at https://rstudio.mtholyoke.edu/. Note that for the rstudio.mtholyoke.edu website to work you need to login AND you must either be on campus or be using the MHC VPN.\
+2. Sign up for a posit cloud account here: https://posit.cloud/plans/free. Posit Cloud is a way to access RStudio online without downloading and installing anything. 
 
 ::: panel-tabset
 ## **Install R**
@@ -61,11 +61,6 @@ To install R, we will use this link: [install R](https://cran.r-project.org/bin/
 1.) Click [this link](https://www.rstudio.com/products/rstudio/download/#download) and follow instructions\
 2.) OPEN RStudio (not R). Click on the logo that is a white R inside a blue circle (RStudio). We never need to open R, we can use RStudio.
 
-## **Access the MHC Server**
-
-1.) follow this link [rstudio.mtholyoke.edu](https://rstudio.mtholyoke.edu)\
-2.) login\
-3.) This is RStudio hosted by Mt Holyoke servers. It requires 2 things: a.) internet connection b.) you must be on campus OR you must have the Mt Holyoke VPN activated. To learn about the VPN, check out [this page](https://lits.mtholyoke.edu/tech-support/access-and-internet-connectivity/connect-campus/using-virtual-private-network-vpn)
 :::
 
 ------------------------------------------------------------------------
